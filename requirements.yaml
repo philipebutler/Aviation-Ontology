@@ -1,0 +1,26 @@
+entity: Requirement
+
+description: >
+  A formal engineering obligation that must be satisfied
+  and verified.
+
+attributes:
+  - id
+  - title
+  - rationale
+  - owner
+  - status
+
+relationships:
+  satisfies:
+    target: Function
+
+verified_by:
+    target: VerificationArtifact
+
+lifecycle_states:
+  - draft
+  - approved
+  - implemented
+  - verified
+  - obsolete
