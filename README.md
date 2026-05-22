@@ -33,28 +33,28 @@ This repository provides a simple structure for documenting those concepts in a 
 
 ```text
 ontology/
-âââ entities/
-â   âââ requirement.yaml
-â   âââ function.yaml
-â   âââ system.yaml
-â   âââ part.yaml
-â   âââ change.yaml
-â   âââ verification.yaml
-â
-âââ relationships/
-â   âââ satisfies.yaml
-â   âââ allocated_to.yaml
-â   âââ realizes.yaml
-â   âââ verifies.yaml
-â
-âââ lifecycle/
-â   âââ states.yaml
-â   âââ workflows.yaml
-â
-âââ glossary/
-â   âââ terminology.md
-â
-âââ examples/
+├── entities/
+│   ├── requirement.yaml
+│   ├── function.yaml
+│   ├── system.yaml
+│   ├── part.yaml
+│   ├── change.yaml
+│   └── verification.yaml
+│
+├── relationships/
+│   ├── satisfies.yaml
+│   ├── allocated_to.yaml
+│   ├── realizes.yaml
+│   └── verifies.yaml
+│
+├── lifecycle/
+│   ├── states.yaml
+│   └── workflows.yaml
+│
+├── glossary/
+│   └── terminology.md
+│
+└── examples/
 ```
 
 ## Recommended starting scope
