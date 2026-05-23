@@ -74,6 +74,30 @@ A STEP concept that captures contextual technical meaning of a product version, 
 
 A STEP context construct paired with product_definition to declare the discipline or lifecycle viewpoint (for example, design, manufacturing, or support) in which a definition is valid.
 
+## EXPRESS schema
+
+The formal ISO 10303 data-model definition written in the EXPRESS language, where entities, attributes, and constraints are specified for interoperable product data.
+
+## product (EXPRESS entity)
+
+The ISO 10303 identity entity for an item, typically carrying identifiers and descriptive metadata independent of versioned formations and contextual definitions.
+
+## product_definition_formation (EXPRESS entity)
+
+The ISO 10303 entity representing a specific formation/version of a product identity, commonly used for revision-controlled progression.
+
+## product_definition_formation_with_specified_source (EXPRESS entity)
+
+An ISO 10303 specialization of product_definition_formation that adds a source classification (for example, made, bought, or not known).
+
+## product_definition (EXPRESS entity)
+
+The ISO 10303 entity that captures the governed technical definition of a product formation within a declared context.
+
+## product_definition_context (EXPRESS entity)
+
+The ISO 10303 context entity defining the application discipline and lifecycle viewpoint attached to a product_definition.
+
 ## Next assembly usage occurrence
 
 A STEP concept representing a specific parent-child usage link in product structure, commonly used for assembly/BOM semantics.
