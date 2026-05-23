@@ -70,7 +70,7 @@ A STEP concept used to represent controlled revision/version progression of a pr
 
 A STEP concept that captures contextual technical meaning of a product version, often bound to design, manufacturing, or support contexts.
 
-## Product definition context
+## Product Definition Context
 
 A STEP context construct paired with product_definition to declare the discipline or lifecycle viewpoint (for example design, manufacturing, or support) in which a definition is valid.
 
@@ -86,6 +86,6 @@ A STEP construct linking product definition semantics to representational shape 
 
 A STEP representation construct for geometric/topological/presentation form, including use in AP242 model-based definition exchange.
 
-## Advanced B-Rep shape representation
+## Advanced B-Rep Shape Representation
 
 A STEP geometric representation subtype used to encode boundary-representation solids and topology for high-fidelity product model exchange.
