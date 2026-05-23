@@ -1,0 +1,142 @@
+id: entity.shape_representation
+name: ShapeRepresentation
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A STEP-aligned representational construct for geometric or presentation form of a product definition.
+
+canonical_definition: >
+  ShapeRepresentation captures ISO 10303 product_definition_shape and shape_representation semantics
+  used to encode geometric, topological, and presentation forms associated with product definition.
+
+purpose: >
+  ShapeRepresentation provides explicit linkage from governed product definition semantics to model
+  representations used for design, manufacturing, analysis, and digital interoperability.
+
+semantic_scope:
+  includes:
+    - 3D geometric representation.
+    - Topology-linked product shape context.
+    - Representation forms used for exchange and downstream consumption.
+  excludes:
+    - Pure product identity semantics.
+    - Functional requirements not represented as product shape data.
+
+standards_alignment:
+  sysml:
+    concept: External model artifact reference for realization geometry
+    notes: Typically linked from architecture model, not fully represented inside SysML itself.
+  iso_15288:
+    concept: Technical data artifact supporting implementation and verification
+    notes: Supports realization evidence and manufacturing preparation.
+  step_iso_10303:
+    concept: product_definition_shape, shape_representation, advanced_brep_shape_representation (ISO 10303-42), AP242 MBD
+    notes: Aligns managed geometric representation semantics in STEP.
+  other:
+    - standard: JT/3D PDF exchange policies
+      concept: Visualization derivative representation
+      notes: Downstream representation may derive from STEP-authoritative geometry.
+
+ownership:
+  business_owner: Product Definition / CAD Governance
+  semantic_owner: Product Definition
+  steward: CAD Data Architecture
+  approving_authority: Chief Engineering Office
+
+source_of_authority:
+  system_of_record: PLM with CAD integration
+  authoritative_artifact: Released model representation package
+  authoritative_process: Model-based definition release process
+
+attributes:
+  - name: id
+    description: Unique shape representation identifier.
+    required: true
+    datatype: string
+  - name: representation_type
+    description: Representation type such as B-Rep, tessellated, wireframe, or hybrid.
+    required: true
+    datatype: string
+  - name: format
+    description: Exchange or native format identifier.
+    required: false
+    datatype: string
+  - name: pmi_included
+    description: Indicates whether product manufacturing information is included.
+    required: false
+    datatype: boolean
+
+relationships:
+  - predicate: represents_definition
+    target_entity: ProductDefinition
+    cardinality: many-to-one
+    required: true
+    description: ShapeRepresentation corresponds to one product definition context.
+  - predicate: supports_verification_by
+    target_entity: VerificationArtifact
+    cardinality: many-to-many
+    required: false
+    description: Geometry representations may support verification evidence generation.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - superseded
+  - obsolete
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: superseded
+  - from: superseded
+    to: obsolete
+
+local_definitions:
+  - context: CAD native
+    definition: Native geometry model used for design authoring and detailed updates.
+    source: CAD governance standard.
+  - context: STEP exchange
+    definition: AP242 exchange representation for interoperable product geometry and PMI.
+    source: Enterprise interoperability profile.
+
+historical_definitions:
+  - period: drawing-dominant release
+    definition: Shape meaning conveyed primarily through 2D drawing projection.
+    source: Historical drafting and release policy.
+
+aliases:
+  - geometry representation
+  - model representation
+  - product definition shape
+
+not_to_be_confused_with:
+  - concept: ProductDefinition
+    distinction: ProductDefinition captures full contextual semantics; shape is representational form.
+  - concept: VerificationArtifact
+    distinction: VerificationArtifact is evidence; shape representation is design/definition data.
+
+examples:
+  - name: AP242 managed model with PMI
+    description: Released 3D representation with GD&T annotations used for downstream manufacturing.
+
+anti_examples:
+  - name: Informal screenshot in slide deck
+    description: Screenshot is not governed shape representation in digital thread.
+
+open_questions:
+  - Should non-geometric simulation representations be modeled as separate entity or specialized subtype?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned shape representation entity.

@@ -34,6 +34,9 @@ standards_alignment:
   iso_15288:
     concept: Verification and validation processes
     notes: Use for lifecycle process alignment.
+  step_iso_10303:
+    concept: AP239 in-service support evidence and AP233 verification exchange context
+    notes: Verification artifacts can be linked to product definitions and lifecycle evidence in STEP-aligned threads.
 
 ownership:
   business_owner: Verification / Certification / Quality

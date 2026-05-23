@@ -1,0 +1,58 @@
+id: relationship.defines
+name: Defines
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: defines
+inverse_predicate: defined_by
+
+summary: >
+  Associates a product version with one or more contextual product definitions.
+
+canonical_definition: >
+  defines links ProductVersion to ProductDefinition to represent how a controlled revision
+  governs specific contextual technical definitions in ISO 10303-aligned semantics.
+
+source_entity: ProductVersion
+target_entity: ProductDefinition
+
+cardinality:
+  source_to_target: one-to-many
+  target_to_source: many-to-one
+
+required: true
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - ProductDefinition context should be explicit (e.g., design, manufacturing, support).
+  - A ProductDefinition must trace to a governing ProductVersion.
+
+lifecycle_constraints:
+  - ProductDefinition release should not exceed governing ProductVersion maturity.
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_process: Technical data and configuration release
+
+examples:
+  - source: FCC-LRU revision C
+    relationship: defines
+    target: FCC-LRU design definition
+    explanation: Released revision governs the contextual technical definition.
+
+anti_examples:
+  - source: Unreleased working branch model
+    relationship: defines
+    target: Released manufacturing definition
+    explanation: Unreleased working content cannot govern released definition.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned defines relationship.

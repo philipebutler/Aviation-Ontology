@@ -1,0 +1,58 @@
+id: relationship.represented_by_shape
+name: Represented By Shape
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: represented_by_shape
+inverse_predicate: represents_definition
+
+summary: >
+  Associates a product definition with a governed geometric representation.
+
+canonical_definition: >
+  represented_by_shape links ProductDefinition to ShapeRepresentation consistent with ISO 10303
+  product_definition_shape and shape_representation semantics.
+
+source_entity: ProductDefinition
+target_entity: ShapeRepresentation
+
+cardinality:
+  source_to_target: one-to-many
+  target_to_source: many-to-one
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - ShapeRepresentation should reference a controlled format and representation type.
+  - Relationship does not imply manufacturing release unless lifecycle states permit.
+
+lifecycle_constraints:
+  - Released ProductDefinition should reference released or approved shape representations.
+
+source_of_authority:
+  system_of_record: PLM with CAD integration
+  authoritative_process: Model-based definition release process
+
+examples:
+  - source: FCC-LRU design definition
+    relationship: represented_by_shape
+    target: AP242 model with PMI
+    explanation: Contextual product definition links to governed geometric representation.
+
+anti_examples:
+  - source: Requirement REQ-001
+    relationship: represented_by_shape
+    target: Test report VER-102
+    explanation: Requirements and test reports are not geometric representation semantics.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned represented_by_shape relationship.

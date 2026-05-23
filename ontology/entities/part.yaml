@@ -31,8 +31,8 @@ standards_alignment:
     concept: PartDefinition / PartUsage
     notes: Useful for logical or physical realization modeling.
   step_iso_10303:
-    concept: Product / ProductDefinition / ProductStructure
-    notes: Candidate alignment for product data exchange semantics.
+    concept: product, product_definition, next_assembly_usage_occurrence, product_definition_shape (ISO 10303-41/42, AP242)
+    notes: Part semantics can map to STEP identity, definition, structure usage, and representation constructs.
 
 ownership:
   business_owner: Engineering / Configuration Management

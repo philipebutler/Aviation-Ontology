@@ -1,0 +1,147 @@
+id: entity.product_structure_occurrence
+name: ProductStructureOccurrence
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A STEP-aligned assembly usage occurrence linking parent and child definitions in product structure.
+
+canonical_definition: >
+  ProductStructureOccurrence represents ISO 10303 next_assembly_usage_occurrence semantics for a
+  specific usage of a child product definition within a parent product definition context.
+
+purpose: >
+  Usage occurrences provide explicit assembly structure reasoning, including quantity, reference
+  designator, and effectivity needed for traceable product configuration analysis.
+
+semantic_scope:
+  includes:
+    - Parent-child usage links in product structure.
+    - Quantity and placement usage metadata.
+    - Effectivity-scoped structural applicability.
+  excludes:
+    - Standalone part identity without parent-child context.
+    - Abstract functional decomposition without realization usage.
+
+standards_alignment:
+  sysml:
+    concept: PartUsage / composition usage relationship
+    notes: Closest alignment is usage in structural decomposition.
+  iso_15288:
+    concept: Product structure baseline under configuration management
+    notes: Enables decomposition governance.
+  step_iso_10303:
+    concept: next_assembly_usage_occurrence (ISO 10303-44/41 usage patterns), AP203/AP214/AP242 BOM semantics
+    notes: Core structure occurrence concept for parent-child assembly links.
+  other:
+    - standard: ISO 81346
+      concept: Reference designation context
+      notes: Complementary naming context for occurrences.
+
+ownership:
+  business_owner: Product Structure Management
+  semantic_owner: Configuration Management
+  steward: PLM Data Architecture
+  approving_authority: Configuration Control Board
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Released product structure (BOM)
+  authoritative_process: Product structure release and change control
+
+attributes:
+  - name: id
+    description: Unique structure occurrence identifier.
+    required: true
+    datatype: string
+  - name: quantity
+    description: Usage quantity of child in parent context.
+    required: false
+    datatype: number
+  - name: reference_designator
+    description: Optional reference designator or position code.
+    required: false
+    datatype: string
+  - name: effectivity
+    description: Applicability bounds for this usage occurrence.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: usage_in_parent
+    target_entity: ProductDefinition
+    cardinality: many-to-one
+    required: true
+    description: Occurrence exists in one parent product definition context.
+  - predicate: references_child_definition
+    target_entity: ProductDefinition
+    cardinality: many-to-one
+    required: true
+    description: Occurrence points to one child product definition.
+  - predicate: corresponds_to
+    target_entity: Part
+    cardinality: many-to-many
+    required: false
+    description: Enterprise part usage records may correspond to STEP occurrences.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - superseded
+  - obsolete
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: superseded
+  - from: superseded
+    to: obsolete
+
+local_definitions:
+  - context: PLM MBOM
+    definition: Manufacturing usage row connecting parent and child manufacturing definitions.
+    source: Manufacturing BOM management procedure.
+  - context: eBOM
+    definition: Engineering assembly occurrence in released product structure.
+    source: Engineering product structure standard.
+
+historical_definitions:
+  - period: spreadsheet BOM era
+    definition: Parent-child usage manually tracked by row-level references.
+    source: Legacy BOM governance practice.
+
+aliases:
+  - assembly occurrence
+  - usage occurrence
+  - BOM line occurrence
+
+not_to_be_confused_with:
+  - concept: ProductDefinition
+    distinction: ProductDefinition is the node; occurrence is the usage edge between nodes.
+  - concept: Part
+    distinction: Part is enterprise concept; occurrence is contextual parent-child usage.
+
+examples:
+  - name: FCC chassis includes processor module
+    description: Parent FCC definition uses processor module definition quantity 1 in released baseline.
+
+anti_examples:
+  - name: Generic subsystem capability decomposition
+    description: Capability hierarchy is not a product structure usage occurrence.
+
+open_questions:
+  - Should serial-level occurrence effectivity be modeled directly or by linked effectivity entity?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned product structure occurrence entity.

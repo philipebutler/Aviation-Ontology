@@ -1,0 +1,145 @@
+id: entity.product_version
+name: ProductVersion
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A STEP-aligned versioned formation of product identity used for configuration control.
+
+canonical_definition: >
+  ProductVersion represents the ISO 10303 product_definition_formation semantics that capture
+  controlled version, revision, or release evolution of a product identity.
+
+purpose: >
+  ProductVersion allows explicit configuration progression while preserving continuity of the
+  underlying product identity and linking to definition content valid for that version.
+
+semantic_scope:
+  includes:
+    - Revisioned or versioned product formations.
+    - Release-oriented configuration increments.
+  excludes:
+    - Geometry-only representation without version authority.
+    - Individual installed occurrences.
+
+standards_alignment:
+  sysml:
+    concept: Versioned definition view or baseline context
+    notes: Use external configuration model when needed.
+  iso_15288:
+    concept: Configuration item version control
+    notes: Supports lifecycle baseline management.
+  step_iso_10303:
+    concept: product_definition_formation (ISO 10303-41), AP242 managed revisions
+    notes: Explicitly models product revision/formation semantics.
+  other:
+    - standard: CMII principles
+      concept: Controlled baseline version object
+      notes: Comparable governance intent.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Configuration Management
+  steward: PLM Governance
+  approving_authority: Configuration Control Board
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Released revision record
+  authoritative_process: Change and release management process
+
+attributes:
+  - name: id
+    description: Unique product version identifier.
+    required: true
+    datatype: string
+  - name: revision
+    description: Version/revision token.
+    required: true
+    datatype: string
+  - name: release_status
+    description: Governance state such as in-work, frozen, released.
+    required: true
+    datatype: string
+  - name: effectivity_basis
+    description: Effectivity basis for applicability of this version.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: version_of
+    target_entity: Product
+    cardinality: many-to-one
+    required: true
+    description: ProductVersion belongs to one product identity.
+  - predicate: defines
+    target_entity: ProductDefinition
+    cardinality: one-to-many
+    required: true
+    description: Version is associated with one or more controlled definition contexts.
+  - predicate: superseded_by
+    target_entity: ProductVersion
+    cardinality: zero-or-one
+    required: false
+    description: Optional forward reference to a replacement version.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - superseded
+  - obsolete
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: superseded
+  - from: superseded
+    to: obsolete
+
+local_definitions:
+  - context: PLM
+    definition: Managed revision object bound to release process and change authority.
+    source: PLM configuration management procedure.
+  - context: CAD
+    definition: Model file revision label promoted through release states.
+    source: CAD release workflow.
+
+historical_definitions:
+  - period: legacy drawing control
+    definition: Version represented primarily as drawing letter revision.
+    source: Historical drafting standards.
+
+aliases:
+  - revision
+  - product formation
+
+not_to_be_confused_with:
+  - concept: Product
+    distinction: Product is identity; ProductVersion is controlled revision state.
+  - concept: ProductDefinition
+    distinction: ProductDefinition is technical content context; version governs release identity.
+
+examples:
+  - name: FCC-LRU revision C
+    description: Released product formation used for production baseline.
+
+anti_examples:
+  - name: Analyst scratch geometry update
+    description: Informal modeling change is not a governed product version.
+
+open_questions:
+  - Do we require immutable effectivity snapshots for each released product version?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned product version definition.

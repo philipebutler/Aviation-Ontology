@@ -33,6 +33,9 @@ standards_alignment:
   iso_15288:
     concept: System-of-interest and enabling systems
     notes: Use for lifecycle and system boundary alignment.
+  step_iso_10303:
+    concept: product_definition in system-engineering context (AP233), AP239 lifecycle support context
+    notes: System viewpoints can map to contextual STEP definitions when exchanging engineered system semantics.
 
 ownership:
   business_owner: Systems Engineering

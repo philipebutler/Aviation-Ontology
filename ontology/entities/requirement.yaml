@@ -33,8 +33,8 @@ standards_alignment:
     concept: Requirements definition and requirements analysis processes
     notes: Use as lifecycle process alignment.
   step_iso_10303:
-    concept: TBD
-    notes: Map only where product data exchange requires it.
+    concept: AP233 requirement and systems engineering exchange constructs
+    notes: Requirement semantics can be exchanged through STEP systems engineering application protocols.
 
 ownership:
   business_owner: Systems Engineering
