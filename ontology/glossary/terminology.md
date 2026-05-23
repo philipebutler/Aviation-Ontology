@@ -72,7 +72,7 @@ A STEP concept that captures contextual technical meaning of a product version, 
 
 ## Product Definition Context
 
-A STEP context construct paired with product_definition to declare the discipline or lifecycle viewpoint (for example design, manufacturing, or support) in which a definition is valid.
+A STEP context construct paired with product_definition to declare the discipline or lifecycle viewpoint (for example, design, manufacturing, or support) in which a definition is valid.
 
 ## Next assembly usage occurrence
 
