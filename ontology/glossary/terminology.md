@@ -38,6 +38,26 @@ The ISO standard family for computer-interpretable product data representation a
 
 A domain-specific implementation profile in STEP, such as AP203, AP214, AP233, AP239, or AP242, that constrains and applies integrated resources for practical interoperability.
 
+## AP203
+
+Configuration-controlled 3D design exchange protocol in ISO 10303 focused on mechanical design representation and management.
+
+## AP214
+
+Core data protocol in ISO 10303 for automotive mechanical design processes, including product data exchange across design and manufacturing toolchains.
+
+## AP233
+
+Systems engineering data exchange protocol in ISO 10303 for requirements, functional, and architectural model interoperability.
+
+## AP239
+
+Product lifecycle support protocol in ISO 10303 used for lifecycle traceability, support analysis, and in-service data interoperability.
+
+## AP242
+
+Managed model-based 3D engineering protocol in ISO 10303 that supports geometry, product manufacturing information (PMI), and configuration-aware digital thread exchange.
+
 ## Product (STEP)
 
 In ISO 10303, a stable product identity concept that is separated from versioned formations and contextual technical definitions.
@@ -50,6 +70,10 @@ A STEP concept used to represent controlled revision/version progression of a pr
 
 A STEP concept that captures contextual technical meaning of a product version, often bound to design, manufacturing, or support contexts.
 
+## Product definition context
+
+A STEP context construct paired with product_definition to declare the discipline or lifecycle viewpoint (for example design, manufacturing, or support) in which a definition is valid.
+
 ## Next assembly usage occurrence
 
 A STEP concept representing a specific parent-child usage link in product structure, commonly used for assembly/BOM semantics.
@@ -61,3 +85,7 @@ A STEP construct linking product definition semantics to representational shape 
 ## Shape representation
 
 A STEP representation construct for geometric/topological/presentation form, including use in AP242 model-based definition exchange.
+
+## Advanced B-Rep shape representation
+
+A STEP geometric representation subtype used to encode boundary-representation solids and topology for high-fidelity product model exchange.
