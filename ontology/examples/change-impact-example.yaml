@@ -1,0 +1,54 @@
+# Example: Change impact semantic thread
+
+example_id: example.change_impact_semantic_thread
+name: Change Impact Semantic Thread
+
+objects:
+  - id: REQ-001
+    type: Requirement
+    name: Stall speed requirement
+
+  - id: FUNC-001
+    type: Function
+    name: Provide sufficient low-speed lift
+
+  - id: SYS-001
+    type: System
+    name: Wing system
+
+  - id: PART-001
+    type: Part
+    name: Wing leading edge assembly
+
+  - id: CHG-001
+    type: Change
+    name: Leading edge geometry update
+
+  - id: VER-001
+    type: VerificationArtifact
+    name: Stall speed flight test report
+
+relationships:
+  - source: FUNC-001
+    predicate: satisfies
+    target: REQ-001
+
+  - source: FUNC-001
+    predicate: allocated_to
+    target: SYS-001
+
+  - source: PART-001
+    predicate: realizes
+    target: SYS-001
+
+  - source: CHG-001
+    predicate: affects
+    target: PART-001
+
+  - source: VER-001
+    predicate: verifies
+    target: REQ-001
+
+reasoning_value: >
+  If CHG-001 modifies PART-001, the relationship graph can help identify the affected system,
+  allocated functions, satisfied requirements, and verification artifacts that may need review.

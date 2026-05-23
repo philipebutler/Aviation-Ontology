@@ -1,0 +1,124 @@
+id: entity.requirement
+name: Requirement
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A formal engineering obligation that must be satisfied and verified.
+
+canonical_definition: >
+  A Requirement is a documented statement of need, capability, constraint, performance,
+  interface, safety, regulatory, or design obligation that applies to a system, product,
+  component, process, or artifact and must be satisfied and verified.
+
+purpose: >
+  Requirements capture engineering intent and provide the basis for design, analysis,
+  verification, certification, change impact assessment, and traceability.
+
+semantic_scope:
+  includes:
+    - Stakeholder needs translated into engineering obligations.
+    - System, subsystem, interface, regulatory, and certification requirements.
+    - Derived requirements.
+  excludes:
+    - Informal wishes that have not been accepted into the governed requirement set.
+    - Test results or verification evidence, which are separate verification artifacts.
+
+standards_alignment:
+  sysml:
+    concept: RequirementDefinition / RequirementUsage
+    notes: Align with SysML requirement semantics where practical.
+  iso_15288:
+    concept: Requirements definition and requirements analysis processes
+    notes: Use as lifecycle process alignment.
+  step_iso_10303:
+    concept: TBD
+    notes: Map only where product data exchange requires it.
+
+ownership:
+  business_owner: Systems Engineering
+  semantic_owner: Systems Engineering
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_artifact: TBD
+  authoritative_process: Requirements management process
+
+attributes:
+  - name: id
+    description: Unique requirement identifier.
+    required: true
+    datatype: string
+  - name: title
+    description: Short human-readable title.
+    required: true
+    datatype: string
+  - name: text
+    description: Requirement statement.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Explanation for why the requirement exists.
+    required: false
+    datatype: string
+  - name: owner
+    description: Organization or role accountable for the requirement.
+    required: true
+    datatype: string
+  - name: status
+    description: Lifecycle state of the requirement.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: satisfies
+    target_entity: Function
+    cardinality: many-to-many
+    required: false
+    description: A function may satisfy or partially satisfy a requirement.
+  - predicate: verified_by
+    target_entity: VerificationArtifact
+    cardinality: one-to-many
+    required: false
+    description: A verification artifact provides evidence that a requirement has been verified.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - implemented
+  - verified
+  - obsolete
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - shall statement
+  - specification requirement
+  - design requirement
+
+not_to_be_confused_with:
+  - concept: Design decision
+    distinction: A design decision may satisfy a requirement but is not itself the obligation.
+  - concept: Verification artifact
+    distinction: Verification artifacts provide evidence; requirements define the obligation.
+
+examples:
+  - name: Stall speed requirement
+    description: The aircraft shall demonstrate stall speed below a specified threshold under defined conditions.
+
+anti_examples:
+  - name: Engineer preference
+    description: A preference is not a requirement unless formally accepted into the governed requirement baseline.
+
+open_questions:
+  - What requirement management system is authoritative?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

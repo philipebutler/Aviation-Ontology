@@ -1,0 +1,59 @@
+id: relationship.allocated_to
+name: Allocated To
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: allocated_to
+inverse_predicate: allocated_from
+
+summary: >
+  Assigns responsibility for a function, requirement, behavior, or constraint to a system or element.
+
+canonical_definition: >
+  The allocated_to relationship indicates that responsibility for performing, satisfying,
+  implementing, or owning a semantic object is assigned to another object, usually a system,
+  subsystem, organization, or product element.
+
+source_entity: Function
+target_entity: System
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Allocation indicates responsibility, not necessarily physical realization.
+  - Allocation should identify the context or architecture level where it applies.
+
+lifecycle_constraints:
+  - Allocations should be baselined with the architecture they support.
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_process: Architecture definition process
+
+examples:
+  - source: Control roll attitude
+    relationship: allocated_to
+    target: Flight control system
+    explanation: The flight control system is responsible for performing the function.
+
+anti_examples:
+  - source: Wing skin
+    relationship: allocated_to
+    target: Requirement
+    explanation: This may be a satisfies or realizes relationship, not an allocation of function to system.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

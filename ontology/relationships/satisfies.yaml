@@ -1,0 +1,59 @@
+id: relationship.satisfies
+name: Satisfies
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: satisfies
+inverse_predicate: is_satisfied_by
+
+summary: >
+  Indicates that one entity contributes to fulfilling the obligation stated by another entity.
+
+canonical_definition: >
+  The satisfies relationship links a design, function, system, part, process, or artifact to
+  a requirement or obligation that it fulfills in whole or in part.
+
+source_entity: Function
+target_entity: Requirement
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - The target should represent an obligation or required condition.
+  - Satisfaction may be partial unless explicitly stated otherwise.
+  - Satisfaction does not imply verification.
+
+lifecycle_constraints:
+  - Satisfaction relationships should be reviewed before requirement or architecture baseline release.
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_process: Requirements and architecture management process
+
+examples:
+  - source: Provide lift
+    relationship: satisfies
+    target: Aircraft lift requirement
+    explanation: The function contributes to fulfilling the required aircraft capability.
+
+anti_examples:
+  - source: Test report
+    relationship: satisfies
+    target: Requirement
+    explanation: A test report verifies; it does not itself satisfy the design obligation.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

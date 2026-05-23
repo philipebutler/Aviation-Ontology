@@ -1,0 +1,58 @@
+id: relationship.verifies
+name: Verifies
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: verifies
+inverse_predicate: is_verified_by
+
+summary: >
+  Indicates that an artifact or activity provides evidence that an obligation has been met.
+
+canonical_definition: >
+  The verifies relationship links a verification artifact, activity, method, or result to
+  the requirement or obligation for which it provides evidence.
+
+source_entity: VerificationArtifact
+target_entity: Requirement
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Verification provides evidence; it does not imply design satisfaction by itself.
+  - Verification should include a method such as test, analysis, inspection, or demonstration.
+
+lifecycle_constraints:
+  - Verification relationships should be established before compliance closure.
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_process: Verification and certification process
+
+examples:
+  - source: Stall speed flight test report
+    relationship: verifies
+    target: Stall speed requirement
+    explanation: The test report provides evidence against the requirement.
+
+anti_examples:
+  - source: Wing assembly
+    relationship: verifies
+    target: Lift requirement
+    explanation: A wing may satisfy or realize design intent, but evidence is required to verify.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

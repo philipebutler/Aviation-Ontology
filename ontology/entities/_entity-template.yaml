@@ -1,0 +1,123 @@
+# Entity Definition Template
+# Use this template to define a canonical, domain, local, or historical concept.
+
+id: entity.unique_name
+name: Human Readable Entity Name
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  One-sentence summary of the entity.
+
+canonical_definition: >
+  Clear enterprise-level definition of the concept. Avoid circular language.
+
+purpose: >
+  Explain why this entity matters operationally, semantically, or for traceability.
+
+semantic_scope:
+  includes:
+    - What is included in this concept.
+  excludes:
+    - What is explicitly not included.
+
+standards_alignment:
+  sysml:
+    concept: TBD
+    notes: TBD
+  iso_15288:
+    concept: TBD
+    notes: TBD
+  step_iso_10303:
+    concept: TBD
+    notes: TBD
+  other:
+    - standard: TBD
+      concept: TBD
+      notes: TBD
+
+ownership:
+  business_owner: TBD
+  semantic_owner: TBD
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_artifact: TBD
+  authoritative_process: TBD
+
+attributes:
+  - name: id
+    description: Unique identifier for the entity instance.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable name.
+    required: true
+    datatype: string
+
+relationships:
+  # Example:
+  # - predicate: satisfies
+  #   target_entity: Function
+  #   cardinality: many-to-many
+  #   required: false
+  #   description: A relationship to a function this entity satisfies.
+  []
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - obsolete
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: obsolete
+
+local_definitions:
+  # Use for tool-specific, organization-specific, or domain-specific meanings.
+  # - context: Legacy PLM
+  #   definition: TBD
+  #   source: TBD
+  []
+
+historical_definitions:
+  # Use when the meaning changed over time.
+  # - period: 1995-2010
+  #   definition: TBD
+  #   source: TBD
+  []
+
+aliases:
+  - TBD
+
+not_to_be_confused_with:
+  - concept: TBD
+    distinction: TBD
+
+examples:
+  - name: TBD
+    description: TBD
+
+anti_examples:
+  - name: TBD
+    description: TBD
+
+open_questions:
+  - TBD
+
+change_history:
+  - version: 0.1.0
+    date: YYYY-MM-DD
+    author: TBD
+    description: Initial draft.

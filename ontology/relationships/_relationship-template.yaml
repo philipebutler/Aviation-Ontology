@@ -1,0 +1,63 @@
+# Relationship Definition Template
+
+id: relationship.unique_name
+name: Human Readable Relationship Name
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: verb_phrase
+inverse_predicate: inverse_verb_phrase
+
+summary: >
+  One-sentence summary of the relationship.
+
+canonical_definition: >
+  Explain what this relationship means semantically.
+
+source_entity: TBD
+target_entity: TBD
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - TBD
+
+lifecycle_constraints:
+  - TBD
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_process: TBD
+
+examples:
+  - source: TBD
+    relationship: verb_phrase
+    target: TBD
+    explanation: TBD
+
+anti_examples:
+  - source: TBD
+    relationship: verb_phrase
+    target: TBD
+    explanation: TBD
+
+local_meanings:
+  - context: TBD
+    definition: TBD
+
+historical_meanings:
+  - period: TBD
+    definition: TBD
+
+change_history:
+  - version: 0.1.0
+    date: YYYY-MM-DD
+    author: TBD
+    description: Initial draft.

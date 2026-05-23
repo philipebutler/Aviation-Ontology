@@ -1,0 +1,34 @@
+# Starter semantic governance workflow.
+
+workflows:
+  - id: semantic_definition_workflow
+    name: Semantic Definition Governance Workflow
+    description: Workflow for proposing, reviewing, approving, releasing, and retiring ontology definitions.
+
+    states:
+      - draft
+      - reviewed
+      - approved
+      - released
+      - obsolete
+
+    transitions:
+      - from: draft
+        to: reviewed
+        trigger: Submit for semantic review
+        approval_required: false
+
+      - from: reviewed
+        to: approved
+        trigger: Semantic owner approval
+        approval_required: true
+
+      - from: approved
+        to: released
+        trigger: Baseline release
+        approval_required: true
+
+      - from: released
+        to: obsolete
+        trigger: Definition retired or superseded
+        approval_required: true

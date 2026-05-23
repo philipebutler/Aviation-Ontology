@@ -1,0 +1,107 @@
+id: entity.function
+name: Function
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A capability or behavior the system must perform to satisfy requirements or mission needs.
+
+canonical_definition: >
+  A Function is an abstract description of what the system or one of its elements does,
+  independent of the specific physical implementation.
+
+purpose: >
+  Functions connect requirements to logical and physical architectures and support allocation,
+  decomposition, behavior modeling, and change impact analysis.
+
+semantic_scope:
+  includes:
+    - System capabilities.
+    - Decomposed behaviors.
+    - Allocable functional responsibilities.
+  excludes:
+    - Physical parts themselves.
+    - Organizational activities unless they are modeled as business process functions.
+
+standards_alignment:
+  sysml:
+    concept: Action / Behavior / PartUsage depending on modeling method
+    notes: May be represented using actions, behaviors, or functional blocks.
+  iso_15288:
+    concept: Architecture definition process
+    notes: Align with functional analysis and architecture activities.
+
+ownership:
+  business_owner: Systems Engineering
+  semantic_owner: Systems Engineering
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_artifact: Functional architecture
+  authoritative_process: System architecture process
+
+attributes:
+  - name: id
+    description: Unique function identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Verb-noun phrase naming the function.
+    required: true
+    datatype: string
+  - name: description
+    description: Description of the capability or behavior.
+    required: true
+    datatype: string
+  - name: owner
+    description: Organization or role accountable for the function.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: satisfies
+    target_entity: Requirement
+    cardinality: many-to-many
+    required: false
+    description: Function contributes to satisfying a requirement.
+  - predicate: allocated_to
+    target_entity: System
+    cardinality: many-to-many
+    required: false
+    description: Function is assigned to a logical or physical system element.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - obsolete
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - capability
+  - behavior
+
+not_to_be_confused_with:
+  - concept: Part
+    distinction: A part is a realization element; a function is what must be done.
+
+examples:
+  - name: Provide lift
+    description: Function performed by aircraft lifting surfaces.
+
+anti_examples:
+  - name: Wing assembly
+    description: A wing assembly is a physical or logical element, not a function.
+
+open_questions: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

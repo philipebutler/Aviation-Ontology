@@ -1,3 +1,5 @@
+# Enterprise Product Engineering Ontology Starter Repository
+
 This repository is a lightweight, Git-based starting point for capturing an enterprise ontology for product engineering, program execution, business processes, certification artifacts, and legacy semantic context.
 
 The intent is not to create a perfect ontology on day one. The intent is to make implicit engineering meaning explicit, reviewable, version-controlled, and reusable by humans, tools, and AI systems.

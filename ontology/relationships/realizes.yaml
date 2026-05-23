@@ -1,0 +1,59 @@
+id: relationship.realizes
+name: Realizes
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: realizes
+inverse_predicate: is_realized_by
+
+summary: >
+  Indicates that a physical, logical, or implementation element provides the realization of an abstract concept.
+
+canonical_definition: >
+  The realizes relationship links an implementation or realization element, such as a part,
+  assembly, software component, or process artifact, to the logical system, function, or
+  design concept it implements.
+
+source_entity: Part
+target_entity: System
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Realization should not be used when the relationship is merely documentary reference.
+  - Realization should preserve abstraction level distinctions where possible.
+
+lifecycle_constraints:
+  - Realization relationships should be reviewed when product structure or architecture baselines change.
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_process: Architecture and product definition process
+
+examples:
+  - source: Aileron assembly
+    relationship: realizes
+    target: Roll control subsystem
+    explanation: The physical assembly implements part of the subsystem capability.
+
+anti_examples:
+  - source: Test report
+    relationship: realizes
+    target: Requirement
+    explanation: A test report verifies a requirement; it does not realize it.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

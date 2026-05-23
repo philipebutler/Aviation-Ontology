@@ -1,0 +1,27 @@
+# Common lifecycle states used by ontology entities.
+# These are starter states only. Tailor them to your company governance model.
+
+states:
+  - id: draft
+    name: Draft
+    description: Concept or artifact is being developed and is not approved.
+
+  - id: reviewed
+    name: Reviewed
+    description: Concept or artifact has been reviewed but is not yet approved for use.
+
+  - id: approved
+    name: Approved
+    description: Concept or artifact is approved as a governed semantic definition.
+
+  - id: released
+    name: Released
+    description: Concept or artifact is released for operational use.
+
+  - id: obsolete
+    name: Obsolete
+    description: Concept or artifact is no longer valid for new use but is preserved for history and traceability.
+
+  - id: superseded
+    name: Superseded
+    description: Concept or artifact has been replaced by a newer definition.

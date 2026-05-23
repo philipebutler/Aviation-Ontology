@@ -1,0 +1,113 @@
+id: entity.verification_artifact
+name: VerificationArtifact
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  Evidence or planned activity used to show that a requirement, system, product, or process satisfies defined obligations.
+
+canonical_definition: >
+  A VerificationArtifact is a test, analysis, inspection, demonstration, report, result,
+  certification artifact, or other governed evidence used to establish that an engineering
+  obligation has been satisfied.
+
+purpose: >
+  Verification artifacts connect requirements and certification obligations to evidence,
+  enabling compliance reasoning, certification traceability, and change impact analysis.
+
+semantic_scope:
+  includes:
+    - Test procedures.
+    - Test results.
+    - Analysis reports.
+    - Inspection records.
+    - Certification evidence.
+  excludes:
+    - Requirements themselves.
+    - Informal claims not accepted as evidence.
+
+standards_alignment:
+  sysml:
+    concept: VerificationCase / satisfy / verify relationship concepts
+    notes: Align with SysML verification semantics where practical.
+  iso_15288:
+    concept: Verification and validation processes
+    notes: Use for lifecycle process alignment.
+
+ownership:
+  business_owner: Verification / Certification / Quality
+  semantic_owner: Verification / Certification
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_artifact: Test or certification evidence repository
+  authoritative_process: Verification and certification process
+
+attributes:
+  - name: id
+    description: Unique verification artifact identifier.
+    required: true
+    datatype: string
+  - name: title
+    description: Human-readable title.
+    required: true
+    datatype: string
+  - name: method
+    description: Verification method such as test, analysis, inspection, or demonstration.
+    required: true
+    datatype: string
+  - name: status
+    description: Lifecycle or approval state.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: verifies
+    target_entity: Requirement
+    cardinality: many-to-many
+    required: false
+    description: Artifact provides evidence for a requirement.
+  - predicate: supports_certification_of
+    target_entity: System
+    cardinality: many-to-many
+    required: false
+    description: Artifact supports certification of a system or product.
+
+lifecycle_states:
+  - planned
+  - in_work
+  - completed
+  - accepted
+  - rejected
+  - obsolete
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - evidence
+  - test artifact
+  - compliance artifact
+  - certification artifact
+
+not_to_be_confused_with:
+  - concept: Requirement
+    distinction: Requirements define obligations; verification artifacts provide evidence.
+
+examples:
+  - name: Ground vibration test report
+    description: Report used as evidence for structural or aeroelastic compliance.
+
+anti_examples:
+  - name: Design assumption
+    description: A design assumption is not verification evidence unless formally accepted as such.
+
+open_questions: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

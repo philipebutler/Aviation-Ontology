@@ -1,0 +1,121 @@
+id: entity.part
+name: Part
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A managed physical or design realization element of a product.
+
+canonical_definition: >
+  A Part is a product realization element that may represent a designed, manufactured,
+  procured, installed, or configuration-controlled item depending on lifecycle context and
+  source system semantics.
+
+purpose: >
+  Parts connect product architecture to CAD, PLM, manufacturing, procurement, configuration,
+  change management, and certification evidence.
+
+semantic_scope:
+  includes:
+    - Designed parts.
+    - Assemblies.
+    - Configuration-controlled items.
+    - Procured or manufactured items where applicable.
+  excludes:
+    - Pure functions or behaviors.
+    - Uncontrolled reference objects.
+
+standards_alignment:
+  sysml:
+    concept: PartDefinition / PartUsage
+    notes: Useful for logical or physical realization modeling.
+  step_iso_10303:
+    concept: Product / ProductDefinition / ProductStructure
+    notes: Candidate alignment for product data exchange semantics.
+
+ownership:
+  business_owner: Engineering / Configuration Management
+  semantic_owner: Product Definition / Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Product structure or part master
+  authoritative_process: Configuration management process
+
+attributes:
+  - name: id
+    description: Unique part identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable part name.
+    required: true
+    datatype: string
+  - name: revision
+    description: Revision or version identifier.
+    required: false
+    datatype: string
+  - name: lifecycle_state
+    description: Managed lifecycle state.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: realizes
+    target_entity: System
+    cardinality: many-to-many
+    required: false
+    description: A part may realize a system or system element.
+  - predicate: changed_by
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: A part may be affected by a change object.
+
+lifecycle_states:
+  - draft
+  - in_work
+  - released
+  - superseded
+  - obsolete
+
+local_definitions:
+  - context: CAD
+    definition: A modeled design item or assembly with geometric representation.
+    source: TBD
+  - context: ERP
+    definition: A planning, procurement, or inventory item.
+    source: TBD
+  - context: PLM
+    definition: A configuration-managed product definition object.
+    source: TBD
+
+historical_definitions: []
+aliases:
+  - item
+  - assembly
+  - component
+
+not_to_be_confused_with:
+  - concept: Function
+    distinction: A part is a realization element; a function is a behavior or capability.
+
+examples:
+  - name: Wing rib
+    description: Structural component within a wing assembly.
+
+anti_examples:
+  - name: Lift generation
+    description: Lift generation is a function, not a part.
+
+open_questions:
+  - Which part semantics are canonical across CAD, PLM, ERP, and manufacturing?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

@@ -1,0 +1,110 @@
+id: entity.system
+name: System
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  An organized set of interacting elements that provides capabilities within a defined boundary.
+
+canonical_definition: >
+  A System is a bounded arrangement of elements, interfaces, behaviors, and relationships
+  that together perform one or more functions in support of stakeholder, mission, product,
+  or operational needs.
+
+purpose: >
+  Systems provide the architectural context for functional allocation, interface definition,
+  product organization, verification planning, and change impact analysis.
+
+semantic_scope:
+  includes:
+    - Aircraft-level systems.
+    - Subsystems.
+    - Logical systems.
+    - Physical systems.
+  excludes:
+    - Individual unmanaged documents.
+    - Activities that are purely organizational unless modeled as process systems.
+
+standards_alignment:
+  sysml:
+    concept: PartDefinition / PartUsage / System
+    notes: Align with SysML structural architecture concepts.
+  iso_15288:
+    concept: System-of-interest and enabling systems
+    notes: Use for lifecycle and system boundary alignment.
+
+ownership:
+  business_owner: Systems Engineering
+  semantic_owner: Systems Engineering
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: TBD
+  authoritative_artifact: System architecture baseline
+  authoritative_process: Architecture definition process
+
+attributes:
+  - name: id
+    description: Unique system identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable system name.
+    required: true
+    datatype: string
+  - name: boundary_description
+    description: Description of what is inside and outside the system boundary.
+    required: false
+    datatype: string
+  - name: owner
+    description: Organization or role accountable for the system.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: allocated_from
+    target_entity: Function
+    cardinality: many-to-many
+    required: false
+    description: Functions allocated to this system.
+  - predicate: realized_by
+    target_entity: Part
+    cardinality: many-to-many
+    required: false
+    description: Physical parts or assemblies that realize this system.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - obsolete
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - subsystem
+  - logical system
+  - system element
+
+not_to_be_confused_with:
+  - concept: Part
+    distinction: A part is a physical realization or managed item; a system may be logical or physical.
+
+examples:
+  - name: Flight control system
+    description: System responsible for controlling aircraft attitude and flight surfaces.
+
+anti_examples:
+  - name: Drawing file
+    description: A drawing file may describe a system but is not itself the system.
+
+open_questions: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.

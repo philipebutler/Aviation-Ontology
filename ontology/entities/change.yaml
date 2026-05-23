@@ -1,0 +1,122 @@
+id: entity.change
+name: Change
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A governed object representing proposed, approved, or implemented modification to product, process, requirement, or artifact baselines.
+
+canonical_definition: >
+  A Change is a governed lifecycle object used to request, evaluate, authorize, implement,
+  or document a modification to an engineering, product, process, configuration, or certification baseline.
+
+purpose: >
+  Change objects provide traceability between problems, decisions, affected items,
+  implementation activities, approvals, and released configurations.
+
+semantic_scope:
+  includes:
+    - Change requests.
+    - Change orders.
+    - Change actions.
+    - Engineering changes.
+  excludes:
+    - Informal discussion without governed change authority.
+
+standards_alignment:
+  sysml:
+    concept: TBD
+    notes: May be modeled as lifecycle/process object external to core system architecture.
+  iso_15288:
+    concept: Configuration management and decision management processes
+    notes: Align with lifecycle governance.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Change object
+  authoritative_process: Change management process
+
+attributes:
+  - name: id
+    description: Unique change identifier.
+    required: true
+    datatype: string
+  - name: title
+    description: Short human-readable title.
+    required: true
+    datatype: string
+  - name: change_type
+    description: Type of change, such as CR, CO, CA, ECO, or equivalent.
+    required: true
+    datatype: string
+  - name: status
+    description: Lifecycle state of the change.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Explanation of why the change is needed.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: affects
+    target_entity: Part
+    cardinality: many-to-many
+    required: false
+    description: Change affects a part or product structure element.
+  - predicate: affects
+    target_entity: Requirement
+    cardinality: many-to-many
+    required: false
+    description: Change affects a requirement.
+  - predicate: produces
+    target_entity: VerificationArtifact
+    cardinality: one-to-many
+    required: false
+    description: Change may produce or require verification evidence.
+
+lifecycle_states:
+  - proposed
+  - under_review
+  - approved
+  - in_work
+  - implemented
+  - closed
+  - cancelled
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - CR
+  - CO
+  - CA
+  - ECO
+  - PECO
+
+not_to_be_confused_with:
+  - concept: Requirement
+    distinction: A requirement defines an obligation; a change modifies a governed baseline.
+
+examples:
+  - name: Engineering change order
+    description: A governed object authorizing implementation of approved product changes.
+
+anti_examples:
+  - name: Verbal request
+    description: A verbal request is not a governed change until captured in the authoritative change process.
+
+open_questions:
+  - How should legacy ECO/PECO semantics map to modern CR/CO/CA semantics?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-21
+    author: Initial repository template
+    description: Initial draft.
