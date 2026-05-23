@@ -1,0 +1,152 @@
+id: entity.product_definition
+name: ProductDefinition
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A STEP-aligned technical definition context for a product version in a specific discipline view.
+
+canonical_definition: >
+  ProductDefinition represents the ISO 10303 product_definition semantics capturing the governed
+  technical definition of a product version within a defined context such as design, analysis,
+  manufacturing, or support.
+
+purpose: >
+  ProductDefinition separates configuration identity from contextual technical meaning, enabling
+  traceable multi-view engineering definitions across the digital thread.
+
+semantic_scope:
+  includes:
+    - Design context definitions.
+    - Manufacturing context definitions.
+    - Support or service context definitions where governed.
+  excludes:
+    - Single assembly occurrence usage links.
+    - Uncontrolled engineering working notes.
+
+standards_alignment:
+  sysml:
+    concept: Contextualized architectural/realization definition
+    notes: Comparable to view-specific definition artifacts.
+  iso_15288:
+    concept: Architecture definition and technical data baselines
+    notes: Supports lifecycle architecture and realization artifacts.
+  step_iso_10303:
+    concept: product_definition and product_definition_context (ISO 10303-41), AP242/AP239 usage
+    notes: Central anchor for contextual product semantics in STEP models.
+  other:
+    - standard: S1000D
+      concept: Context-specific product data modules
+      notes: Related for support data views.
+
+ownership:
+  business_owner: Product Definition
+  semantic_owner: Systems Engineering / Configuration Management
+  steward: PLM Data Architecture
+  approving_authority: Chief Engineering Office
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Released product definition record
+  authoritative_process: Technical data release process
+
+attributes:
+  - name: id
+    description: Unique product definition identifier.
+    required: true
+    datatype: string
+  - name: context
+    description: Definition context such as design, manufacturing, or support.
+    required: true
+    datatype: string
+  - name: description
+    description: Summary of definition intent and scope.
+    required: false
+    datatype: string
+  - name: maturity
+    description: Definition maturity state for governance.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: defined_by
+    target_entity: ProductVersion
+    cardinality: many-to-one
+    required: true
+    description: ProductDefinition belongs to a governing product version.
+  - predicate: represented_by_shape
+    target_entity: ShapeRepresentation
+    cardinality: one-to-many
+    required: false
+    description: ProductDefinition may reference geometric or presentation representation.
+  - predicate: has_occurrence
+    target_entity: ProductStructureOccurrence
+    cardinality: one-to-many
+    required: false
+    description: ProductDefinition may be decomposed into assembly usage occurrences.
+  - predicate: corresponds_to
+    target_entity: Part
+    cardinality: many-to-many
+    required: false
+    description: Enterprise part semantics may map to contextual STEP product definitions.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - superseded
+  - obsolete
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: superseded
+  - from: superseded
+    to: obsolete
+
+local_definitions:
+  - context: CAD design definition
+    definition: Primary design-authoritative technical definition for geometry and PMI.
+    source: CAD/PLM modeling standard.
+  - context: Manufacturing definition
+    definition: Manufacturing-planning interpretation of released product definition.
+    source: Manufacturing engineering release process.
+
+historical_definitions:
+  - period: drawing-centric era
+    definition: Product definition was represented as 2D drawing package plus parts list.
+    source: Historical drawing release process.
+
+aliases:
+  - technical definition
+  - contextual definition
+
+not_to_be_confused_with:
+  - concept: ProductVersion
+    distinction: ProductVersion governs revision identity; ProductDefinition captures contextual content.
+  - concept: ShapeRepresentation
+    distinction: ShapeRepresentation provides representational form, not full product definition intent.
+
+examples:
+  - name: Flight control computer design definition
+    description: Design-context definition including interfaces, constraints, and released model references.
+
+anti_examples:
+  - name: Ad hoc email with geometry screenshot
+    description: Informal communication is not a governed product definition.
+
+open_questions:
+  - Should context taxonomy be fixed or extensible per program?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned product definition entity.

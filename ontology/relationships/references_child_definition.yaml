@@ -1,0 +1,58 @@
+id: relationship.references_child_definition
+name: References Child Definition
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: references_child_definition
+inverse_predicate: referenced_as_child_by
+
+summary: >
+  Links a product structure occurrence to the child product definition it uses.
+
+canonical_definition: >
+  references_child_definition captures the child-side target of a ProductStructureOccurrence,
+  aligning with STEP parent-child usage semantics in assembly structures.
+
+source_entity: ProductStructureOccurrence
+target_entity: ProductDefinition
+
+cardinality:
+  source_to_target: many-to-one
+  target_to_source: one-to-many
+
+required: true
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Child ProductDefinition should be valid in the occurrence's configuration context.
+  - Relationship identifies structure usage, not equivalence.
+
+lifecycle_constraints:
+  - If child definition is superseded, occurrence applicability must be reviewed.
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_process: Product structure and effectivity management
+
+examples:
+  - source: FCC processor module occurrence in FCC assembly
+    relationship: references_child_definition
+    target: FCC processor module definition
+    explanation: Occurrence points to governed child definition.
+
+anti_examples:
+  - source: Change request CR-120
+    relationship: references_child_definition
+    target: Requirement REQ-118
+    explanation: Change-to-requirement is not assembly child usage linkage.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned child definition reference relationship.

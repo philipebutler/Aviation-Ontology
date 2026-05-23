@@ -1,0 +1,137 @@
+id: entity.product
+name: Product
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The STEP-aligned identity of an engineered item independent of versioned definitions.
+
+canonical_definition: >
+  A Product is the ISO 10303 identity anchor for an engineered item, represented independently
+  from its versioned design definitions, lifecycle maturity, or specific assembly occurrence.
+
+purpose: >
+  Product separates enduring identity from evolving definitions so digital thread links across
+  configuration, geometry, verification, and change can remain stable over time.
+
+semantic_scope:
+  includes:
+    - Product identity as used across PLM, CAD, and enterprise integration.
+    - Cross-version continuity for design and configuration traceability.
+  excludes:
+    - Specific revision content.
+    - Assembly occurrence-specific usage context.
+
+standards_alignment:
+  sysml:
+    concept: PartDefinition (identity anchor role)
+    notes: Use with versioned views for released baselines.
+  iso_15288:
+    concept: Technical baseline identification within configuration management
+    notes: Supports controlled lifecycle traceability.
+  step_iso_10303:
+    concept: product (ISO 10303-41), AP203/AP214/AP242 usage
+    notes: Core STEP product identity independent of formation/definition.
+  other:
+    - standard: ASME Y14.41
+      concept: Model-based product definition governance context
+      notes: Align where MBD policy references product identity.
+
+ownership:
+  business_owner: Product Definition
+  semantic_owner: Configuration Management
+  steward: PLM Governance
+  approving_authority: Chief Engineering Office
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Product master record
+  authoritative_process: Product identification and baseline governance process
+
+attributes:
+  - name: id
+    description: Unique enterprise product identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable product name.
+    required: true
+    datatype: string
+  - name: product_type
+    description: Product category or type classification.
+    required: false
+    datatype: string
+  - name: description
+    description: Business or engineering description of product identity scope.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: has_version
+    target_entity: ProductVersion
+    cardinality: one-to-many
+    required: true
+    description: Product identity is realized through one or more versioned formations.
+  - predicate: corresponds_to
+    target_entity: Part
+    cardinality: many-to-many
+    required: false
+    description: Enterprise part semantics may reference STEP product identity.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - obsolete
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: obsolete
+
+local_definitions:
+  - context: Legacy CAD vault
+    definition: Product identity stored as model family identifier.
+    source: Legacy CAD administration guide.
+  - context: ERP
+    definition: Product corresponds to sellable planning identity.
+    source: ERP product master policy.
+
+historical_definitions:
+  - period: pre-PLM migration
+    definition: Product identity inferred from drawing number families.
+    source: Historical drawing release process.
+
+aliases:
+  - product master
+  - product identity
+
+not_to_be_confused_with:
+  - concept: ProductVersion
+    distinction: ProductVersion is a controlled versioned formation, not the identity anchor.
+  - concept: ProductDefinition
+    distinction: ProductDefinition contains technical defining content, not identity only.
+
+examples:
+  - name: Flight control computer line replaceable unit product
+    description: Stable product identity spanning multiple design revisions and variants.
+
+anti_examples:
+  - name: Installed left-wing instance on aircraft serial 1007
+    description: Installed usage occurrence is not a product identity.
+
+open_questions:
+  - Should enterprise product type taxonomy be managed in ontology or referenced externally?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned product identity definition.

@@ -1,0 +1,58 @@
+id: relationship.has_version
+name: Has Version
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: has_version
+inverse_predicate: version_of
+
+summary: >
+  Links a product identity to one or more controlled product versions.
+
+canonical_definition: >
+  has_version expresses ISO 10303 product to product_definition_formation style progression by
+  linking a stable Product identity to governed ProductVersion revisions/formations.
+
+source_entity: Product
+target_entity: ProductVersion
+
+cardinality:
+  source_to_target: one-to-many
+  target_to_source: many-to-one
+
+required: true
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - ProductVersion must belong to exactly one Product identity.
+  - Product identity continuity is preserved across versions.
+
+lifecycle_constraints:
+  - New ProductVersion links should be baselined through change and release governance.
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_process: Configuration and release management
+
+examples:
+  - source: FCC-LRU product identity
+    relationship: has_version
+    target: FCC-LRU revision C
+    explanation: Product identity persists while revision changes through controlled release.
+
+anti_examples:
+  - source: Installed FCC on serial 1007
+    relationship: has_version
+    target: Aircraft tail 1007
+    explanation: Installed instance relationship is usage/deployment, not versioning.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-23
+    author: Copilot task agent
+    description: Initial STEP-aligned has_version relationship.

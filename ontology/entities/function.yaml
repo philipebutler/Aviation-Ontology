@@ -31,6 +31,9 @@ standards_alignment:
   iso_15288:
     concept: Architecture definition process
     notes: Align with functional analysis and architecture activities.
+  step_iso_10303:
+    concept: AP233 functional architecture exchange concepts
+    notes: Functional semantics may be exchanged through systems engineering STEP profiles.
 
 ownership:
   business_owner: Systems Engineering
