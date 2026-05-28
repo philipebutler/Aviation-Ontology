@@ -62,6 +62,10 @@ Managed model-based 3D engineering protocol in ISO 10303 that supports geometry,
 
 In ISO 10303, a stable product identity concept that is separated from versioned formations and contextual technical definitions.
 
+## Variant
+
+A governed alternative of a Product, aligned to STEP AP242 configuration-management patterns that distinguish approved product alternatives and may carry variant-specific version lineages.
+
 ## Product definition formation
 
 A STEP concept used to represent controlled revision/version progression of a product identity.

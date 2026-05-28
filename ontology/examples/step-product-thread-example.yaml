@@ -8,9 +8,13 @@ objects:
     type: Product
     name: Flight control computer product identity
 
+  - id: VAR-001
+    type: Variant
+    name: Flight control computer arctic mission variant
+
   - id: PVER-001
     type: ProductVersion
-    name: Flight control computer revision C
+    name: Flight control computer arctic mission revision C
 
   - id: PDE-001
     type: ProductDefinition
@@ -41,6 +45,14 @@ objects:
     name: Thermal margin analysis report
 
 relationships:
+  - source: PROD-001
+    predicate: has_variant
+    target: VAR-001
+
+  - source: VAR-001
+    predicate: has_variant_version
+    target: PVER-001
+
   - source: PROD-001
     predicate: has_version
     target: PVER-001
@@ -75,5 +87,6 @@ relationships:
 
 reasoning_value: >
   If CHG-210 impacts PART-001, the STEP-aligned graph can trace to product identity (PROD-001),
-  governing revision (PVER-001), contextual definition (PDE-001), assembly usage (OCC-001),
-  child definition impacts (PDE-002), and affected model-based verification evidence (VER-410).
+  governed variant (VAR-001), governing revision (PVER-001), contextual definition (PDE-001),
+  assembly usage (OCC-001), child definition impacts (PDE-002), and affected model-based
+  verification evidence (VER-410).

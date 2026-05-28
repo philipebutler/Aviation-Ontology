@@ -73,6 +73,11 @@ relationships:
     cardinality: many-to-one
     required: true
     description: ProductVersion belongs to one product identity.
+  - predicate: version_of_variant
+    target_entity: Variant
+    cardinality: many-to-one
+    required: false
+    description: ProductVersion may belong to a specific variant branch when revision control is variant-specific.
   - predicate: defines
     target_entity: ProductDefinition
     cardinality: one-to-many
@@ -124,6 +129,8 @@ aliases:
 not_to_be_confused_with:
   - concept: Product
     distinction: Product is identity; ProductVersion is controlled revision state.
+  - concept: Variant
+    distinction: Variant is an alternative configuration branch; ProductVersion is a revision within a product or variant lineage.
   - concept: ProductDefinition
     distinction: ProductDefinition is technical content context; version governs release identity.
 
