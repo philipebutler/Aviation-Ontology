@@ -1,0 +1,146 @@
+id: entity.variant
+name: Variant
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A STEP-aligned managed alternative of a product identity distinguished by configuration choices or applicability.
+
+canonical_definition: >
+  Variant represents a governed product alternative within a Product identity, aligned to STEP AP242
+  configuration-management patterns that distinguish one manufacturable or supportable alternative
+  from another without redefining the underlying product family.
+
+purpose: >
+  Variant makes alternative product semantics explicit so option-driven, market-specific, or
+  mission-specific branches can be traced separately from revision progression and contextual
+  technical definitions.
+
+semantic_scope:
+  includes:
+    - Governed alternatives within a shared product identity.
+    - Variants distinguished by option sets, effectivity, market, mission, or certification basis.
+    - Variant-specific version lineages where configuration control requires them.
+  excludes:
+    - Pure revision progression without alternative semantics.
+    - Individual installed or serialized product instances.
+
+standards_alignment:
+  sysml:
+    concept: Configured product-line member or viewpoint-specific configured alternative
+    notes: Represent as a governed alternative under a common product identity.
+  iso_15288:
+    concept: Configuration-managed variant or baseline alternative
+    notes: Supports lifecycle control of approved alternatives under one product identity.
+  step_iso_10303:
+    concept: AP242 configuration-management patterns using configuration_item/configuration_design with product and product_definition_formation links
+    notes: Best alignment is a managed configured alternative tied to one product identity and optionally to variant-specific versions.
+  other:
+    - standard: ISO 10007
+      concept: Configuration identification of approved variants
+      notes: Comparable control intent for distinguishing governed alternatives.
+
+ownership:
+  business_owner: Product Management / Configuration Management
+  semantic_owner: Configuration Management
+  steward: PLM Governance
+  approving_authority: Configuration Control Board
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Approved variant or configuration record
+  authoritative_process: Product configuration planning and release governance
+
+attributes:
+  - name: id
+    description: Unique variant identifier.
+    required: true
+    datatype: string
+  - name: variant_code
+    description: Variant code, dash number, or option package identifier.
+    required: true
+    datatype: string
+  - name: distinguishing_basis
+    description: Short statement of the option, market, mission, or applicability basis that differentiates this variant.
+    required: true
+    datatype: string
+  - name: applicability
+    description: Effectivity, customer, mission, or market applicability statement.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: variant_of
+    target_entity: Product
+    cardinality: many-to-one
+    required: true
+    description: Variant belongs to one governing product identity.
+  - predicate: has_variant_version
+    target_entity: ProductVersion
+    cardinality: one-to-many
+    required: false
+    description: Variant may have its own configuration-controlled version lineage.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - superseded
+  - obsolete
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: superseded
+  - from: superseded
+    to: obsolete
+
+local_definitions:
+  - context: PLM 150% product structure
+    definition: Resolved configuration branch identifying an approved alternative under a common product family.
+    source: PLM configuration modeling practice.
+  - context: ERP or catalog management
+    definition: Sellable or supportable option package derived from a common engineering product identity.
+    source: Product catalog governance policy.
+
+historical_definitions:
+  - period: drawing and dash-number era
+    definition: Variant was often implied by suffixes, option codes, or dash numbers on the released part family.
+    source: Historical drawing release and catalog conventions.
+
+aliases:
+  - product variant
+  - configured alternative
+  - optioned configuration
+
+not_to_be_confused_with:
+  - concept: Product
+    distinction: Product is the enduring identity anchor; Variant is a governed alternative within that identity.
+  - concept: ProductVersion
+    distinction: ProductVersion captures revision progression; Variant captures alternative configuration semantics.
+  - concept: ProductDefinition
+    distinction: ProductDefinition captures contextual technical content; Variant identifies the managed alternative being governed.
+
+examples:
+  - name: Flight control computer arctic mission variant
+    description: Approved alternative of the flight control computer product for cold-weather installation and qualification.
+
+anti_examples:
+  - name: Serial number 1007 installed flight control computer
+    description: A serialized installed item is an individual instance, not a variant definition.
+
+open_questions:
+  - Should explicit option and rule semantics be modeled as separate entities if the repository grows into full product-line variability?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-05-28
+    author: Copilot task agent
+    description: Initial STEP-aligned variant entity.

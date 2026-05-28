@@ -73,6 +73,11 @@ relationships:
     cardinality: one-to-many
     required: true
     description: Product identity is realized through one or more versioned formations.
+  - predicate: has_variant
+    target_entity: Variant
+    cardinality: one-to-many
+    required: false
+    description: Product identity may branch into governed alternative variants.
   - predicate: corresponds_to
     target_entity: Part
     cardinality: many-to-many
@@ -114,6 +119,8 @@ aliases:
   - product identity
 
 not_to_be_confused_with:
+  - concept: Variant
+    distinction: Variant is a managed alternative under the product identity, not the identity anchor itself.
   - concept: ProductVersion
     distinction: ProductVersion is a controlled versioned formation, not the identity anchor.
   - concept: ProductDefinition
