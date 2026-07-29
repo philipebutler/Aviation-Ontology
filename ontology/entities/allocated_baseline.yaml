@@ -50,16 +50,16 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: specializes
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-one
+    required: true
+    description: Allocated baseline is a specialization of configuration baseline.
   - predicate: precedes
     target_entity: ProductBaseline
     cardinality: one-to-many
     required: false
     description: Allocated baseline precedes product baseline realization.
-  - predicate: references
-    target_entity: ConfigurationBaseline
-    cardinality: many-to-one
-    required: false
-    description: Allocated baseline specialization references general baseline semantics.
 
 lifecycle_states:
   - proposed

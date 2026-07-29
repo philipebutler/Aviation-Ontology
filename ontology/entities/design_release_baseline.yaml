@@ -49,16 +49,16 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: specializes
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-one
+    required: true
+    description: Design release baseline is a specialization of configuration baseline.
   - predicate: evolves_to
     target_entity: ProductBaseline
     cardinality: many-to-many
     required: false
     description: Design release baseline evolves into formal product baseline states.
-  - predicate: references
-    target_entity: ConfigurationBaseline
-    cardinality: many-to-one
-    required: false
-    description: Design release baseline specialization references general baseline semantics.
 
 lifecycle_states:
   - in_work

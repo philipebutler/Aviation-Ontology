@@ -1,0 +1,101 @@
+id: entity.change_classification
+name: ChangeClassification
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A governed classification record assigned to a change under a defined classification scheme.
+
+canonical_definition: >
+  ChangeClassification is the generic semantic parent for regulatory or internal change class
+  assignments used to govern disposition, approval burden, applicability, and implementation semantics.
+
+purpose: >
+  This entity provides a normalized parent concept for all change classification schemes,
+  enabling consistent reasoning across regulatory and internal taxonomies.
+
+semantic_scope:
+  includes:
+    - Classification scheme identity.
+    - Classification value assignment.
+    - Rationale for assigned class.
+  excludes:
+    - Change implementation authority artifacts.
+
+standards_alignment:
+  eia_649c:
+    concept: Configuration change management classification semantics
+    notes: Aligns with controlled class assignment context.
+  iso_10007:
+    concept: Change categorization
+    notes: Supports governance categorization semantics.
+
+ownership:
+  business_owner: Engineering Governance
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: CM / PLM system
+  authoritative_artifact: Classification record
+  authoritative_process: Change classification process
+
+attributes:
+  - name: id
+    description: Unique classification record identifier.
+    required: true
+    datatype: string
+  - name: scheme
+    description: Classification scheme name, such as FAA or internal.
+    required: true
+    datatype: string
+  - name: class_value
+    description: Assigned classification value within the scheme.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Justification for the class assignment.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: classifies
+    target_entity: Change
+    cardinality: one-to-many
+    required: false
+    description: A classification record classifies one or more governed changes.
+
+lifecycle_states:
+  - proposed
+  - under_review
+  - approved
+  - superseded
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - change class
+  - change category
+
+not_to_be_confused_with:
+  - concept: ChangeAuthorizationArtifact
+    distinction: Classification expresses governance class; authorization artifacts initiate or implement change.
+
+examples:
+  - name: Regulatory major class
+    description: A classification record assigning major class in a regulatory scheme.
+
+anti_examples:
+  - name: Design note
+    description: Design notes are not classification records.
+
+open_questions:
+  - Should class hierarchy and allowed values be modeled as separate controlled vocabularies?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

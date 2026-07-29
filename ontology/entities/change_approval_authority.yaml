@@ -57,6 +57,11 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: specializes
+    target_entity: ChangeGovernanceAuthority
+    cardinality: many-to-one
+    required: true
+    description: Change approval authority is a specialization of change governance authority.
   - predicate: approves
     target_entity: Change
     cardinality: many-to-many

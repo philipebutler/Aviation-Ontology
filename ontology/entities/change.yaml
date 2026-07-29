@@ -69,16 +69,11 @@ attributes:
     datatype: string
 
 relationships:
-  - predicate: classified_as_faa
-    target_entity: ChangeClassificationFAA
+  - predicate: classified_as
+    target_entity: ChangeClassification
     cardinality: many-to-many
     required: false
-    description: Change has an FAA major/minor classification record.
-  - predicate: classified_as_internal
-    target_entity: ChangeClassificationInternal
-    cardinality: many-to-many
-    required: false
-    description: Change has an internal enterprise class assignment.
+    description: Change is assigned a classification record independent of scheme.
   - predicate: reviewed_by
     target_entity: ChangeControlBoard
     cardinality: many-to-many

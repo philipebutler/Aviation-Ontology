@@ -69,6 +69,11 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: specializes
+    target_entity: ChangeAuthorizationArtifact
+    cardinality: many-to-one
+    required: true
+    description: Change request is a specialization of change authorization artifact.
   - predicate: initiates
     target_entity: Change
     cardinality: one-to-many

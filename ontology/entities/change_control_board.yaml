@@ -58,6 +58,11 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: specializes
+    target_entity: ChangeGovernanceAuthority
+    cardinality: many-to-one
+    required: true
+    description: Change control board is a specialization of change governance authority.
   - predicate: reviews
     target_entity: Change
     cardinality: many-to-many

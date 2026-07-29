@@ -57,6 +57,11 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: specializes
+    target_entity: ChangeClassification
+    cardinality: many-to-one
+    required: true
+    description: FAA classification is a specialization of the generic change classification concept.
   - predicate: classifies
     target_entity: Change
     cardinality: one-to-many

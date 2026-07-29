@@ -1,0 +1,57 @@
+id: relationship.classified_as
+name: Classified As
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: classified_as
+inverse_predicate: classifies
+
+summary: >
+  Links a change to a generic change classification record independent of scheme.
+
+canonical_definition: >
+  The classified_as relationship connects a Change to a ChangeClassification record,
+  enabling normalized classification semantics across regulatory and internal schemes.
+
+source_entity: Change
+target_entity: ChangeClassification
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Classification records should declare scheme and class value.
+
+lifecycle_constraints:
+  - Classification should be established before final disposition when required by policy.
+
+source_of_authority:
+  system_of_record: CM / PLM system
+  authoritative_process: Change classification governance process
+
+examples:
+  - source: Change CHG-1021
+    relationship: classified_as
+    target: Classification record CL-77
+    explanation: The change is normalized to a scheme-specific classification record.
+
+anti_examples:
+  - source: Change CHG-1021
+    relationship: classified_as
+    target: ChangeOrder CO-99
+    explanation: Change orders are authorization artifacts, not classification records.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

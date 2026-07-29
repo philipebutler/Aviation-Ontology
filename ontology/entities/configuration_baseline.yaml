@@ -52,10 +52,6 @@ attributes:
     description: Unique baseline identifier.
     required: true
     datatype: string
-  - name: baseline_type
-    description: Baseline category such as functional, allocated, product, or design release.
-    required: true
-    datatype: string
   - name: effective_date
     description: Date baseline is approved and effective.
     required: true
@@ -71,21 +67,6 @@ relationships:
     cardinality: many-to-many
     required: true
     description: A baseline is defined by approved configuration information.
-  - predicate: follows
-    target_entity: FunctionalBaseline
-    cardinality: many-to-many
-    required: false
-    description: Baseline context may reference functional predecessor semantics.
-  - predicate: follows
-    target_entity: AllocatedBaseline
-    cardinality: many-to-many
-    required: false
-    description: Baseline context may reference allocated predecessor semantics.
-  - predicate: evolved_from
-    target_entity: DesignReleaseBaseline
-    cardinality: many-to-many
-    required: false
-    description: Baseline context may reference controlled design-release evolution lineage.
   - predicate: audited_by
     target_entity: ConfigurationAudit
     cardinality: many-to-many
@@ -123,7 +104,7 @@ anti_examples:
     description: Draft design packages are not baselines until approved.
 
 open_questions:
-  - Should baseline_type remain an attribute or evolve into separate baseline entities?
+  - Are additional baseline specializations needed beyond functional, allocated, product, and design-release?
 
 change_history:
   - version: 0.1.0

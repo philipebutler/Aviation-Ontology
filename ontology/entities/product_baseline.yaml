@@ -51,11 +51,11 @@ attributes:
     datatype: string
 
 relationships:
-  - predicate: references
+  - predicate: specializes
     target_entity: ConfigurationBaseline
     cardinality: many-to-one
-    required: false
-    description: Product baseline specialization references general baseline semantics.
+    required: true
+    description: Product baseline is a specialization of configuration baseline.
   - predicate: evolved_from
     target_entity: DesignReleaseBaseline
     cardinality: many-to-many

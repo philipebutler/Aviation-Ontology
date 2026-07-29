@@ -1,0 +1,98 @@
+id: entity.change_authorization_artifact
+name: ChangeAuthorizationArtifact
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A governed artifact used to initiate or implement a controlled engineering change.
+
+canonical_definition: >
+  ChangeAuthorizationArtifact is the generic semantic parent for artifacts that provide
+  controlled initiation or implementation authority for engineering changes.
+
+purpose: >
+  This entity unifies initiation and implementation authority records under one parent concept,
+  improving traceability and reducing duplicated semantics.
+
+semantic_scope:
+  includes:
+    - Change initiation authority artifacts.
+    - Change implementation authority artifacts.
+    - Governance-linked change authorization records.
+  excludes:
+    - Informal communication lacking controlled authority status.
+
+standards_alignment:
+  eia_649c:
+    concept: Change request and approved incorporation artifact semantics
+    notes: Supports CM authorization artifact normalization.
+  iso_10007:
+    concept: Change documentation, disposition, implementation records
+    notes: Aligns with documented change governance artifacts.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Engineering Governance
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_artifact: Controlled change authorization record
+  authoritative_process: Change governance and release process
+
+attributes:
+  - name: id
+    description: Unique authorization artifact identifier.
+    required: true
+    datatype: string
+  - name: authorization_type
+    description: Initiation or implementation authorization type.
+    required: true
+    datatype: string
+  - name: status
+    description: Lifecycle state of the authorization artifact.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: authorizes
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: Authorization artifact authorizes initiation or implementation of changes.
+
+lifecycle_states:
+  - drafted
+  - under_review
+  - approved
+  - released
+  - superseded
+  - cancelled
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - change authority artifact
+
+not_to_be_confused_with:
+  - concept: ChangeClassification
+    distinction: Authorization artifact grants authority; classification defines governance category.
+
+examples:
+  - name: Controlled change authorization record
+    description: Record that authorizes initiation or implementation under CM governance.
+
+anti_examples:
+  - name: Draft email
+    description: Draft communication is not an authorization artifact.
+
+open_questions:
+  - Should initiation and implementation be modeled as explicit subclasses only?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

@@ -1,0 +1,58 @@
+id: relationship.specializes
+name: Specializes
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: specializes
+inverse_predicate: generalizes
+
+summary: >
+  Indicates that a source concept is a specialization of a more generic target concept.
+
+canonical_definition: >
+  The specializes relationship links a source entity to a parent entity whose semantics are
+  inherited or narrowed by the source entity.
+
+source_entity: Entity
+target_entity: Entity
+
+cardinality:
+  source_to_target: many-to-one
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Source must be semantically narrower than target.
+  - Parent/child semantics should avoid contradictory scope definitions.
+
+lifecycle_constraints:
+  - Specialization links should be stable for released ontology baselines.
+
+source_of_authority:
+  system_of_record: Ontology repository
+  authoritative_process: Semantic governance and review process
+
+examples:
+  - source: ChangeClassificationFAA
+    relationship: specializes
+    target: ChangeClassification
+    explanation: FAA classification is a specific scheme under the generic change classification concept.
+
+anti_examples:
+  - source: Change
+    relationship: specializes
+    target: ChangeRequest
+    explanation: Change and ChangeRequest are distinct concepts, not parent-child specialization.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

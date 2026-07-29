@@ -49,16 +49,16 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: specializes
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-one
+    required: true
+    description: Functional baseline is a specialization of configuration baseline.
   - predicate: precedes
     target_entity: AllocatedBaseline
     cardinality: one-to-many
     required: false
     description: Functional baseline precedes allocated baseline refinement.
-  - predicate: references
-    target_entity: ConfigurationBaseline
-    cardinality: many-to-one
-    required: false
-    description: Functional baseline specialization references general baseline semantics.
 
 lifecycle_states:
   - proposed

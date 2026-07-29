@@ -1,18 +1,18 @@
 id: relationship.classified_as_internal
 name: Classified As Internal
 kind: relationship
-status: draft
-version: 0.1.0
+status: deprecated
+version: 0.2.0
 
 predicate: classified_as_internal
 inverse_predicate: classifies_change
 
 summary: >
-  Links a governed change to its internal enterprise classification record.
+  Legacy alias relationship for internal classification; use classified_as to ChangeClassification instead.
 
 canonical_definition: >
-  The classified_as_internal relationship connects a Change to the internal class assignment
-  used to govern internal approvals, effectivity, and implementation obligations.
+  The classified_as_internal relationship is retained only for backward compatibility.
+  New models should use classified_as to ChangeClassification with scheme=internal.
 
 source_entity: Change
 target_entity: ChangeClassificationInternal
@@ -26,7 +26,7 @@ transitive: false
 symmetric: false
 
 semantic_constraints:
-  - Internal class semantics may coexist with FAA classification.
+  - Deprecated: replace this predicate with classified_as and a scheme-qualified classification record.
 
 lifecycle_constraints:
   - Internal classification should be available before approval routing is completed.
@@ -51,6 +51,10 @@ local_meanings: []
 historical_meanings: []
 
 change_history:
+  - version: 0.2.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Deprecated in favor of classified_as + ChangeClassification(scheme=internal).
   - version: 0.1.0
     date: 2026-07-29
     author: GitHub Copilot

@@ -1,18 +1,18 @@
 id: relationship.classified_as_faa
 name: Classified As FAA
 kind: relationship
-status: draft
-version: 0.1.0
+status: deprecated
+version: 0.2.0
 
 predicate: classified_as_faa
 inverse_predicate: classifies_change
 
 summary: >
-  Links a governed change to its FAA regulatory classification record.
+  Legacy alias relationship for FAA classification; use classified_as to ChangeClassification instead.
 
 canonical_definition: >
-  The classified_as_faa relationship connects a Change to the FAA classification
-  determination that establishes major/minor regulatory status.
+  The classified_as_faa relationship is retained only for backward compatibility.
+  New models should use classified_as to ChangeClassification with scheme=FAA.
 
 source_entity: Change
 target_entity: ChangeClassificationFAA
@@ -26,7 +26,7 @@ transitive: false
 symmetric: false
 
 semantic_constraints:
-  - FAA classification is regulatory and distinct from internal class taxonomies.
+  - Deprecated: replace this predicate with classified_as and a scheme-qualified classification record.
 
 lifecycle_constraints:
   - Classification should be established prior to final disposition of regulated changes.
@@ -51,6 +51,10 @@ local_meanings: []
 historical_meanings: []
 
 change_history:
+  - version: 0.2.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Deprecated in favor of classified_as + ChangeClassification(scheme=FAA).
   - version: 0.1.0
     date: 2026-07-29
     author: GitHub Copilot
