@@ -1,0 +1,132 @@
+id: entity.configuration_baseline
+name: Configuration Baseline
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  An approved configuration definition at a point in time used as a reference for change and verification.
+
+canonical_definition: >
+  A Configuration Baseline is the approved set of configuration information that defines
+  product characteristics at a specific point in time and serves as the governed reference
+  for change control, verification, and lifecycle management activities.
+
+purpose: >
+  Configuration Baselines provide stable references for controlled evolution of product
+  definition through approved changes with traceable before/after configuration context.
+
+semantic_scope:
+  includes:
+    - Functional, allocated, product, and design-release baseline semantics.
+    - Approved baseline plus subsequently approved incorporated changes.
+    - Baseline references used for verification and audit.
+  excludes:
+    - Unapproved working definitions.
+    - Informal snapshots not under CM authority.
+
+standards_alignment:
+  eia_649c:
+    concept: Configuration baseline
+    notes: Baseline as managed reference for change and verification activities.
+  eia_649_2a:
+    concept: Functional, allocated, and product baseline progression
+    notes: Aligns with formal baseline establishment and maintenance.
+  iso_10007:
+    concept: Approved configuration information baseline
+    notes: Directly aligned with approved reference configuration definition.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_artifact: Baseline record and approved configuration information package
+  authoritative_process: Baseline establishment and change control process
+
+attributes:
+  - name: id
+    description: Unique baseline identifier.
+    required: true
+    datatype: string
+  - name: baseline_type
+    description: Baseline category such as functional, allocated, product, or design release.
+    required: true
+    datatype: string
+  - name: effective_date
+    description: Date baseline is approved and effective.
+    required: true
+    datatype: date
+  - name: status
+    description: Lifecycle state of the baseline.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: defined_by
+    target_entity: ConfigurationInformation
+    cardinality: many-to-many
+    required: true
+    description: A baseline is defined by approved configuration information.
+  - predicate: follows
+    target_entity: FunctionalBaseline
+    cardinality: many-to-many
+    required: false
+    description: Baseline context may reference functional predecessor semantics.
+  - predicate: follows
+    target_entity: AllocatedBaseline
+    cardinality: many-to-many
+    required: false
+    description: Baseline context may reference allocated predecessor semantics.
+  - predicate: evolved_from
+    target_entity: DesignReleaseBaseline
+    cardinality: many-to-many
+    required: false
+    description: Baseline context may reference controlled design-release evolution lineage.
+  - predicate: audited_by
+    target_entity: ConfigurationAudit
+    cardinality: many-to-many
+    required: false
+    description: A baseline may be evaluated by formal configuration audits.
+  - predicate: scoped_by
+    target_entity: Effectivity
+    cardinality: many-to-many
+    required: false
+    description: A baseline may be constrained by effectivity.
+
+lifecycle_states:
+  - proposed
+  - approved
+  - active
+  - superseded
+  - retired
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - baseline
+  - approved configuration
+
+not_to_be_confused_with:
+  - concept: Configuration Information
+    distinction: Baseline is approved state; configuration information is definitional content.
+
+examples:
+  - name: Product baseline for flight control subsystem
+    description: Approved build-to baseline used for implementation and verification.
+
+anti_examples:
+  - name: Draft design package
+    description: Draft design packages are not baselines until approved.
+
+open_questions:
+  - Should baseline_type remain an attribute or evolve into separate baseline entities?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

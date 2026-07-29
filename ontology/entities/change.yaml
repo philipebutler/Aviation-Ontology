@@ -69,6 +69,56 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: classified_as_faa
+    target_entity: ChangeClassificationFAA
+    cardinality: many-to-many
+    required: false
+    description: Change has an FAA major/minor classification record.
+  - predicate: classified_as_internal
+    target_entity: ChangeClassificationInternal
+    cardinality: many-to-many
+    required: false
+    description: Change has an internal enterprise class assignment.
+  - predicate: reviewed_by
+    target_entity: ChangeControlBoard
+    cardinality: many-to-many
+    required: false
+    description: Change is reviewed by a designated change control board.
+  - predicate: approved_by
+    target_entity: ChangeApprovalAuthority
+    cardinality: many-to-many
+    required: false
+    description: Change is dispositioned by authorized approval authority.
+  - predicate: tracked_by
+    target_entity: ConfigurationStatusAccounting
+    cardinality: many-to-many
+    required: false
+    description: Change status and implementation are tracked by CSA records.
+  - predicate: initiated_by
+    target_entity: ChangeRequest
+    cardinality: many-to-many
+    required: false
+    description: Change is formally initiated by one or more governed change requests.
+  - predicate: implemented_by
+    target_entity: ChangeOrder
+    cardinality: many-to-many
+    required: false
+    description: Change is implemented under change order authority.
+  - predicate: has_effectivity
+    target_entity: Effectivity
+    cardinality: many-to-many
+    required: false
+    description: Change has explicit applicability scope.
+  - predicate: changes_baseline
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-many
+    required: false
+    description: Change modifies one or more approved configuration baselines.
+  - predicate: affects_ci
+    target_entity: ConfigurationItem
+    cardinality: many-to-many
+    required: false
+    description: Change impacts designated configuration items.
   - predicate: affects
     target_entity: Part
     cardinality: many-to-many
@@ -84,6 +134,7 @@ relationships:
     cardinality: one-to-many
     required: false
     description: Change may produce or require verification evidence.
+
 
 lifecycle_states:
   - proposed

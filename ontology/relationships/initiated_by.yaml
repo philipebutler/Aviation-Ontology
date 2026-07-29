@@ -1,0 +1,58 @@
+id: relationship.initiated_by
+name: Initiated By
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: initiated_by
+inverse_predicate: initiates
+
+summary: >
+  Indicates that a governed change is formally initiated by a specific change request artifact.
+
+canonical_definition: >
+  The initiated_by relationship links a Change to the Change Request that provides
+  controlled initiation authority for evaluating and governing the proposed change.
+
+source_entity: Change
+target_entity: ChangeRequest
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - A change request should exist before a governed change is initiated.
+  - A single request may initiate multiple coordinated changes.
+
+lifecycle_constraints:
+  - Initiation linkage should be present before implementation authorization.
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_process: Change initiation and evaluation process
+
+examples:
+  - source: Cabin pressure sensor redesign change
+    relationship: initiated_by
+    target: CR-2026-0142
+    explanation: The CR provides formal initiation authority for the proposed redesign change.
+
+anti_examples:
+  - source: Implemented change
+    relationship: initiated_by
+    target: Informal email thread
+    explanation: Informal communications are not governed initiation authority artifacts.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

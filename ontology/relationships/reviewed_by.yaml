@@ -1,0 +1,57 @@
+id: relationship.reviewed_by
+name: Reviewed By
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: reviewed_by
+inverse_predicate: reviews
+
+summary: >
+  Indicates that a governed change was reviewed by a designated change control board.
+
+canonical_definition: >
+  The reviewed_by relationship links a Change to the Change Control Board that performed
+  governance review and recommendation input for disposition.
+
+source_entity: Change
+target_entity: ChangeControlBoard
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Review may be advisory and distinct from final approval authority.
+
+lifecycle_constraints:
+  - Review relationships should be established for changes requiring board governance.
+
+source_of_authority:
+  system_of_record: CM governance records
+  authoritative_process: Change review process
+
+examples:
+  - source: Cabin wiring reroute change
+    relationship: reviewed_by
+    target: Program CCB
+    explanation: Board review occurred prior to disposition decision.
+
+anti_examples:
+  - source: Change
+    relationship: reviewed_by
+    target: Unattributed discussion note
+    explanation: Informal discussions are not board governance review records.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

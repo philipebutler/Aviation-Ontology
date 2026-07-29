@@ -1,0 +1,102 @@
+id: entity.configuration_status_accounting
+name: Configuration Status Accounting
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  Formalized recording and reporting of configuration information and change implementation status.
+
+canonical_definition: >
+  Configuration Status Accounting is the CM function and associated governed information
+  used to record, report, and trace configuration states, revision history, proposed changes,
+  and implementation status of approved changes.
+
+purpose: >
+  Status accounting provides visibility, traceability, and audit-ready evidence of evolving
+  configuration and change implementation across product lifecycle activities.
+
+semantic_scope:
+  includes:
+    - Baseline membership and revision status reporting.
+    - Proposed/approved/implemented change status records.
+    - Cross-reference data for configuration traceability.
+  excludes:
+    - Uncontrolled status notes.
+
+standards_alignment:
+  eia_649c:
+    concept: Configuration status accounting (CSA)
+    notes: Direct alignment to CM status recording/reporting function.
+  iso_10007:
+    concept: Configuration status accounting documented information and reports
+    notes: Aligns with lifecycle traceability and visibility requirements.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: CM / PLM / document control systems
+  authoritative_artifact: CSA records and reports
+  authoritative_process: Configuration status accounting process
+
+attributes:
+  - name: id
+    description: Unique status accounting record identifier.
+    required: true
+    datatype: string
+  - name: report_type
+    description: Type of status output such as baseline, revision, change, or implementation report.
+    required: true
+    datatype: string
+  - name: effective_date
+    description: Date/status timestamp represented by the record.
+    required: true
+    datatype: date
+
+relationships:
+  - predicate: tracks
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: CSA records track change processing and implementation status.
+  - predicate: references
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-many
+    required: false
+    description: CSA records reference baseline and revision status context.
+
+lifecycle_states:
+  - active
+  - archived
+  - superseded
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - CSA
+  - configuration reporting record
+
+not_to_be_confused_with:
+  - concept: ConfigurationBaseline
+    distinction: CSA reports baseline state; it is not the baseline definition itself.
+
+examples:
+  - name: Change implementation status report
+    description: Report listing approved changes and incorporation status by effectivity.
+
+anti_examples:
+  - name: Personal spreadsheet
+    description: Uncontrolled private tracking is not authoritative CSA.
+
+open_questions:
+  - Should CSA reports be typed as separate sub-entities in a later wave?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

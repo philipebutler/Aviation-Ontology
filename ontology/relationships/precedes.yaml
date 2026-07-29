@@ -1,0 +1,57 @@
+id: relationship.precedes
+name: Precedes
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: precedes
+inverse_predicate: follows
+
+summary: >
+  Indicates an ordered maturity relationship where one baseline state comes before another.
+
+canonical_definition: >
+  The precedes relationship expresses baseline maturity ordering where a source baseline
+  state is an approved predecessor of a target baseline state.
+
+source_entity: FunctionalBaseline
+target_entity: AllocatedBaseline
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Ordering should reflect approved baseline progression semantics.
+
+lifecycle_constraints:
+  - Precedence links should remain stable for archived baseline history.
+
+source_of_authority:
+  system_of_record: CM baseline records
+  authoritative_process: Baseline establishment and progression process
+
+examples:
+  - source: Functional baseline FBL-10
+    relationship: precedes
+    target: Allocated baseline ABL-10
+    explanation: Functional requirements baseline precedes lower-level allocated baseline content.
+
+anti_examples:
+  - source: Product baseline
+    relationship: precedes
+    target: Functional baseline
+    explanation: Reverse ordering is generally not valid baseline progression.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

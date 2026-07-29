@@ -1,0 +1,94 @@
+id: entity.design_release_baseline
+name: DesignReleaseBaseline
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The internally controlled evolving development baseline used during transition from allocated to product baseline maturity.
+
+canonical_definition: >
+  DesignReleaseBaseline is an internally controlled baseline state that tracks evolving design
+  release content before or between formal baseline approvals as product definition matures.
+
+purpose: >
+  Design release baseline semantics capture in-progress controlled evolution and improve
+  traceability between allocated baseline intent and product baseline realization.
+
+semantic_scope:
+  includes:
+    - Internally controlled evolving design release states.
+    - Transitional baseline semantics between allocated and product maturity.
+  excludes:
+    - Uncontrolled draft artifacts.
+
+standards_alignment:
+  eia_649_2a:
+    concept: Supplier design release baseline
+    notes: Aligns with evolving internal design baseline semantics.
+
+ownership:
+  business_owner: Product Definition
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / CM repositories
+  authoritative_artifact: Controlled design release baseline records
+  authoritative_process: Internal design release and CM control process
+
+attributes:
+  - name: id
+    description: Unique design release baseline identifier.
+    required: true
+    datatype: string
+  - name: status
+    description: Baseline status.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: evolves_to
+    target_entity: ProductBaseline
+    cardinality: many-to-many
+    required: false
+    description: Design release baseline evolves into formal product baseline states.
+  - predicate: references
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-one
+    required: false
+    description: Design release baseline specialization references general baseline semantics.
+
+lifecycle_states:
+  - in_work
+  - controlled
+  - transitioned
+  - archived
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - DRB
+  - development baseline
+
+not_to_be_confused_with:
+  - concept: ProductBaseline
+    distinction: Design release baseline is transitional and internal; product baseline is formal approved realization baseline.
+
+examples:
+  - name: Internal release baseline before formal production release
+    description: Controlled design state used to mature content prior to formal product baseline approval.
+
+anti_examples:
+  - name: Personal draft folder
+    description: Personal drafts are not controlled design release baselines.
+
+open_questions:
+  - Should transition criteria to product baseline be modeled as explicit governance entities?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

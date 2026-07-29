@@ -1,0 +1,57 @@
+id: relationship.approved_by
+name: Approved By
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: approved_by
+inverse_predicate: approves
+
+summary: >
+  Indicates that a governed change was dispositioned by an authorized approval authority.
+
+canonical_definition: >
+  The approved_by relationship links a Change to the Change Approval Authority entity that
+  issued final disposition decision for governance and release commitment.
+
+source_entity: Change
+target_entity: ChangeApprovalAuthority
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Approval authority should be designated for the change scope and class.
+
+lifecycle_constraints:
+  - Approval relationships should exist before release implementation artifacts are issued.
+
+source_of_authority:
+  system_of_record: CM governance records
+  authoritative_process: Change disposition and approval process
+
+examples:
+  - source: Fuel vent redesign change
+    relationship: approved_by
+    target: Chief engineer delegate authority
+    explanation: Authorized decision authority approved the change.
+
+anti_examples:
+  - source: Change
+    relationship: approved_by
+    target: Reviewer comment
+    explanation: Comments do not represent final disposition authority.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

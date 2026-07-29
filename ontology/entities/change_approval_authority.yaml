@@ -1,0 +1,96 @@
+id: entity.change_approval_authority
+name: Change Approval Authority
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The person or organization authorized to approve, reject, defer, or cancel governed changes.
+
+canonical_definition: >
+  Change Approval Authority is the formally designated decision authority entity responsible
+  for change disposition and release commitment decisions within governed CM processes.
+
+purpose: >
+  Approval authority semantics make final decision accountability explicit and traceable for
+  controlled changes and associated baseline evolution.
+
+semantic_scope:
+  includes:
+    - Decision authority for change disposition outcomes.
+    - Resource commitment and release authority context.
+    - Approval governance role distinct from advisory review bodies.
+  excludes:
+    - Informal reviewers without authorized disposition responsibility.
+
+standards_alignment:
+  eia_649c:
+    concept: Approval authority
+    notes: Direct alignment with authorized change disposition role.
+  iso_10007:
+    concept: Dispositioning authority
+    notes: Supports documented change decision governance.
+
+ownership:
+  business_owner: Engineering Governance
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: CM governance records
+  authoritative_artifact: Delegation and approval authority records
+  authoritative_process: Change disposition and release process
+
+attributes:
+  - name: id
+    description: Unique authority identifier.
+    required: true
+    datatype: string
+  - name: authority_type
+    description: Person, role, board chair, or organization authority type.
+    required: true
+    datatype: string
+  - name: scope
+    description: Scope of approval authority by product, class, or function.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: approves
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: Approval authority approves or otherwise dispositions governed changes.
+
+lifecycle_states:
+  - active
+  - suspended
+  - retired
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - disposition authority
+  - decision authority
+
+not_to_be_confused_with:
+  - concept: ChangeControlBoard
+    distinction: Approval authority issues final disposition decisions; CCB may only recommend.
+
+examples:
+  - name: Chief engineer delegate
+    description: Authorized approver for designated class of engineering changes.
+
+anti_examples:
+  - name: Commenter
+    description: Comment-only participants are not approval authorities.
+
+open_questions:
+  - Should authority delegation periods be modeled as separate temporal artifacts?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

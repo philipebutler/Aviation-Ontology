@@ -1,0 +1,101 @@
+id: entity.change_control_board
+name: Change Control Board
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A governance body that reviews and recommends disposition of controlled changes.
+
+canonical_definition: >
+  A Change Control Board is a designated governance group of technical and administrative
+  representatives that reviews proposed changes and provides recommendation input to
+  approval authority for disposition decisions.
+
+purpose: >
+  CCB semantics capture review accountability and governance traceability between proposed
+  changes, recommendations, and final approval decisions.
+
+semantic_scope:
+  includes:
+    - Board-level review and recommendation authority.
+    - Technical/administrative representation context.
+    - Governance participation in change disposition.
+  excludes:
+    - Final approval authority decisions when held by separate entities.
+
+standards_alignment:
+  eia_649c:
+    concept: Change board / configuration control board
+    notes: Directly aligned with board review/recommendation role.
+  iso_10007:
+    concept: Dispositioning authority support context
+    notes: Supports structured disposition governance.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Engineering Governance
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: CM governance records
+  authoritative_artifact: Board charter and review minutes
+  authoritative_process: Change review and disposition process
+
+attributes:
+  - name: id
+    description: Unique CCB identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Board name.
+    required: true
+    datatype: string
+  - name: scope
+    description: Organizational or product scope under CCB governance.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: reviews
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: The board reviews and recommends disposition for governed changes.
+
+lifecycle_states:
+  - active
+  - inactive
+  - retired
+
+local_definitions:
+  - context: Local usage
+    definition: CCB participation and required action may vary by change class and effectivity type.
+    source: E460583
+
+historical_definitions: []
+aliases:
+  - CCB
+  - change board
+
+not_to_be_confused_with:
+  - concept: ChangeApprovalAuthority
+    distinction: The board may recommend disposition while approval authority finalizes it.
+
+examples:
+  - name: Program CCB
+    description: Multi-discipline board reviewing program-level design and baseline changes.
+
+anti_examples:
+  - name: Individual author review
+    description: Single-author review is not a governance board decision process.
+
+open_questions:
+  - Should board membership be modeled in a separate role/organization ontology?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

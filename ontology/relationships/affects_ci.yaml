@@ -1,0 +1,58 @@
+id: relationship.affects_ci
+name: Affects CI
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: affects_ci
+inverse_predicate: affected_by_change
+
+summary: >
+  Indicates that a governed change impacts one or more designated configuration items.
+
+canonical_definition: >
+  The affects_ci relationship links a Change to the Configuration Item(s) whose
+  requirements, definition, interfaces, implementation, or applicability are impacted.
+
+source_entity: Change
+target_entity: ConfigurationItem
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Target must be designated as a controlled configuration item.
+  - Effectivity may constrain scope of impacted CIs.
+
+lifecycle_constraints:
+  - CI impact relationships should be identified before final change approval.
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_process: Change impact assessment and disposition process
+
+examples:
+  - source: Hydraulic manifold redesign change
+    relationship: affects_ci
+    target: Hydraulic manifold CI
+    explanation: Change impacts controlled CI definition and associated baseline content.
+
+anti_examples:
+  - source: Organizational chart update
+    relationship: affects_ci
+    target: CI-1023
+    explanation: Non-product governance updates do not necessarily affect CIs.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

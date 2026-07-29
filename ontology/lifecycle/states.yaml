@@ -1,5 +1,5 @@
 # Common lifecycle states used by ontology entities.
-# These are starter states only. Tailor them to your company governance model.
+# These are starter states only. Tailor them to your governance model.
 
 states:
   - id: draft

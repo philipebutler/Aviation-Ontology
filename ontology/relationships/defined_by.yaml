@@ -1,0 +1,58 @@
+id: relationship.defined_by
+name: Defined By
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: defined_by
+inverse_predicate: defines
+
+summary: >
+  Indicates that a controlled baseline is semantically established by approved configuration information.
+
+canonical_definition: >
+  The defined_by relationship links a Configuration Baseline to the Configuration Information
+  artifacts that collectively define the approved configuration state.
+
+source_entity: ConfigurationBaseline
+target_entity: ConfigurationInformation
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: true
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Defining information should be under document and revision control.
+  - Baseline definition should support traceability to included CIs and approvals.
+
+lifecycle_constraints:
+  - Defined-by references should be stable at baseline approval time.
+
+source_of_authority:
+  system_of_record: PLM / document control system
+  authoritative_process: Configuration identification and baseline approval process
+
+examples:
+  - source: Product baseline PBL-44
+    relationship: defined_by
+    target: Released drawings/models/specifications set
+    explanation: Approved technical data set defines the controlled baseline state.
+
+anti_examples:
+  - source: Baseline record
+    relationship: defined_by
+    target: Unreleased draft notes
+    explanation: Unreleased drafts do not define approved baseline state.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

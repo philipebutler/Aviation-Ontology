@@ -1,0 +1,107 @@
+id: entity.verification_requirement
+name: VerificationRequirement
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A binding statement that defines how compliance to a requirement will be demonstrated.
+
+canonical_definition: >
+  VerificationRequirement is a governed requirement that specifies method, criteria, and
+  evidence expectations for demonstrating satisfaction of a target engineering requirement.
+
+purpose: >
+  Verification requirements make compliance demonstration explicit and traceable from
+  obligation to verification evidence and pass/fail criteria.
+
+semantic_scope:
+  includes:
+    - Method statements such as test, analysis, inspection, or demonstration.
+    - Pass/fail criteria and evidence expectations.
+    - Traceable linkage to governed requirements.
+  excludes:
+    - Performed verification results.
+    - Non-binding objectives without compliance obligation.
+
+standards_alignment:
+  iso_15288:
+    concept: Verification process requirements
+    notes: Aligns with lifecycle verification planning and execution semantics.
+  local_reference:
+    concept: ARD/SRD verification requirements language
+    notes: Derived from engineering manual requirements documentation guidance.
+
+ownership:
+  business_owner: Systems Engineering / Verification
+  semantic_owner: Verification and Certification
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: Requirements management system
+  authoritative_artifact: Released requirements baseline
+  authoritative_process: Requirements and verification planning process
+
+attributes:
+  - name: id
+    description: Unique verification requirement identifier.
+    required: true
+    datatype: string
+  - name: method
+    description: Verification method such as test, analysis, inspection, or demonstration.
+    required: true
+    datatype: string
+  - name: criteria
+    description: Pass/fail criteria.
+    required: true
+    datatype: string
+  - name: status
+    description: Lifecycle state of verification requirement.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: verifies
+    target_entity: Requirement
+    cardinality: many-to-many
+    required: false
+    description: Verification requirement defines how a requirement will be demonstrated.
+  - predicate: evidenced_by
+    target_entity: VerificationArtifact
+    cardinality: one-to-many
+    required: false
+    description: Verification artifacts provide evidence against this verification requirement.
+
+lifecycle_states:
+  - drafted
+  - reviewed
+  - approved
+  - active
+  - superseded
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - compliance verification requirement
+
+not_to_be_confused_with:
+  - concept: VerificationArtifact
+    distinction: Verification requirement defines expected proof; artifact is the produced evidence.
+
+examples:
+  - name: Stall speed verification requirement
+    description: Requirement shall be shown by flight test with explicit pass/fail threshold.
+
+anti_examples:
+  - name: General objective
+    description: Non-binding objectives are not verification requirements.
+
+open_questions:
+  - Should verification requirement be modeled as specialization of Requirement in future?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

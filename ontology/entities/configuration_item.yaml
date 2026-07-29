@@ -1,0 +1,116 @@
+id: entity.configuration_item
+name: Configuration Item
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A designated product element placed under distinct configuration management control.
+
+canonical_definition: >
+  A Configuration Item is a product, allocated component, or software item with defined
+  requirements, interfaces, and lifecycle significance that is designated for separate
+  configuration identification, control, status accounting, and verification.
+
+purpose: >
+  Configuration Items establish the control granularity used to manage baselines,
+  changes, effectivity, and traceability across product lifecycle activities.
+
+semantic_scope:
+  includes:
+    - Hardware and software items designated for CM control.
+    - Items with distinct functional, interface, or support significance.
+    - Items represented in formal baseline structures.
+  excludes:
+    - Undesignated references not under CM control.
+    - Informal decomposition artifacts.
+
+standards_alignment:
+  eia_649c:
+    concept: Configuration item (CI)
+    notes: Direct alignment with CI definition and control intent.
+  eia_649_2a:
+    concept: Configuration item selection and baseline governance
+    notes: Aligns with acquirer/supplier CI lifecycle semantics.
+  iso_10007:
+    concept: Configuration item selection criteria
+    notes: Supports controlled selection and interrelationship semantics.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Engineering / Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_artifact: CI registry or approved baseline records
+  authoritative_process: Configuration identification process
+
+attributes:
+  - name: id
+    description: Unique CI identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable CI name.
+    required: true
+    datatype: string
+  - name: ci_type
+    description: Type of CI such as hardware, software, or system-level item.
+    required: true
+    datatype: string
+  - name: criticality
+    description: Risk or governance criticality level.
+    required: false
+    datatype: string
+  - name: status
+    description: Lifecycle state of the CI.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: defined_by
+    target_entity: ConfigurationInformation
+    cardinality: many-to-many
+    required: false
+    description: A CI is defined by controlled configuration information.
+  - predicate: included_in
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-many
+    required: false
+    description: A CI may be included in one or more baselines over time.
+
+lifecycle_states:
+  - identified
+  - controlled
+  - released
+  - maintained
+  - retired
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - CI
+  - designated item
+
+not_to_be_confused_with:
+  - concept: Part
+    distinction: A part may be a CI, but not every part is designated as a CI.
+
+examples:
+  - name: Flight control computer CSCI
+    description: Software/hardware item controlled as a distinct CI.
+
+anti_examples:
+  - name: Temporary analysis sketch
+    description: A temporary sketch is not a controlled configuration item.
+
+open_questions:
+  - Should CSCI be modeled as subtype or attribute value of Configuration Item?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

@@ -1,0 +1,101 @@
+id: entity.change_classification_internal
+name: Internal Change Classification
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  Internal enterprise classification of engineering changes used for governance, approvals, and implementation control.
+
+canonical_definition: >
+  Internal Change Classification is the enterprise change class assignment used to govern
+  approvals, effectivity handling, and implementation obligations for controlled changes.
+
+purpose: >
+  Internal classification provides consistent governance semantics across product
+  change types and their required review, approval, and implementation pathways.
+
+semantic_scope:
+  includes:
+    - Class I and Class II family semantics.
+    - Internal class variants such as IIA/IIB/IIC/IID where used.
+    - Governance implications tied to class assignment.
+  excludes:
+    - External regulatory major/minor classification semantics.
+
+standards_alignment:
+  local_reference:
+    concept: Internal change class taxonomy
+    notes: Derived from engineering manual class semantics.
+  eia_649c:
+    concept: Configuration change management
+    notes: Class semantics support controlled disposition and implementation.
+
+ownership:
+  business_owner: Engineering Governance
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: CM / PLM system
+  authoritative_artifact: Change classification record
+  authoritative_process: Internal change classification process
+
+attributes:
+  - name: id
+    description: Unique internal classification record identifier.
+    required: true
+    datatype: string
+  - name: classification
+    description: Internal class assignment such as Class I, IIA, IIB, IIC, or IID.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Internal justification for assigned class.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: classifies
+    target_entity: Change
+    cardinality: one-to-many
+    required: false
+    description: An internal class assignment may classify one or more governed changes.
+
+lifecycle_states:
+  - proposed
+  - under_review
+  - approved
+  - superseded
+
+local_definitions:
+  - context: Engineering Administration Manual
+    definition: Class families constrain approval burden, effectivity expectations, and CI impact scope.
+    source: E460583
+
+historical_definitions: []
+aliases:
+  - internal class
+  - internal change class
+
+not_to_be_confused_with:
+  - concept: ChangeClassificationFAA
+    distinction: Internal class does not replace FAA regulatory classification.
+
+examples:
+  - name: Class IIB
+    description: Production-facilitation oriented class with defined approval semantics.
+
+anti_examples:
+  - name: Project phase
+    description: Program phase is not a change class assignment.
+
+open_questions:
+  - Should class-specific policy constraints be modeled as separate entities?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

@@ -1,0 +1,96 @@
+id: entity.change_classification_faa
+name: Change Classification FAA
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  Regulatory classification of a design change under FAA major/minor criteria.
+
+canonical_definition: >
+  Change Classification FAA is the regulatory determination that classifies a change as
+  major or minor for certification and approval governance.
+
+purpose: >
+  FAA classification semantics provide explicit regulatory traceability for change disposition,
+  approval path, and downstream certification obligations.
+
+semantic_scope:
+  includes:
+    - Major change classification.
+    - Minor change classification.
+    - Regulatory basis references for classification decisions.
+  excludes:
+    - Internal enterprise-only classification categories.
+
+standards_alignment:
+  faa_14_cfr_21_93:
+    concept: Major and minor change classification
+    notes: Regulatory basis for FAA classification semantics.
+  local_reference:
+    concept: ODA and engineering manual classification guidance
+    notes: Local procedures define decision support context.
+
+ownership:
+  business_owner: Certification / ODA Governance
+  semantic_owner: Certification / Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: Certification and CM systems
+  authoritative_artifact: Classification decision record
+  authoritative_process: Change classification and certification process
+
+attributes:
+  - name: id
+    description: Unique FAA classification record identifier.
+    required: true
+    datatype: string
+  - name: classification
+    description: FAA class, typically major or minor.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Regulatory rationale for the classification decision.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: classifies
+    target_entity: Change
+    cardinality: one-to-many
+    required: false
+    description: A classification record may classify one or more governed changes.
+
+lifecycle_states:
+  - proposed
+  - under_review
+  - approved
+  - superseded
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - FAA major/minor classification
+
+not_to_be_confused_with:
+  - concept: ChangeClassificationInternal
+    distinction: FAA classification is regulatory; internal classification is enterprise-specific.
+
+examples:
+  - name: FAA Major
+    description: Change classified as major due to airworthiness impact.
+
+anti_examples:
+  - name: Internal priority flag
+    description: Internal urgency does not define FAA major/minor classification.
+
+open_questions:
+  - Should this entity carry explicit links to regulation paragraphs?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

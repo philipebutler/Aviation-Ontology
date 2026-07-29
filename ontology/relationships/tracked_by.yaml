@@ -1,0 +1,57 @@
+id: relationship.tracked_by
+name: Tracked By
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: tracked_by
+inverse_predicate: tracks
+
+summary: >
+  Indicates that a governed change has status and implementation traceability in CSA records.
+
+canonical_definition: >
+  The tracked_by relationship links a Change to Configuration Status Accounting records that
+  provide formal visibility of processing, approval, and implementation state.
+
+source_entity: Change
+target_entity: ConfigurationStatusAccounting
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Tracking records should be controlled and revision-aware.
+
+lifecycle_constraints:
+  - Tracking should continue through closure and archival phases.
+
+source_of_authority:
+  system_of_record: CM / PLM status systems
+  authoritative_process: Configuration status accounting process
+
+examples:
+  - source: Wing attach fitting revision change
+    relationship: tracked_by
+    target: CSA record set for program baseline
+    explanation: Status accounting records track implementation and closure status.
+
+anti_examples:
+  - source: Change
+    relationship: tracked_by
+    target: Private notebook
+    explanation: Private notes are not authoritative CSA records.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

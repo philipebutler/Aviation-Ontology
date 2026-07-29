@@ -1,0 +1,115 @@
+id: entity.change_request
+name: Change Request
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A governed request that initiates evaluation and authorization of a proposed engineering change.
+
+canonical_definition: >
+  A Change Request is the initiating authority artifact that captures proposed change intent,
+  rationale, impact context, and applicability before implementation authorization.
+
+purpose: >
+  Change Requests provide controlled initiation, traceability, and governance input for
+  engineering changes affecting product definition and configuration baselines.
+
+semantic_scope:
+  includes:
+    - Initiation of proposed product definition or configuration change.
+    - Change rationale and preliminary impact context.
+    - References to affected baselines, items, and authorities.
+  excludes:
+    - Final implementation authority artifacts.
+    - Informal discussion not recorded in controlled systems.
+
+standards_alignment:
+  eia_649c:
+    concept: Configuration change / change request
+    notes: Aligns with formal change initiation and disposition concepts.
+  eia_649_2a:
+    concept: Preparation of change requests and supporting data
+    notes: Supports acquisition and supplier change governance semantics.
+  iso_10007:
+    concept: Initiation, identification, and documentation of change
+    notes: Aligns with documented change proposal requirements.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Engineering Governance
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_artifact: Change Request record
+  authoritative_process: Configuration change management process
+
+attributes:
+  - name: id
+    description: Unique change request identifier.
+    required: true
+    datatype: string
+  - name: title
+    description: Short summary of requested change.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Reason the change is requested.
+    required: true
+    datatype: string
+  - name: requested_by
+    description: Person or organization initiating the request.
+    required: true
+    datatype: string
+  - name: status
+    description: Lifecycle state of the change request.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: initiates
+    target_entity: Change
+    cardinality: one-to-many
+    required: false
+    description: A change request may initiate one or more governed change objects.
+
+lifecycle_states:
+  - drafted
+  - submitted
+  - under_review
+  - approved
+  - rejected
+  - withdrawn
+
+local_definitions:
+  - context: Legacy terminology
+    definition: EECR may be used interchangeably with CR in some local documentation.
+    source: E460583
+
+historical_definitions: []
+aliases:
+  - CR
+  - EECR
+
+not_to_be_confused_with:
+  - concept: Change Order
+    distinction: A change request proposes change; a change order authorizes implementation.
+
+examples:
+  - name: Flammability compliance update request
+    description: Request to revise material specification and affected product definition artifacts.
+
+anti_examples:
+  - name: Verbal suggestion
+    description: A verbal suggestion is not a governed change request until recorded.
+
+open_questions:
+  - Should ECR be modeled as a specialization of Change Request or a separate canonical entity?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

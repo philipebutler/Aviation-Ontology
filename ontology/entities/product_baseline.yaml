@@ -1,0 +1,95 @@
+id: entity.product_baseline
+name: ProductBaseline
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The baseline state containing approved build-level product definition used for qualification, acceptance, and release.
+
+canonical_definition: >
+  ProductBaseline is the approved baseline state containing detailed product definition,
+  physical characteristics, selected functional/performance characteristics, and qualification
+  or acceptance context required for realization and release.
+
+purpose: >
+  Product baseline semantics provide the governed build-level reference for production,
+  verification closure, release, and sustained configuration control.
+
+semantic_scope:
+  includes:
+    - Detailed build-to product definition.
+    - Qualification/acceptance related definition context.
+    - Approved release-ready baseline state.
+  excludes:
+    - Early functional-only requirement baselines.
+
+standards_alignment:
+  eia_649_2a:
+    concept: Product baseline (PBL)
+    notes: Aligns with formal baseline maturity sequence.
+
+ownership:
+  business_owner: Product Definition / Configuration Management
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / release system
+  authoritative_artifact: Approved product baseline package
+  authoritative_process: Product release and baseline maintenance process
+
+attributes:
+  - name: id
+    description: Unique product baseline identifier.
+    required: true
+    datatype: string
+  - name: status
+    description: Baseline status.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: references
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-one
+    required: false
+    description: Product baseline specialization references general baseline semantics.
+  - predicate: evolved_from
+    target_entity: DesignReleaseBaseline
+    cardinality: many-to-many
+    required: false
+    description: Product baseline may be matured from design-release baseline increments.
+
+lifecycle_states:
+  - proposed
+  - approved
+  - active
+  - superseded
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - PBL
+
+not_to_be_confused_with:
+  - concept: DesignReleaseBaseline
+    distinction: Product baseline is formal approved realization state; design release baseline may represent evolving internal development state.
+
+examples:
+  - name: Flight controls product baseline
+    description: Approved build-level technical definition and acceptance context for flight controls.
+
+anti_examples:
+  - name: Preliminary concept sketch
+    description: Preliminary sketches are not product baseline content.
+
+open_questions:
+  - Should qualification criteria be explicit attributes or linked entities later?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

@@ -1,0 +1,111 @@
+id: entity.change_order
+name: Change Order
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A governed authorization artifact used to implement approved engineering changes.
+
+canonical_definition: >
+  A Change Order is a formal implementation authority artifact that directs incorporation
+  of approved engineering changes into controlled product definition and configuration data.
+
+purpose: >
+  Change Orders provide release-level authority, implementation traceability, and controlled
+  linkage between approved change intent and incorporated product definition revisions.
+
+semantic_scope:
+  includes:
+    - Implementation authorization for approved changes.
+    - Controlled linkage to affected baselines and items.
+    - Traceable release of revised technical data.
+  excludes:
+    - Initial change proposal artifacts.
+    - Informal implementation instructions outside governed control.
+
+standards_alignment:
+  eia_649c:
+    concept: Configuration change management / approved change incorporation
+    notes: Aligns with controlled incorporation of approved changes.
+  eia_649_2a:
+    concept: Approval and release of product configuration information
+    notes: Supports formal baseline update semantics.
+  iso_10007:
+    concept: Implementation and verification of approved change
+    notes: Aligns with controlled release and implementation documentation.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Engineering Governance
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_artifact: Change Order record
+  authoritative_process: Document approval and release process
+
+attributes:
+  - name: id
+    description: Unique change order identifier.
+    required: true
+    datatype: string
+  - name: title
+    description: Short implementation summary.
+    required: true
+    datatype: string
+  - name: release_date
+    description: Date change order is authorized for implementation.
+    required: true
+    datatype: date
+  - name: status
+    description: Lifecycle state of the change order.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: implements
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: A change order implements one or more approved changes.
+
+lifecycle_states:
+  - drafted
+  - under_review
+  - approved
+  - released
+  - superseded
+  - cancelled
+
+local_definitions:
+  - context: Local implementation terminology
+    definition: Engineering Orders may be treated as implementation artifacts in some domains.
+    source: E460583
+
+historical_definitions: []
+aliases:
+  - CO
+  - implementation order
+
+not_to_be_confused_with:
+  - concept: Change Request
+    distinction: A change request proposes change; a change order authorizes implementation.
+
+examples:
+  - name: Cabin placard revision incorporation
+    description: Authorized incorporation of revised placard definition and associated release data.
+
+anti_examples:
+  - name: Preliminary design note
+    description: Preliminary notes do not authorize controlled implementation.
+
+open_questions:
+  - Should Engineering Order be modeled as local synonym or separate canonical entity?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

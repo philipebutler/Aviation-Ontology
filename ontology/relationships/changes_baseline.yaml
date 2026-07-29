@@ -1,0 +1,58 @@
+id: relationship.changes_baseline
+name: Changes Baseline
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: changes_baseline
+inverse_predicate: changed_by
+
+summary: >
+  Indicates that a governed change modifies a specific approved configuration baseline.
+
+canonical_definition: >
+  The changes_baseline relationship links a Change to the Configuration Baseline that is
+  revised, extended, or otherwise modified by approved and incorporated change actions.
+
+source_entity: Change
+target_entity: ConfigurationBaseline
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Baseline must be identifiable and under CM governance.
+  - Change impact should be traceable as before/after baseline context.
+
+lifecycle_constraints:
+  - Baseline-change linkage should be established before baseline supersession.
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_process: Configuration baseline maintenance process
+
+examples:
+  - source: Flight test instrumentation update change
+    relationship: changes_baseline
+    target: Allocated baseline ABL-27
+    explanation: Approved change revises baseline definition for designated scope.
+
+anti_examples:
+  - source: Discussion note
+    relationship: changes_baseline
+    target: Baseline identifier
+    explanation: Informal notes do not modify baselines.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

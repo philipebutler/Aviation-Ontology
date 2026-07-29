@@ -1,0 +1,58 @@
+id: relationship.implemented_by
+name: Implemented By
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: implemented_by
+inverse_predicate: implements
+
+summary: >
+  Indicates that a governed change is implemented under authority of a change order artifact.
+
+canonical_definition: >
+  The implemented_by relationship links a Change to the Change Order that authorizes
+  release and incorporation of approved modifications into controlled configuration data.
+
+source_entity: Change
+target_entity: ChangeOrder
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Implementation authority should reference an approved change disposition.
+  - The relationship does not replace change approval semantics.
+
+lifecycle_constraints:
+  - Implementation linkage should exist before release completion.
+
+source_of_authority:
+  system_of_record: PLM / document control system
+  authoritative_process: Approval and release process
+
+examples:
+  - source: Avionics harness routing change
+    relationship: implemented_by
+    target: CO-2026-0097
+    explanation: The change order authorizes incorporation into released technical data.
+
+anti_examples:
+  - source: Proposed change
+    relationship: implemented_by
+    target: Draft checklist
+    explanation: Draft checklists do not provide implementation authority.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

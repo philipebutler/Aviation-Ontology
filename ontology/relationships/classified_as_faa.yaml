@@ -1,0 +1,57 @@
+id: relationship.classified_as_faa
+name: Classified As FAA
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: classified_as_faa
+inverse_predicate: classifies_change
+
+summary: >
+  Links a governed change to its FAA regulatory classification record.
+
+canonical_definition: >
+  The classified_as_faa relationship connects a Change to the FAA classification
+  determination that establishes major/minor regulatory status.
+
+source_entity: Change
+target_entity: ChangeClassificationFAA
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - FAA classification is regulatory and distinct from internal class taxonomies.
+
+lifecycle_constraints:
+  - Classification should be established prior to final disposition of regulated changes.
+
+source_of_authority:
+  system_of_record: Certification and CM systems
+  authoritative_process: Regulatory change classification process
+
+examples:
+  - source: Cabin pressure schedule update
+    relationship: classified_as_faa
+    target: FAA Minor classification
+    explanation: The change carries explicit regulatory classification semantics.
+
+anti_examples:
+  - source: Change
+    relationship: classified_as_faa
+    target: Internal Class IIB
+    explanation: Internal class is enterprise-specific and not FAA classification.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

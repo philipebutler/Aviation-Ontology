@@ -1,0 +1,57 @@
+id: relationship.audited_by
+name: Audited By
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: audited_by
+inverse_predicate: audits
+
+summary: >
+  Indicates that a configuration baseline has been evaluated by a formal configuration audit.
+
+canonical_definition: >
+  The audited_by relationship links a Configuration Baseline to the Configuration Audit activity
+  record that verifies conformance to approved configuration information and requirements.
+
+source_entity: ConfigurationBaseline
+target_entity: ConfigurationAudit
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Audit linkage should identify audit type and result context.
+
+lifecycle_constraints:
+  - Audit linkage should be recorded prior to baseline acceptance where required.
+
+source_of_authority:
+  system_of_record: QA / CM audit records
+  authoritative_process: Configuration audit process
+
+examples:
+  - source: Product baseline PBL-44
+    relationship: audited_by
+    target: PCA-2026-013
+    explanation: Physical configuration audit confirms baseline conformance.
+
+anti_examples:
+  - source: Baseline
+    relationship: audited_by
+    target: Informal team sync
+    explanation: Informal syncs are not formal configuration audits.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

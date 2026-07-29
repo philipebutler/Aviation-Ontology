@@ -1,0 +1,57 @@
+id: relationship.constrains
+name: Constrains
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: constrains
+inverse_predicate: constrained_by
+
+summary: >
+  Indicates that one governed concept limits or bounds permitted definition space of another concept.
+
+canonical_definition: >
+  The constrains relationship links a source concept that imposes approved technical bounds
+  to a target concept whose permissible definition or evolution must remain within those bounds.
+
+source_entity: TechnicalBaseline
+target_entity: ProductDefinition
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Constraint semantics should be traceable to approved baseline content.
+
+lifecycle_constraints:
+  - Constraint linkages should be maintained when baselines are superseded.
+
+source_of_authority:
+  system_of_record: Engineering baseline repository
+  authoritative_process: Technical baseline governance process
+
+examples:
+  - source: Validated aircraft technical baseline
+    relationship: constrains
+    target: Product definition for derivative configuration
+    explanation: Product definition evolution is bounded by validated baseline assumptions and decisions.
+
+anti_examples:
+  - source: Informal suggestion
+    relationship: constrains
+    target: Product definition
+    explanation: Informal suggestions are not governed constraints.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

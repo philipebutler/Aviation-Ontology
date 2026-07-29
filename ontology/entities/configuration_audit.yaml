@@ -1,0 +1,102 @@
+id: entity.configuration_audit
+name: Configuration Audit
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A formal examination verifying conformance of a configuration item or baseline to approved definition and requirements.
+
+canonical_definition: >
+  Configuration Audit is a formal review and evidence evaluation activity that verifies
+  functional and/or physical conformance of configuration items and baselines to approved
+  configuration information and requirements.
+
+purpose: >
+  Configuration audits provide objective governance evidence that approved baselines and
+  associated items conform to required attributes and controlled definition data.
+
+semantic_scope:
+  includes:
+    - Functional configuration audit semantics.
+    - Physical configuration audit semantics.
+    - Evidence-based conformance assessment against approved definitions.
+  excludes:
+    - Informal design reviews without audit criteria and recorded outcomes.
+
+standards_alignment:
+  eia_649c:
+    concept: Configuration audit
+    notes: Direct alignment with process/document/product conformance review.
+  iso_10007:
+    concept: Functional and physical configuration audit
+    notes: Aligns with formal conformance verification expectations.
+
+ownership:
+  business_owner: Configuration Management / Quality Assurance
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: QA / CM systems
+  authoritative_artifact: Audit plan, results, and closure record
+  authoritative_process: Configuration audit process
+
+attributes:
+  - name: id
+    description: Unique audit identifier.
+    required: true
+    datatype: string
+  - name: audit_type
+    description: Functional or physical configuration audit type.
+    required: true
+    datatype: string
+  - name: result
+    description: Audit conclusion such as pass, conditional pass, or fail.
+    required: true
+    datatype: string
+  - name: date
+    description: Audit execution or closure date.
+    required: true
+    datatype: date
+
+relationships:
+  - predicate: audits
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-many
+    required: false
+    description: Audit records evaluate configuration baseline conformance.
+
+lifecycle_states:
+  - planned
+  - in_work
+  - completed
+  - closed
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - FCA
+  - PCA
+
+not_to_be_confused_with:
+  - concept: VerificationArtifact
+    distinction: Audit is a formal conformance activity context; artifacts are resulting evidence objects.
+
+examples:
+  - name: PCA for released flight control baseline
+    description: Physical configuration audit confirms conformance to released baseline.
+
+anti_examples:
+  - name: Informal team walkthrough
+    description: A walkthrough without formal criteria is not a configuration audit.
+
+open_questions:
+  - Should audit findings be modeled as separate entities?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

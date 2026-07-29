@@ -1,0 +1,112 @@
+id: entity.effectivity
+name: Effectivity
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The applicability scope defining where, when, and to which product instances a configuration applies.
+
+canonical_definition: >
+  Effectivity is a controlled applicability designation that identifies the model, serial,
+  block, lot, date, event, or spares scope where a configuration state or approved change applies.
+
+purpose: >
+  Effectivity enables precise applicability control for changes, baselines, and released
+  technical data across product variants and lifecycle states.
+
+semantic_scope:
+  includes:
+    - Serial, model, block, lot, or date applicability.
+    - No-serial-required and spares-only applicability semantics.
+    - Applicability references used in change and release governance.
+  excludes:
+    - Generic lifecycle states.
+    - Non-governed commentary about applicability.
+
+standards_alignment:
+  eia_649c:
+    concept: Source code effectivity / product range applicability
+    notes: Aligns with controlled applicability designation semantics.
+  iso_10007:
+    concept: Change implementation traceability and status accounting
+    notes: Supports traceable applicability across delivered and maintained configurations.
+
+ownership:
+  business_owner: Configuration Management
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / CM system
+  authoritative_artifact: Released technical data applicability fields
+  authoritative_process: Configuration identification and change incorporation process
+
+attributes:
+  - name: id
+    description: Unique effectivity identifier or record key.
+    required: true
+    datatype: string
+  - name: type
+    description: Effectivity type such as serial, model, block, lot, date, NSR, or spares.
+    required: true
+    datatype: string
+  - name: value
+    description: Applicability value or bounded range.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Optional reason for effectivity choice.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: scopes
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-many
+    required: false
+    description: Effectivity scopes where a baseline applies.
+  - predicate: applies_to
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: Effectivity applies to controlled change applicability.
+
+lifecycle_states:
+  - proposed
+  - approved
+  - active
+  - superseded
+  - retired
+
+local_definitions:
+  - context: Internal classification usage
+    definition: NSR and SPARES may be used as special applicability semantics.
+    source: E460583
+
+historical_definitions: []
+aliases:
+  - applicability
+  - incorporation scope
+
+not_to_be_confused_with:
+  - concept: Version
+    distinction: Version identifies a revision state; effectivity identifies where it applies.
+
+examples:
+  - name: Serial effectivity range
+    description: Applies to aircraft serial numbers from 150 to 220.
+
+anti_examples:
+  - name: General statement
+    description: A general note without governed scope is not effectivity.
+
+open_questions:
+  - Should effectivity be modeled as scalar values or reusable range objects?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

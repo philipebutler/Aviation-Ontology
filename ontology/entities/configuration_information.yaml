@@ -1,0 +1,114 @@
+id: entity.configuration_information
+name: Configuration Information
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  Controlled technical information that defines product requirements, design, verification, and support characteristics.
+
+canonical_definition: >
+  Configuration Information is the governed set of requirements, specifications, models,
+  drawings, interfaces, verification definitions, and related technical data used to define,
+  realize, verify, operate, and support product configuration.
+
+purpose: >
+  Configuration Information provides the authoritative definitional content used to establish
+  baselines, control changes, and maintain traceable product configuration integrity.
+
+semantic_scope:
+  includes:
+    - Requirements and specifications.
+    - Drawings, models, and parts lists.
+    - Verification-related definition data.
+    - Operational and support technical data under CM control.
+  excludes:
+    - Informal notes not under CM control.
+    - Purely administrative records with no product definition significance.
+
+standards_alignment:
+  eia_649c:
+    concept: Product configuration information
+    notes: Aligns with recorded information defining managed product attributes.
+  eia_649_2a:
+    concept: Product configuration information for baseline establishment
+    notes: Supports baseline creation, release, and maintenance semantics.
+  iso_10007:
+    concept: Configuration information
+    notes: Direct alignment with configuration identification and status accounting.
+
+ownership:
+  business_owner: Engineering / Configuration Management
+  semantic_owner: Product Definition Governance
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / document control system
+  authoritative_artifact: Released technical data artifacts
+  authoritative_process: Document control and configuration identification process
+
+attributes:
+  - name: id
+    description: Unique identifier of configuration information artifact.
+    required: true
+    datatype: string
+  - name: information_type
+    description: Type such as requirement, drawing, model, specification, or test definition.
+    required: true
+    datatype: string
+  - name: revision
+    description: Revision/version indicator of the information artifact.
+    required: true
+    datatype: string
+  - name: status
+    description: Lifecycle or release state of the information artifact.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: defines
+    target_entity: ConfigurationItem
+    cardinality: many-to-many
+    required: false
+    description: Configuration information defines CI characteristics.
+  - predicate: contributes_to
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-many
+    required: false
+    description: Approved information contributes to baseline definition.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - superseded
+  - obsolete
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - product definition information
+  - technical data
+
+not_to_be_confused_with:
+  - concept: Configuration Baseline
+    distinction: Information is content; baseline is approved reference state.
+
+examples:
+  - name: Flight control actuator specification
+    description: Controlled specification contributing to allocated and product baselines.
+
+anti_examples:
+  - name: Whiteboard sketch
+    description: Uncontrolled whiteboard content is not configuration information.
+
+open_questions:
+  - Should interface control documents be modeled as separate subtype entities?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

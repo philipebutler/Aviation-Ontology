@@ -1,0 +1,108 @@
+id: entity.aircraft_development_program
+name: AircraftDevelopmentProgram
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The governed enterprise context that develops, certifies, produces, and supports an aircraft or system.
+
+canonical_definition: >
+  AircraftDevelopmentProgram is the program-level semantic construct that integrates product
+  definition, technical baseline maturity, certification intent, and lifecycle execution objectives
+  for a specific aircraft or system development effort.
+
+purpose: >
+  This entity provides a stable semantic anchor linking product-level definitions and baseline
+  evolution to program-level accountability and launch readiness context.
+
+semantic_scope:
+  includes:
+    - Program-level product development context.
+    - Linkage to product definitions and baseline states.
+    - Program-level governance semantics for lifecycle execution.
+  excludes:
+    - Single engineering artifacts managed outside program context.
+
+standards_alignment:
+  iso_15288:
+    concept: Technical management and lifecycle process integration
+    notes: Aligns with lifecycle coordination and governance roles.
+  local_reference:
+    concept: Program and technical baseline maturity guidance
+    notes: Derived from engineering manual program definition concepts.
+
+ownership:
+  business_owner: Program Management
+  semantic_owner: Systems Engineering / Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: Program governance systems
+  authoritative_artifact: Program management and engineering baseline records
+  authoritative_process: Program definition and governance process
+
+attributes:
+  - name: id
+    description: Unique program identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable program name.
+    required: true
+    datatype: string
+  - name: scope
+    description: Program scope across product and lifecycle boundaries.
+    required: true
+    datatype: string
+  - name: status
+    description: Program lifecycle status.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: governs
+    target_entity: ProductDefinition
+    cardinality: one-to-many
+    required: false
+    description: Program governance context applies to product definitions.
+  - predicate: owns
+    target_entity: TechnicalBaseline
+    cardinality: one-to-many
+    required: false
+    description: Program owns the technical baseline context for development maturity.
+
+lifecycle_states:
+  - conceived
+  - defined
+  - in_development
+  - launched
+  - in_service
+  - closed
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - development program
+
+not_to_be_confused_with:
+  - concept: ProductDefinition
+    distinction: Program defines execution context; product definition captures technical content.
+
+examples:
+  - name: Derivative aircraft development program
+    description: Program that governs technical baseline and product definition evolution for a derivative model.
+
+anti_examples:
+  - name: Single change order
+    description: A single change order does not represent full program context.
+
+open_questions:
+  - Should program phase gates be modeled as separate entities in a later wave?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

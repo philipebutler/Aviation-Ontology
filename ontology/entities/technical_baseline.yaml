@@ -1,0 +1,107 @@
+id: entity.technical_baseline
+name: TechnicalBaseline
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The validated technical reference state used to guide and constrain ongoing product definition decisions.
+
+canonical_definition: >
+  TechnicalBaseline is the validated and governed technical reference for product definition
+  maturity at a point in time, including approved assumptions, architecture intent, and
+  accepted design definition context used for trade studies and downstream decisions.
+
+purpose: >
+  Technical baseline semantics provide a stable technical anchor that reduces ambiguity,
+  improves cross-discipline consistency, and constrains uncontrolled design drift.
+
+semantic_scope:
+  includes:
+    - Validated technical reference states.
+    - Baseline assumptions and accepted design context.
+    - Traceable baseline updates through governed change.
+  excludes:
+    - Informal working assumptions without governance.
+
+standards_alignment:
+  iso_15288:
+    concept: Technical baseline management and architecture evolution
+    notes: Aligns with lifecycle technical governance.
+  local_reference:
+    concept: ADD/SDD baseline maturity concepts
+    notes: Derived from E463089 baseline guidance semantics.
+
+ownership:
+  business_owner: Systems Engineering
+  semantic_owner: Systems Engineering / Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: Engineering baseline repository
+  authoritative_artifact: Approved technical baseline package and change log
+  authoritative_process: Technical baseline establishment and update process
+
+attributes:
+  - name: id
+    description: Unique technical baseline identifier.
+    required: true
+    datatype: string
+  - name: baseline_date
+    description: Date of baseline approval or validation.
+    required: true
+    datatype: date
+  - name: status
+    description: Baseline lifecycle status.
+    required: true
+    datatype: string
+  - name: rationale
+    description: Summary of technical basis and assumptions.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: constrains
+    target_entity: ProductDefinition
+    cardinality: one-to-many
+    required: false
+    description: Technical baseline constrains product definition evolution.
+  - predicate: informed_by
+    target_entity: VerificationRequirement
+    cardinality: many-to-many
+    required: false
+    description: Verification requirements inform confidence and maturity of the baseline.
+
+lifecycle_states:
+  - drafted
+  - validated
+  - approved
+  - active
+  - superseded
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - validated technical baseline
+
+not_to_be_confused_with:
+  - concept: ConfigurationBaseline
+    distinction: Technical baseline emphasizes engineering maturity and assumptions; configuration baseline emphasizes approved configuration control state.
+
+examples:
+  - name: System functional review baseline
+    description: Validated technical baseline used to proceed into subsequent design phases.
+
+anti_examples:
+  - name: Personal design notes
+    description: Personal notes do not constitute a governed technical baseline.
+
+open_questions:
+  - Should technical baseline snapshots be represented as linked configuration baselines?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

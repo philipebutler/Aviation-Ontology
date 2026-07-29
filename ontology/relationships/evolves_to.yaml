@@ -1,0 +1,57 @@
+id: relationship.evolves_to
+name: Evolves To
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: evolves_to
+inverse_predicate: evolved_from
+
+summary: >
+  Indicates controlled maturation from one baseline state into another baseline state.
+
+canonical_definition: >
+  The evolves_to relationship links a source baseline state to a target baseline state that
+  represents approved maturation and evolution under controlled configuration governance.
+
+source_entity: DesignReleaseBaseline
+target_entity: ProductBaseline
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: many-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Evolution should be traceable through approved baseline changes.
+
+lifecycle_constraints:
+  - Evolution links should be established at transition or release milestones.
+
+source_of_authority:
+  system_of_record: PLM / CM baseline repositories
+  authoritative_process: Design release and product baseline transition process
+
+examples:
+  - source: DRB-27
+    relationship: evolves_to
+    target: PBL-27
+    explanation: Controlled design release state matures into approved product baseline state.
+
+anti_examples:
+  - source: Uncontrolled draft
+    relationship: evolves_to
+    target: Product baseline
+    explanation: Uncontrolled drafts cannot be baseline evolution predecessors.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

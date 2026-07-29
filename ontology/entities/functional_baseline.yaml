@@ -1,0 +1,93 @@
+id: entity.functional_baseline
+name: FunctionalBaseline
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The baseline state capturing approved functional and performance requirements for a configured item or system.
+
+canonical_definition: >
+  FunctionalBaseline is the approved configuration baseline state that defines functional,
+  performance, interoperability, and interface requirement context for controlled items.
+
+purpose: >
+  Functional baseline semantics anchor early formal requirement-level control and provide
+  traceable predecessor context for allocated and product baseline evolution.
+
+semantic_scope:
+  includes:
+    - Approved functional/performance requirement state.
+    - Interface and interoperability requirement baseline context.
+  excludes:
+    - Detailed build-to physical design content.
+
+standards_alignment:
+  eia_649_2a:
+    concept: Functional baseline (FBL)
+    notes: Aligns with formal baseline progression semantics.
+
+ownership:
+  business_owner: Systems Engineering
+  semantic_owner: Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / requirements baseline repository
+  authoritative_artifact: Approved functional baseline package
+  authoritative_process: Baseline approval process
+
+attributes:
+  - name: id
+    description: Unique functional baseline identifier.
+    required: true
+    datatype: string
+  - name: status
+    description: Baseline status.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: precedes
+    target_entity: AllocatedBaseline
+    cardinality: one-to-many
+    required: false
+    description: Functional baseline precedes allocated baseline refinement.
+  - predicate: references
+    target_entity: ConfigurationBaseline
+    cardinality: many-to-one
+    required: false
+    description: Functional baseline specialization references general baseline semantics.
+
+lifecycle_states:
+  - proposed
+  - approved
+  - active
+  - superseded
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - FBL
+
+not_to_be_confused_with:
+  - concept: ProductBaseline
+    distinction: Functional baseline defines what is required; product baseline defines build-level realization details.
+
+examples:
+  - name: Flight control functional baseline
+    description: Approved functional baseline for flight control requirements and interfaces.
+
+anti_examples:
+  - name: Detailed production drawing set
+    description: Drawing sets represent later product baseline content.
+
+open_questions:
+  - Should this entity remain separate or be represented by baseline_type in configuration_baseline?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.

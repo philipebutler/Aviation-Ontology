@@ -1,0 +1,57 @@
+id: relationship.classified_as_internal
+name: Classified As Internal
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: classified_as_internal
+inverse_predicate: classifies_change
+
+summary: >
+  Links a governed change to its internal enterprise classification record.
+
+canonical_definition: >
+  The classified_as_internal relationship connects a Change to the internal class assignment
+  used to govern internal approvals, effectivity, and implementation obligations.
+
+source_entity: Change
+target_entity: ChangeClassificationInternal
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Internal class semantics may coexist with FAA classification.
+
+lifecycle_constraints:
+  - Internal classification should be available before approval routing is completed.
+
+source_of_authority:
+  system_of_record: CM / PLM system
+  authoritative_process: Internal change classification process
+
+examples:
+  - source: Supplier alternate material update
+    relationship: classified_as_internal
+    target: Class IIB
+    explanation: Internal class assignment drives review and implementation path.
+
+anti_examples:
+  - source: Change
+    relationship: classified_as_internal
+    target: FAA Major
+    explanation: FAA class belongs in regulatory classification relation.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-07-29
+    author: GitHub Copilot
+    description: Initial draft.
