@@ -1,0 +1,115 @@
+id: entity.material
+name: Material
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  The governed specification of the physical substance from which a part or assembly is made.
+
+canonical_definition: >
+  A Material is an approved, specification-controlled substance or compound assigned to
+  a part or assembly to define its physical, mechanical, chemical, or environmental
+  properties. It is distinct from the part itself and may be shared across multiple parts.
+
+purpose: >
+  Material provides traceability between part design intent and physical substance
+  specifications, enabling material qualification, substitution control, obsolescence
+  management, and manufacturing process planning.
+
+semantic_scope:
+  includes:
+    - Metals, alloys, composites, polymers, and other engineering materials.
+    - Material specifications controlled under approved specification documents.
+    - Materials assigned to parts for manufacturing or analysis.
+  excludes:
+    - Coatings and surface treatments unless modeled as distinct material specifications.
+    - Process parameters that depend on material but are not the material itself.
+
+standards_alignment:
+  step_iso_10303:
+    concept: material_designation and material_property in AP242 and AP210
+    notes: Material specifications align with STEP material property and designation constructs.
+  other:
+    - standard: AMS / ASTM / MIL-SPEC
+      concept: Material specification control
+      notes: Material entities should reference governing specification identifiers.
+
+ownership:
+  business_owner: Engineering / Materials and Processes
+  semantic_owner: Product Definition / Materials Engineering
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / Material specification database
+  authoritative_artifact: Approved material specification
+  authoritative_process: Materials qualification and approval process
+
+attributes:
+  - name: id
+    description: Unique material identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable material name or alloy designation.
+    required: true
+    datatype: string
+  - name: specification
+    description: Governing specification identifier, such as AMS 2770 or ASTM B209.
+    required: true
+    datatype: string
+  - name: material_class
+    description: High-level material category such as metal, composite, or polymer.
+    required: false
+    datatype: string
+  - name: qualification_status
+    description: Approval or qualification state for use in production.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: used_by
+    target_entity: Part
+    cardinality: one-to-many
+    required: false
+    description: One or more parts are made from this material.
+
+lifecycle_states:
+  - proposed
+  - under_qualification
+  - qualified
+  - approved
+  - restricted
+  - obsolete
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - material specification
+  - alloy designation
+
+not_to_be_confused_with:
+  - concept: Part
+    distinction: A part is the designed item; material is the substance specification it is made from.
+  - concept: ShapeRepresentation
+    distinction: Shape representation encodes geometry; material defines physical substance properties.
+
+examples:
+  - name: 7075-T73 aluminum alloy
+    description: High-strength aluminum alloy commonly used in aircraft structural parts per AMS 2770.
+  - name: Carbon fiber reinforced polymer
+    description: Composite material used in control surfaces and structural panels.
+
+anti_examples:
+  - name: Surface primer coat
+    description: A primer is a surface treatment process, not a structural material specification.
+
+open_questions:
+  - Should material grades and tempers be modeled as child entities or as attribute values?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-15
+    author: GitHub Copilot
+    description: Initial definition. Added to support part-to-material traceability in product structure.

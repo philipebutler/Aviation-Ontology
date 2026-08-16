@@ -1,0 +1,64 @@
+id: relationship.has_child
+name: Has Child
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: has_child
+inverse_predicate: child_of
+
+summary: >
+  Links an assembly to its constituent child parts or sub-assemblies.
+
+canonical_definition: >
+  The has_child relationship asserts that a target Part or Assembly is a direct
+  structural constituent of the source Assembly. This captures one level of the
+  product structure hierarchy without implying any usage context or quantity.
+
+source_entity: Assembly
+target_entity: Part
+
+cardinality:
+  source_to_target: one-to-many
+  target_to_source: many-to-one
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Target may be a Part or a sub-Assembly (which specializes Part).
+  - Has_child captures type-level structure; for usage-level structure with quantity and
+    effectivity see ProductStructureOccurrence.
+
+lifecycle_constraints:
+  - Child relationships should be stable at released baseline.
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_process: Product structure release process
+
+examples:
+  - source: Wing spar assembly
+    relationship: has_child
+    target: Spar cap part
+    explanation: The spar cap is a direct constituent of the wing spar assembly.
+  - source: Wing spar assembly
+    relationship: has_child
+    target: Fastener sub-assembly
+    explanation: The fastener kit is a sub-assembly nested inside the spar assembly.
+
+anti_examples:
+  - source: Assembly
+    relationship: has_child
+    target: Material specification
+    explanation: Material is not a child in the structural hierarchy; use has_material.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-15
+    author: GitHub Copilot
+    description: Initial definition supporting assembly-to-part and assembly-to-assembly composition.

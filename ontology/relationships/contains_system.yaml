@@ -1,0 +1,59 @@
+id: relationship.contains_system
+name: Contains System
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: contains_system
+inverse_predicate: contained_in
+
+summary: >
+  Links an aircraft to the aircraft systems it architecturally contains.
+
+canonical_definition: >
+  The contains_system relationship asserts that a target AircraftSystem is an integral,
+  governed element of the source Aircraft, contributing to its capability and subject to
+  its airworthiness and configuration governance.
+
+source_entity: Aircraft
+target_entity: AircraftSystem
+
+cardinality:
+  source_to_target: one-to-many
+  target_to_source: many-to-one
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - Target must be an AircraftSystem scoped to the source aircraft context.
+  - A contained system's lifecycle and certification obligations are governed under the parent aircraft type design.
+
+lifecycle_constraints:
+  - Containment links should be established by architecture definition and stable at product baseline.
+
+source_of_authority:
+  system_of_record: PLM / systems architecture toolset
+  authoritative_process: Aircraft systems architecture decomposition process
+
+examples:
+  - source: Commercial Transport Aircraft Model X
+    relationship: contains_system
+    target: Flight Control System
+    explanation: The flight control system is an integral, certified system of the aircraft.
+
+anti_examples:
+  - source: Aircraft
+    relationship: contains_system
+    target: Ground Power Unit
+    explanation: Ground support equipment is not an aircraft system contained within the aircraft.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-15
+    author: GitHub Copilot
+    description: Initial definition linking Aircraft to its contained AircraftSystem elements.

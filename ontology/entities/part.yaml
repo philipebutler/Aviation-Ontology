@@ -69,6 +69,11 @@ relationships:
     cardinality: many-to-many
     required: false
     description: A part may realize a system or system element.
+  - predicate: has_material
+    target_entity: Material
+    cardinality: many-to-many
+    required: false
+    description: A part is made from one or more governed material specifications.
   - predicate: changed_by
     target_entity: Change
     cardinality: many-to-many

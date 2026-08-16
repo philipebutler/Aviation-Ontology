@@ -1,0 +1,162 @@
+id: entity.aircraft
+name: Aircraft
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A governed, certifiable, airborne vehicle that is simultaneously a product identity and a system.
+
+canonical_definition: >
+  An Aircraft is an engineered vehicle designed to operate in the atmosphere, carrying payload
+  or performing missions. It is both a Product — maintaining stable identity across versions,
+  configurations, and variants — and a System — comprised of interacting subsystems and
+  elements that together deliver flight capability.
+
+purpose: >
+  Aircraft is the top-level semantic anchor for aviation ontology domains including product
+  configuration, systems architecture, certification, change management, and lifecycle governance.
+  Modeling it as both Product and System enables traceability across PLM, systems engineering,
+  and airworthiness processes.
+
+semantic_scope:
+  includes:
+    - Fixed-wing aircraft.
+    - Rotorcraft.
+    - Unmanned aerial vehicles (UAV/UAS) governed under airworthiness frameworks.
+    - Aircraft in any lifecycle state from design through retirement.
+  excludes:
+    - Individual aircraft installation occurrences (see ProductStructureOccurrence).
+    - Aircraft components or subsystems considered independently.
+    - Ground support equipment, even if associated with an aircraft program.
+
+standards_alignment:
+  sysml:
+    concept: PartDefinition / system-of-interest
+    notes: Aircraft is the primary system-of-interest in the SysML architectural model.
+  iso_15288:
+    concept: System-of-interest
+    notes: Aircraft is the top-level system-of-interest across all lifecycle stages.
+  step_iso_10303:
+    concept: product (ISO 10303-41), AP242 aircraft assembly context
+    notes: Aircraft maps to the top-level product identity in STEP-based digital thread frameworks.
+  far_cs:
+    concept: Aircraft type design
+    notes: Aircraft aligns with the certified type design, change to which requires regulatory approval.
+
+ownership:
+  business_owner: Chief Engineering Office
+  semantic_owner: Systems Engineering
+  steward: Configuration Management
+  approving_authority: Chief Engineering Office
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Aircraft product master and type certificate basis
+  authoritative_process: Type design definition and configuration management process
+
+attributes:
+  - name: id
+    description: Unique aircraft identity, typically a model or type designator.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable aircraft name or model designation.
+    required: true
+    datatype: string
+  - name: aircraft_category
+    description: Regulatory or architectural category such as transport, general aviation, or rotorcraft.
+    required: false
+    datatype: string
+  - name: certification_basis
+    description: Regulatory framework under which the aircraft is certified, such as FAR Part 25 or CS-25.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: specializes
+    target_entity: System
+    cardinality: many-to-one
+    required: true
+    description: An aircraft is a system — a bounded arrangement of interacting subsystems providing flight capability.
+  - predicate: specializes
+    target_entity: Product
+    cardinality: many-to-one
+    required: true
+    description: An aircraft is a product — a stable PLM identity anchor spanning configurations, versions, and variants.
+  - predicate: developed_under
+    target_entity: AircraftDevelopmentProgram
+    cardinality: many-to-one
+    required: false
+    description: Aircraft is the primary product deliverable of an aircraft development program.
+  - predicate: has_technical_baseline
+    target_entity: TechnicalBaseline
+    cardinality: one-to-many
+    required: false
+    description: Aircraft definition is anchored by one or more governed technical baselines.
+  - predicate: subject_to
+    target_entity: ConfigurationBaseline
+    cardinality: one-to-many
+    required: false
+    description: Aircraft configuration is controlled against approved configuration baselines.
+  - predicate: contains_system
+    target_entity: AircraftSystem
+    cardinality: one-to-many
+    required: false
+    description: Aircraft is architecturally decomposed into governed aircraft systems.
+  - predicate: governed_by
+    target_entity: ChangeControlBoard
+    cardinality: many-to-many
+    required: false
+    description: Aircraft configuration changes are governed through designated change control boards.
+  - predicate: has_requirement
+    target_entity: Requirement
+    cardinality: one-to-many
+    required: false
+    description: Requirements directly obligating this aircraft type design.
+
+lifecycle_states:
+  - concept
+  - development
+  - certification
+  - production
+  - in_service
+  - retired
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - airplane
+  - rotorcraft
+  - aircraft model
+  - type design
+
+not_to_be_confused_with:
+  - concept: AircraftDevelopmentProgram
+    distinction: A program is the organizational and governance construct; an aircraft is the product and system being developed.
+  - concept: ProductStructureOccurrence
+    distinction: A specific aircraft serial number is a usage occurrence; the aircraft entity is the type-level identity.
+  - concept: Part
+    distinction: Parts are managed physical elements within the aircraft; the aircraft itself is the top-level product and system.
+
+examples:
+  - name: Commercial transport aircraft
+    description: A FAR Part 25 certified large transport category aircraft with a stable product identity across multiple variants and serial numbers.
+  - name: Rotorcraft
+    description: A rotary-wing aircraft governed under FAR Part 27 or Part 29, modeled as both a product and a system-of-interest.
+
+anti_examples:
+  - name: Aircraft engine
+    description: An engine is a product and may be a system, but is not itself an aircraft.
+  - name: Aircraft serial number 1007
+    description: A specific serial number is a product structure occurrence, not the aircraft type-level entity.
+
+open_questions:
+  - Should UAV/UAS be a separate specialization of Aircraft, or modeled as an aircraft_category value?
+  - Should aircraft variants be separate Aircraft entities or Variant instances under the parent identity?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-15
+    author: GitHub Copilot
+    description: Initial definition. Aircraft is both a System and a Product.

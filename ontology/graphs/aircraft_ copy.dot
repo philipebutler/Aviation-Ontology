@@ -1,0 +1,141 @@
+digraph aircraft {
+    
+    rankdir=BT
+    
+    graph [
+        label="Aircraft — Product Domain + Requirements\nAviation Ontology · entity.aircraft v0.1.0"
+        labelloc=t
+        fontname="Helvetica Neue, Helvetica, Arial, sans-serif"
+        fontsize=12
+        bgcolor="white"
+        nodesep=0.7
+        ranksep=1.1
+        pad=0.5
+        splines=ortho
+    ]
+
+    node [
+        fontname="Helvetica Neue, Helvetica, Arial, sans-serif"
+        fontsize=11
+        shape=box
+        style="rounded,filled"
+        penwidth=1.5
+        margin="0.2,0.12"
+    ]
+
+    edge [
+        fontname="Helvetica Neue, Helvetica, Arial, sans-serif"
+        fontsize=10
+    ]
+
+    // ── Parent abstract concept ─────────────────────────────────────────────────────────
+    Product [
+        label="Product\n(entity.product)"
+        fillcolor="#dce8f7"
+        color="#3a5f8a"
+        fontcolor="#1a3a60"
+    ]
+
+    // ── Focal node ─────────────────────────────────────────────────────────────────────
+    Aircraft [
+        label="Aircraft\n(entity.aircraft)"
+        fillcolor="#0d3d6e"
+        color="#f0a500"
+        fontcolor="white"
+        penwidth=3.0
+        fontsize=13
+    ]
+
+    // ── Product Variant  ─────────────────────────────────────────────────────────
+    Variant [
+        label="Variant\n(entity.variant)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    ProductVersion [
+        label="ProductVersion\n(entity.product_version)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    System [
+        label="System\n(entity.system)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    Function [
+        label="Function\n(entity.function)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    Requirement [
+        label="Requirement\n(entity.requirement)"
+        fillcolor="#f7e8dc"
+        color="#8a5f3a"
+        fontcolor="#603a1a"
+    ]
+
+    Assembly [
+        label="Assembly\n(entity.assembly)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    Part [
+        label="Part\n(entity.part)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    Material [
+        label="Material\n(entity.material)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+// edges
+//IS-A
+Aircraft -> Product [
+    label="  is_a  "
+    style=dashed
+    arrowhead=empty
+    penwidth=2.0
+    color="#1a4f87"
+    fontcolor="#1a4f87"
+]
+
+//HAS-A
+Variant -> Aircraft [
+    label="  has_a [1..*]  "
+    penwidth=2.0
+    color="#5050b0"
+    fontcolor="#5050b0"
+]
+ProductVersion -> Variant [
+    label="  has_a [1..*]  "
+    penwidth=2.0
+    color="#5050b0"
+    fontcolor="#5050b0"
+]
+
+ProductVersion -> Assembly [ label="  has_a [1..*]  "  penwidth=2.0]
+Assembly -> Assembly [ label="  has_a [0..*]  "  penwidth=2.0]
+Assembly -> Part [ label="  has_a [1..*]  "  penwidth=2.0]
+Part -> Material [ label="  has_a [1..*]  "  penwidth=2.0]
+ProductVersion -> System [ label="  has_a [1..*]  "  penwidth=2.0]
+Assembly -> System [ label="  has_a [0..*]  "  penwidth=2.0]
+System -> System [ label="  has_a [0..*]  "  penwidth=2.0]
+Function -> System [ label="  allocates_to  "  penwidth=2.0]
+Requirement -> Function [ label="  satisfies  "  penwidth=2.0]
+Requirement -> ProductVersion [ label="  constrains  "  penwidth=2.0]      
+}

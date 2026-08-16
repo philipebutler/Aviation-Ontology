@@ -1,0 +1,179 @@
+// Aviation Ontology — Aircraft Product Domain with Requirements
+// entity.aircraft · product identity chain + requirements traceability
+// Render: dot -Tsvg aircraft-product.dot -o aircraft-product.svg
+
+digraph AircraftProductDomain {
+
+    rankdir=TB
+    graph [
+        label="Aircraft — Product Domain + Requirements\nAviation Ontology · entity.aircraft v0.1.0"
+        labelloc=t
+        fontname="Helvetica Neue, Helvetica, Arial, sans-serif"
+        fontsize=12
+        bgcolor="white"
+        nodesep=0.7
+        ranksep=1.1
+        pad=0.5
+        splines=ortho
+    ]
+    node [
+        fontname="Helvetica Neue, Helvetica, Arial, sans-serif"
+        fontsize=11
+        shape=box
+        style="rounded,filled"
+        penwidth=1.5
+        margin="0.2,0.12"
+    ]
+    edge [
+        fontname="Helvetica Neue, Helvetica, Arial, sans-serif"
+        fontsize=10
+    ]
+
+    // ── Parent abstract concept ────────────────────────────────────────────
+    Product [
+        label="Product\n(entity.product)"
+        fillcolor="#dce8f7"
+        color="#3a5f8a"
+        fontcolor="#1a3a60"
+    ]
+
+    // ── Focal node ─────────────────────────────────────────────────────────
+    Aircraft [
+        label="Aircraft\n(entity.aircraft)"
+        fillcolor="#0d3d6e"
+        color="#f0a500"
+        fontcolor="white"
+        penwidth=3.0
+        fontsize=13
+    ]
+
+    // ── Product identity chain ─────────────────────────────────────────────
+    ProductVersion [
+        label="ProductVersion\n(entity.product_version)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    Variant [
+        label="Variant\n(entity.variant)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    ProductDefinition [
+        label="ProductDefinition\n(entity.product_definition)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    ProductStructureOccurrence [
+        label="ProductStructureOccurrence\n(entity.product_structure_occurrence)"
+        fillcolor="#dcdcf8"
+        color="#5050b0"
+        fontcolor="#1a1a6e"
+    ]
+
+    // ── Requirements domain ────────────────────────────────────────────────
+    subgraph cluster_req {
+        label="Requirements Domain"
+        style="rounded,filled"
+        bgcolor="#fdf5e6"
+        color="#b87000"
+        fontcolor="#7a4a00"
+        fontsize=10
+
+        Requirement [
+            label="Requirement\n(entity.requirement)"
+            fillcolor="#fce8c0"
+            color="#c87800"
+            fontcolor="#5a3000"
+        ]
+
+        VerificationRequirement [
+            label="VerificationRequirement\n(entity.verification_requirement)"
+            fillcolor="#fce8c0"
+            color="#c87800"
+            fontcolor="#5a3000"
+        ]
+
+        VerificationArtifact [
+            label="VerificationArtifact\n(entity.verification_artifact)"
+            fillcolor="#fce8c0"
+            color="#c87800"
+            fontcolor="#5a3000"
+        ]
+    }
+
+    // ── Technical baseline — bridge between requirements and product ────────
+    TechnicalBaseline [
+        label="TechnicalBaseline\n(entity.technical_baseline)"
+        fillcolor="#fff0cc"
+        color="#b87000"
+        fontcolor="#5a3000"
+        style="rounded,filled"
+        penwidth=1.5
+    ]
+
+    // ── Physical realization ───────────────────────────────────────────────
+    Part [
+        label="Part\n(entity.part)"
+        fillcolor="#d8f0d8"
+        color="#2d6a2d"
+        fontcolor="#1a3e1a"
+    ]
+
+    ShapeRepresentation [
+        label="ShapeRepresentation\n(entity.shape_representation)"
+        fillcolor="#d8f0d8"
+        color="#2d6a2d"
+        fontcolor="#1a3e1a"
+    ]
+
+    // ── Edges ──────────────────────────────────────────────────────────────
+
+    // IS-A
+    Aircraft -> Product [
+        label="  specializes  "
+        style=dashed
+        arrowhead=empty
+        penwidth=2.0
+        color="#1a4f87"
+        fontcolor="#1a4f87"
+    ]
+
+    // Product identity chain
+    Product        -> ProductVersion   [ label="  has_version [1..*]  "  penwidth=1.8  color="#5050b0"  fontcolor="#5050b0" ]
+    Product        -> Variant          [ label="  has_variant [0..*]  "  color="#5050b0"  fontcolor="#5050b0" ]
+    Variant        -> ProductVersion   [ label="  has_variant_version [0..*]  "  style=dashed  color="#5050b0"  fontcolor="#5050b0" ]
+    ProductVersion -> ProductDefinition [ label="  defines [0..*]  "  penwidth=1.8  color="#5050b0"  fontcolor="#5050b0" ]
+
+    // Structure decomposition
+    ProductDefinition -> ProductStructureOccurrence [ label="  has_occurrence [0..*]  "  color="#5050b0"  fontcolor="#5050b0" ]
+    ProductStructureOccurrence -> ProductDefinition [ label="  references_child_definition  "  style=dashed  color="#5050b0"  fontcolor="#5050b0" ]
+
+    // Physical realization
+    Product           -> Part                [ label="  corresponds_to  "  style=dashed  color="#2d6a2d"  fontcolor="#2d6a2d" ]
+    ProductDefinition -> ShapeRepresentation  [ label="  represented_by_shape  "  color="#2d6a2d"  fontcolor="#2d6a2d" ]
+
+    // Requirements — internal traceability
+    VerificationRequirement -> Requirement        [ label="  specializes  "   style=dashed  arrowhead=empty  penwidth=2.0  color="#b87000"  fontcolor="#b87000" ]
+    VerificationRequirement -> Requirement        [ label="  verifies  "       penwidth=1.8  color="#b87000"  fontcolor="#b87000" ]
+    VerificationRequirement -> VerificationArtifact [ label="  evidenced_by  "  color="#b87000"  fontcolor="#b87000" ]
+    VerificationArtifact    -> Requirement        [ label="  verifies  "       style=dashed  color="#b87000"  fontcolor="#b87000" ]
+
+    // Requirements — direct allocation to aircraft, product, and product definition
+    Requirement -> Aircraft           [ label="  applies_to  "  penwidth=2.0  color="#b87000"  fontcolor="#b87000" ]
+    Requirement -> Product            [ label="  applies_to  "  penwidth=1.8  color="#b87000"  fontcolor="#b87000" ]
+    Requirement -> ProductDefinition  [ label="  applies_to  "  style=dashed  color="#b87000"  fontcolor="#b87000" ]
+
+    // Verification artifact closes the loop back to aircraft/product
+    VerificationArtifact -> Aircraft  [ label="  supports_certification_of  "  style=dashed  color="#b87000"  fontcolor="#b87000" ]
+
+    // Requirements — bridge to product definition via technical baseline
+    TechnicalBaseline -> ProductDefinition       [ label="  constrains  "  penwidth=1.8  color="#b87000"  fontcolor="#b87000" ]
+    TechnicalBaseline -> VerificationRequirement [ label="  informed_by  "  style=dashed  color="#b87000"  fontcolor="#b87000" ]
+
+}

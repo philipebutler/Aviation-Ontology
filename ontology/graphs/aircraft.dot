@@ -1,0 +1,515 @@
+// Aviation Ontology — Aircraft Entity Graph
+// entity.aircraft v0.1.0
+// Render: dot -Tsvg aircraft.dot -o aircraft.svg  |  dot -Tpng -Gdpi=150 aircraft.dot -o aircraft.png
+
+digraph AircraftOntology {
+
+    // ── Global layout ──────────────────────────────────────────────────────
+    rankdir=TB
+    graph [
+        label="Aircraft — Ontology Graph\nAviation Ontology · entity.aircraft v0.1.0"
+        labelloc=t
+        fontname="Helvetica Neue, Helvetica, Arial, sans-serif"
+        fontsize=13
+        bgcolor="#f5f7fa"
+        nodesep=0.55
+        ranksep=1.0
+        pad=0.6
+        splines=ortho
+    ]
+    node [ fontname="Helvetica Neue, Helvetica, Arial, sans-serif" fontsize=10 shape=none margin=0 ]
+    edge [ fontname="Helvetica Neue, Helvetica, Arial, sans-serif" fontsize=9 ]
+
+    // ── Legend key ─────────────────────────────────────────────────────────
+    // Arrow styles:
+    //   empty arrowhead  = specializes (IS-A)
+    //   normal arrowhead = directed relationship
+    //   dashed line      = optional / secondary relationship
+    //   ★ in attribute   = required attribute
+
+    // ══════════════════════════════════════════════════════════════════════
+    // ABSTRACT PARENT CONCEPTS
+    // ══════════════════════════════════════════════════════════════════════
+    subgraph cluster_abstract {
+        label="Abstract Parent Concepts"
+        style=filled
+        bgcolor="#eaf0f8"
+        color="#8aaace"
+        fontcolor="#3a5f8a"
+        fontsize=10
+
+        System [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#dce8f7" COLOR="#3a5f8a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#3a5f8a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>System</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#4a70a0">
+                    <FONT COLOR="#ddf0ff" POINT-SIZE="8">entity.system · ISO 15288 · SysML</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">boundary_description</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>owner</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        Product [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#dce8f7" COLOR="#3a5f8a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#3a5f8a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>Product</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#4a70a0">
+                    <FONT COLOR="#ddf0ff" POINT-SIZE="8">entity.product · ISO 10303-41 · PLM identity anchor</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">product_type</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD ALIGN="LEFT">description</TD><TD ALIGN="LEFT">string</TD></TR>
+            </TABLE>
+        >]
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // FOCAL NODE — AIRCRAFT
+    // ══════════════════════════════════════════════════════════════════════
+    Aircraft [label=<
+        <TABLE BORDER="3" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#0d3d6e" COLOR="#f0a500" CELLPADDING="4">
+            <TR><TD COLSPAN="2" BGCOLOR="#0d3d6e" ALIGN="CENTER">
+                <FONT COLOR="white" POINT-SIZE="14"><B>Aircraft</B></FONT></TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#144d8a">
+                <FONT COLOR="#9fd0ff" POINT-SIZE="8">entity.aircraft · draft v0.1.0 · ISO 15288 / ISO 10303-41 / FAR 14 CFR</FONT></TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#0d3d6e">
+                <FONT COLOR="#b0cce8" POINT-SIZE="8"><I>A governed certifiable airborne vehicle — simultaneously a Product and a System</I></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><FONT COLOR="white"><B>id</B></FONT></TD>
+                <TD ALIGN="LEFT"><FONT COLOR="#9fd0ff">string &#9733;</FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><FONT COLOR="white"><B>name</B></FONT></TD>
+                <TD ALIGN="LEFT"><FONT COLOR="#9fd0ff">string &#9733;</FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><FONT COLOR="white">aircraft_category</FONT></TD>
+                <TD ALIGN="LEFT"><FONT COLOR="#7ab8e8">string (transport / GA / rotorcraft)</FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><FONT COLOR="white">certification_basis</FONT></TD>
+                <TD ALIGN="LEFT"><FONT COLOR="#7ab8e8">string (FAR Part 25 / CS-25 / etc.)</FONT></TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#0a2e54">
+                <FONT COLOR="#4a9fd4" POINT-SIZE="7">Lifecycle: concept &#8594; development &#8594; certification &#8594; production &#8594; in_service &#8594; retired</FONT></TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#0a2e54">
+                <FONT COLOR="#4a9fd4" POINT-SIZE="7">Aliases: airplane · rotorcraft · aircraft model · type design</FONT></TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#0a2e54">
+                <FONT COLOR="#4a9fd4" POINT-SIZE="7">SoR: PLM · Auth: Aircraft product master and type certificate basis</FONT></TD></TR>
+            <TR><TD COLSPAN="2" BGCOLOR="#0a2e54">
+                <FONT COLOR="#4a9fd4" POINT-SIZE="7">Owner: Chief Engineering Office · Semantic: Systems Engineering · Steward: CM</FONT></TD></TR>
+        </TABLE>
+    >]
+
+    // ══════════════════════════════════════════════════════════════════════
+    // SYSTEMS ENGINEERING DOMAIN
+    // ══════════════════════════════════════════════════════════════════════
+    subgraph cluster_se {
+        label="Systems Engineering Domain"
+        style=filled
+        bgcolor="#eef6ee"
+        color="#5a9a5a"
+        fontcolor="#2d6a2d"
+        fontsize=10
+
+        AircraftSystem [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#d8f0d8" COLOR="#2d6a2d" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#2d6a2d" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>AircraftSystem</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#3a7e3a">
+                    <FONT COLOR="#ccffcc" POINT-SIZE="8">entity.aircraft_system · specializes System · ARP4754A</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">ata_chapter</TD><TD ALIGN="LEFT">string (ATA iSpec 2200)</TD></TR>
+                <TR><TD ALIGN="LEFT">development_assurance_level</TD><TD ALIGN="LEFT">DAL A–E (ARP4754A)</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#1e4e1e">
+                    <FONT COLOR="#88cc88" POINT-SIZE="7">Lifecycle: concept &#8594; development &#8594; qualification &#8594; released &#8594; in_service &#8594; retired</FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#1e4e1e">
+                    <FONT COLOR="#88cc88" POINT-SIZE="7">Examples: flight controls · propulsion · avionics · structures · hydraulics</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        Function [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#d8f0d8" COLOR="#2d6a2d" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#2d6a2d" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>Function</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#3a7e3a">
+                    <FONT COLOR="#ccffcc" POINT-SIZE="8">entity.function · ISO 15288 · SysML action/behaviour</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">verb-noun phrase &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>description</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">owner</TD><TD ALIGN="LEFT">string</TD></TR>
+            </TABLE>
+        >]
+
+        Requirement [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#d8f0d8" COLOR="#2d6a2d" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#2d6a2d" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>Requirement</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#3a7e3a">
+                    <FONT COLOR="#ccffcc" POINT-SIZE="8">entity.requirement · ISO 15288 · SysML RequirementDefinition</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>title</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>text</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">rationale</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>owner</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        Part [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#d8f0d8" COLOR="#2d6a2d" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#2d6a2d" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>Part</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#3a7e3a">
+                    <FONT COLOR="#ccffcc" POINT-SIZE="8">entity.part · ISO 10303-41/42 AP242 · PLM</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">revision</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>lifecycle_state</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        VerificationArtifact [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#d8f0d8" COLOR="#2d6a2d" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#2d6a2d" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>VerificationArtifact</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#3a7e3a">
+                    <FONT COLOR="#ccffcc" POINT-SIZE="8">entity.verification_artifact</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>artifact_type</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // PROGRAM DOMAIN
+    // ══════════════════════════════════════════════════════════════════════
+    subgraph cluster_program {
+        label="Program Domain"
+        style=filled
+        bgcolor="#fdf5e8"
+        color="#c87800"
+        fontcolor="#7a4a00"
+        fontsize=10
+
+        AircraftDevelopmentProgram [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fce8c0" COLOR="#c87800" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c87800" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>AircraftDevelopmentProgram</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d98c00">
+                    <FONT COLOR="#fff3cc" POINT-SIZE="8">entity.aircraft_development_program · ISO 15288</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>scope</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#a86600">
+                    <FONT COLOR="#ffdd88" POINT-SIZE="7">Lifecycle: conceived &#8594; defined &#8594; in_development &#8594; launched &#8594; in_service &#8594; closed</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        TechnicalBaseline [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fce8c0" COLOR="#c87800" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c87800" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>TechnicalBaseline</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d98c00">
+                    <FONT COLOR="#fff3cc" POINT-SIZE="8">entity.technical_baseline · ISO 15288</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>baseline_date</B></TD><TD ALIGN="LEFT">date &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">rationale</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#a86600">
+                    <FONT COLOR="#ffdd88" POINT-SIZE="7">Lifecycle: drafted &#8594; validated &#8594; approved &#8594; active &#8594; superseded</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        ProductDefinition [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fce8c0" COLOR="#c87800" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c87800" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ProductDefinition</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d98c00">
+                    <FONT COLOR="#fff3cc" POINT-SIZE="8">entity.product_definition · ISO 10303-41 product_definition</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>context</B></TD><TD ALIGN="LEFT">string &#9733; (design / mfg / analysis)</TD></TR>
+                <TR><TD ALIGN="LEFT">description</TD><TD ALIGN="LEFT">string</TD></TR>
+            </TABLE>
+        >]
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // CONFIGURATION MANAGEMENT DOMAIN
+    // ══════════════════════════════════════════════════════════════════════
+    subgraph cluster_cm {
+        label="Configuration Management Domain"
+        style=filled
+        bgcolor="#fdf0f8"
+        color="#9a3a7a"
+        fontcolor="#5e1a4a"
+        fontsize=10
+
+        ConfigurationBaseline [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#f5ddf0" COLOR="#9a3a7a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#9a3a7a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ConfigurationBaseline</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#b04a8c">
+                    <FONT COLOR="#ffd0f0" POINT-SIZE="8">entity.configuration_baseline · EIA-649C · ISO 10007</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>effective_date</B></TD><TD ALIGN="LEFT">date &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#6e1e54">
+                    <FONT COLOR="#ddaacc" POINT-SIZE="7">Subtypes: FunctionalBaseline · AllocatedBaseline · ProductBaseline · DesignReleaseBaseline</FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#6e1e54">
+                    <FONT COLOR="#ddaacc" POINT-SIZE="7">Lifecycle: proposed &#8594; approved &#8594; active &#8594; superseded &#8594; retired</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        ConfigurationItem [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#f5ddf0" COLOR="#9a3a7a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#9a3a7a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ConfigurationItem</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#b04a8c">
+                    <FONT COLOR="#ffd0f0" POINT-SIZE="8">entity.configuration_item · CI · EIA-649C · ISO 10007</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">ci_type</TD><TD ALIGN="LEFT">string (HWCI / CSCI)</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#6e1e54">
+                    <FONT COLOR="#ddaacc" POINT-SIZE="7">Lifecycle: identified &#8594; controlled &#8594; released &#8594; maintained &#8594; retired</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        ConfigurationInformation [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#f5ddf0" COLOR="#9a3a7a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#9a3a7a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ConfigurationInformation</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#b04a8c">
+                    <FONT COLOR="#ffd0f0" POINT-SIZE="8">entity.configuration_information · EIA-649C</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>title</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>info_type</B></TD><TD ALIGN="LEFT">string &#9733; (spec / drawing / model)</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        ConfigurationAudit [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#f5ddf0" COLOR="#9a3a7a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#9a3a7a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ConfigurationAudit</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#b04a8c">
+                    <FONT COLOR="#ffd0f0" POINT-SIZE="8">entity.configuration_audit · EIA-649C (FCA / PCA)</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>audit_type</B></TD><TD ALIGN="LEFT">string &#9733; (functional / physical)</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        Effectivity [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#f5ddf0" COLOR="#9a3a7a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#9a3a7a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>Effectivity</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#b04a8c">
+                    <FONT COLOR="#ffd0f0" POINT-SIZE="8">entity.effectivity</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>effectivity_type</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">range</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#6e1e54">
+                    <FONT COLOR="#ddaacc" POINT-SIZE="7">Types: serial · model · block · lot · date · NSR · spares-only</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        ConfigurationStatusAccounting [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#f5ddf0" COLOR="#9a3a7a" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#9a3a7a" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ConfigurationStatusAccounting</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#b04a8c">
+                    <FONT COLOR="#ffd0f0" POINT-SIZE="8">entity.configuration_status_accounting · CSA · EIA-649C</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // CHANGE MANAGEMENT DOMAIN
+    // ══════════════════════════════════════════════════════════════════════
+    subgraph cluster_change {
+        label="Change Management Domain"
+        style=filled
+        bgcolor="#fff0f0"
+        color="#c03030"
+        fontcolor="#6e1010"
+        fontsize=10
+
+        Change [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fdd8d8" COLOR="#c03030" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c03030" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>Change</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d44040">
+                    <FONT COLOR="#ffe0e0" POINT-SIZE="8">entity.change · AP239 · ISO 15288 · EIA-649C</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>title</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>change_type</B></TD><TD ALIGN="LEFT">CR|CO|CA|ECO &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">rationale</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#8c1010">
+                    <FONT COLOR="#ffaaaa" POINT-SIZE="7">Lifecycle: proposed &#8594; under_review &#8594; approved &#8594; in_work &#8594; implemented &#8594; closed · cancelled</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        ChangeRequest [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fdd8d8" COLOR="#c03030" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c03030" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ChangeRequest</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d44040">
+                    <FONT COLOR="#ffe0e0" POINT-SIZE="8">entity.change_request · CR · specializes ChangeAuthorizationArtifact</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>title</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        ChangeOrder [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fdd8d8" COLOR="#c03030" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c03030" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ChangeOrder</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d44040">
+                    <FONT COLOR="#ffe0e0" POINT-SIZE="8">entity.change_order · CO · specializes ChangeAuthorizationArtifact</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>title</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        ChangeControlBoard [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fdd8d8" COLOR="#c03030" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c03030" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ChangeControlBoard</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d44040">
+                    <FONT COLOR="#ffe0e0" POINT-SIZE="8">entity.change_control_board · CCB · specializes ChangeGovernanceAuthority</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>scope</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        ChangeClassification [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fdd8d8" COLOR="#c03030" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c03030" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ChangeClassification</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d44040">
+                    <FONT COLOR="#ffe0e0" POINT-SIZE="8">entity.change_classification · EIA-649C</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>scheme</B></TD><TD ALIGN="LEFT">FAA | internal &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>class_value</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT">rationale</TD><TD ALIGN="LEFT">string</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#8c1010">
+                    <FONT COLOR="#ffaaaa" POINT-SIZE="7">Subtypes: ChangeClassificationFAA (Major/Minor) · ChangeClassificationInternal (Class I/IIA/IIB/IIC/IID)</FONT></TD></TR>
+            </TABLE>
+        >]
+
+        ChangeApprovalAuthority [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#fdd8d8" COLOR="#c03030" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#c03030" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ChangeApprovalAuthority</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#d44040">
+                    <FONT COLOR="#ffe0e0" POINT-SIZE="8">entity.change_approval_authority · specializes ChangeGovernanceAuthority</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>authority_level</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // PLM / PRODUCT CHAIN (inherited from Product parent)
+    // ══════════════════════════════════════════════════════════════════════
+    subgraph cluster_plm {
+        label="PLM / Product Chain"
+        style=filled
+        bgcolor="#f0f0ff"
+        color="#5050b0"
+        fontcolor="#202080"
+        fontsize=10
+
+        ProductVersion [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#dcdcf8" COLOR="#5050b0" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#5050b0" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>ProductVersion</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#6060c0">
+                    <FONT COLOR="#d0d0ff" POINT-SIZE="8">entity.product_version · ISO 10303 product_definition_formation</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>revision</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>status</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+
+        Variant [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#dcdcf8" COLOR="#5050b0" CELLPADDING="3">
+                <TR><TD COLSPAN="2" BGCOLOR="#5050b0" ALIGN="CENTER">
+                    <FONT COLOR="white" POINT-SIZE="11"><B>Variant</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#6060c0">
+                    <FONT COLOR="#d0d0ff" POINT-SIZE="8">entity.variant · AP242 · governed product alternative</FONT></TD></TR>
+                <TR><TD ALIGN="LEFT"><B>id</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+                <TR><TD ALIGN="LEFT"><B>name</B></TD><TD ALIGN="LEFT">string &#9733;</TD></TR>
+            </TABLE>
+        >]
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // EDGES
+    // Style key:
+    //   arrowhead=empty    IS-A / specializes
+    //   style=dashed       secondary or inverse relationship
+    //   penwidth=2+        primary / required
+    // ══════════════════════════════════════════════════════════════════════
+
+    // ── Aircraft IS-A ──────────────────────────────────────────────────────
+    Aircraft -> System      [ label="specializes" style=dashed penwidth=2.5 arrowhead=empty color="#1a4f87" fontcolor="#1a4f87" ]
+    Aircraft -> Product     [ label="specializes" style=dashed penwidth=2.5 arrowhead=empty color="#1a4f87" fontcolor="#1a4f87" ]
+
+    // ── Aircraft direct relationships ─────────────────────────────────────
+    Aircraft -> AircraftDevelopmentProgram  [ label="developed_under"        penwidth=1.5 color="#c87800" fontcolor="#c87800" ]
+    Aircraft -> TechnicalBaseline           [ label="has_technical_baseline"  penwidth=1.5 color="#c87800" fontcolor="#c87800" ]
+    Aircraft -> ConfigurationBaseline       [ label="subject_to"              penwidth=1.5 color="#9a3a7a" fontcolor="#9a3a7a" ]
+    Aircraft -> AircraftSystem              [ label="contains_system"         penwidth=2.5 color="#2d6a2d" fontcolor="#2d6a2d" ]
+    Aircraft -> ChangeControlBoard          [ label="governed_by"             penwidth=1.5 color="#c03030" fontcolor="#c03030" ]
+
+    // ── AircraftSystem IS-A and relationships ─────────────────────────────
+    AircraftSystem -> System            [ label="specializes"   style=dashed penwidth=2.0 arrowhead=empty color="#3a5f8a" fontcolor="#3a5f8a" ]
+    AircraftSystem -> Function          [ label="allocated_from" penwidth=1.5 color="#2d6a2d" fontcolor="#2d6a2d" ]
+    AircraftSystem -> Part              [ label="realized_by"    penwidth=1.5 color="#2d6a2d" fontcolor="#2d6a2d" ]
+    AircraftSystem -> ConfigurationItem [ label="affects_ci"     style=dashed color="#9a3a7a" fontcolor="#9a3a7a" ]
+
+    // ── System and Product inherited relationships ─────────────────────────
+    System  -> Function         [ label="allocated_from" style=dotted color="#3a5f8a" fontcolor="#3a5f8a" ]
+    System  -> Part             [ label="realized_by"    style=dotted color="#3a5f8a" fontcolor="#3a5f8a" ]
+    Product -> ProductVersion   [ label="has_version"    penwidth=1.5 color="#5050b0" fontcolor="#5050b0" ]
+    Product -> Variant          [ label="has_variant"    color="#5050b0" fontcolor="#5050b0" ]
+
+    // ── Program domain ────────────────────────────────────────────────────
+    AircraftDevelopmentProgram -> TechnicalBaseline  [ label="owns"    penwidth=1.5 color="#c87800" fontcolor="#c87800" ]
+    AircraftDevelopmentProgram -> ProductDefinition  [ label="governs" penwidth=1.5 color="#c87800" fontcolor="#c87800" ]
+    TechnicalBaseline          -> ProductDefinition  [ label="constrains" color="#c87800" fontcolor="#c87800" ]
+
+    // ── SE / Requirements / Verification chain ─────────────────────────────
+    Function          -> Requirement        [ label="satisfies"  penwidth=1.5 color="#2d6a2d" fontcolor="#2d6a2d" ]
+    Requirement       -> VerificationArtifact [ label="verified_by" style=dashed color="#2d6a2d" fontcolor="#2d6a2d" ]
+
+    // ── CM domain ─────────────────────────────────────────────────────────
+    ConfigurationBaseline    -> ConfigurationInformation [ label="defined_by"  penwidth=1.5 color="#9a3a7a" fontcolor="#9a3a7a" ]
+    ConfigurationBaseline    -> ConfigurationAudit       [ label="audited_by"  color="#9a3a7a" fontcolor="#9a3a7a" ]
+    ConfigurationBaseline    -> Effectivity              [ label="scoped_by"   color="#9a3a7a" fontcolor="#9a3a7a" ]
+    ConfigurationInformation -> ConfigurationItem        [ label="defines"     penwidth=1.5 color="#9a3a7a" fontcolor="#9a3a7a" ]
+    ConfigurationItem        -> ConfigurationBaseline    [ label="included_in" style=dashed color="#9a3a7a" fontcolor="#9a3a7a" ]
+
+    // ── Change management ─────────────────────────────────────────────────
+    Change -> ChangeRequest               [ label="initiated_by"  penwidth=1.5 color="#c03030" fontcolor="#c03030" ]
+    Change -> ChangeOrder                 [ label="implemented_by" penwidth=1.5 color="#c03030" fontcolor="#c03030" ]
+    Change -> ChangeClassification        [ label="classified_as"  color="#c03030" fontcolor="#c03030" ]
+    Change -> ChangeControlBoard          [ label="reviewed_by"    color="#c03030" fontcolor="#c03030" ]
+    Change -> ChangeApprovalAuthority     [ label="approved_by"    color="#c03030" fontcolor="#c03030" ]
+    Change -> Effectivity                 [ label="has_effectivity" color="#c03030" fontcolor="#c03030" ]
+    Change -> ConfigurationStatusAccounting [ label="tracked_by"  color="#c03030" fontcolor="#c03030" ]
+    Change -> ConfigurationBaseline       [ label="changes_baseline" penwidth=1.5 color="#9a3a7a" fontcolor="#9a3a7a" ]
+    Change -> ConfigurationItem           [ label="affects_ci"    color="#9a3a7a" fontcolor="#9a3a7a" ]
+    Change -> Part                        [ label="affects"       style=dashed color="#2d6a2d" fontcolor="#2d6a2d" ]
+
+    // ── PLM chain ─────────────────────────────────────────────────────────
+    ProductVersion -> ProductDefinition  [ label="defines" style=dashed color="#5050b0" fontcolor="#5050b0" ]
+
+}

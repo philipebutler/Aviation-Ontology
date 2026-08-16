@@ -125,6 +125,8 @@ not_to_be_confused_with:
     distinction: ProductVersion is a controlled versioned formation, not the identity anchor.
   - concept: ProductDefinition
     distinction: ProductDefinition contains technical defining content, not identity only.
+  - concept: System
+    distinction: System is an architectural and functional concept; Product is a PLM identity concept. Some top-level products (Aircraft) are also systems, but a product does not universally specialize System.
 
 examples:
   - name: Flight control computer line replaceable unit product

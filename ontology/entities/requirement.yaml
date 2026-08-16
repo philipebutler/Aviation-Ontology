@@ -74,6 +74,21 @@ attributes:
     datatype: string
 
 relationships:
+  - predicate: applies_to
+    target_entity: Aircraft
+    cardinality: many-to-many
+    required: false
+    description: Requirement imposes an obligation directly on an aircraft type design.
+  - predicate: applies_to
+    target_entity: Product
+    cardinality: many-to-many
+    required: false
+    description: Requirement imposes an obligation on a product identity.
+  - predicate: applies_to
+    target_entity: ProductDefinition
+    cardinality: many-to-many
+    required: false
+    description: Requirement imposes an obligation on a specific product definition context.
   - predicate: satisfies
     target_entity: Function
     cardinality: many-to-many

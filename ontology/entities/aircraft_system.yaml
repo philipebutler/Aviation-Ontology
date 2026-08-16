@@ -1,0 +1,138 @@
+id: entity.aircraft_system
+name: AircraftSystem
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A system that is an integral, governed element of an aircraft and contributes directly to its flight, mission, or airworthiness capability.
+
+canonical_definition: >
+  An AircraftSystem is a specialization of System whose boundary, functional allocation,
+  interfaces, and lifecycle are defined and controlled in the context of a parent aircraft.
+  It provides one or more aircraft-level capabilities and is subject to airworthiness
+  governance.
+
+purpose: >
+  AircraftSystem provides the semantic anchor for systems-level decomposition of an
+  aircraft into governed capability areas, enabling traceability between aircraft-level
+  requirements, subsystem functions, configuration items, and verification activities.
+
+semantic_scope:
+  includes:
+    - Primary aircraft systems such as flight controls, propulsion, avionics, and structures.
+    - Subsystems defined within a higher-level aircraft system boundary.
+    - Systems subject to certification and airworthiness obligations as part of the aircraft type design.
+  excludes:
+    - Ground support equipment, even when supporting an aircraft program.
+    - Systems belonging to another vehicle or platform that interact with the aircraft.
+    - Generic systems not bound to a specific aircraft context.
+
+standards_alignment:
+  sysml:
+    concept: PartDefinition scoped within an aircraft system-of-interest
+    notes: AircraftSystem maps to subsystem blocks in the SysML aircraft architecture.
+  iso_15288:
+    concept: System element within system-of-interest decomposition
+    notes: Supports recursive system decomposition at aircraft level.
+  arp4754a:
+    concept: Aircraft function and system development
+    notes: Aircraft systems are the units of function allocation and development assurance.
+  step_iso_10303:
+    concept: product_definition within AP233 or AP242 aircraft system context
+    notes: Each aircraft system may carry its own product definition in a STEP-based digital thread.
+
+ownership:
+  business_owner: Systems Engineering
+  semantic_owner: Systems Engineering
+  steward: Configuration Management
+  approving_authority: Chief Engineering Office
+
+source_of_authority:
+  system_of_record: PLM / systems architecture toolset
+  authoritative_artifact: Aircraft system architecture baseline
+  authoritative_process: Systems architecture definition and decomposition process
+
+attributes:
+  - name: id
+    description: Unique aircraft system identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable system name.
+    required: true
+    datatype: string
+  - name: ata_chapter
+    description: ATA iSpec 2200 chapter assignment, where applicable.
+    required: false
+    datatype: string
+  - name: development_assurance_level
+    description: DAL assigned under ARP4754A, such as A through E.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: specializes
+    target_entity: System
+    cardinality: many-to-one
+    required: true
+    description: AircraftSystem is a type of System whose scope is defined within an aircraft context.
+  - predicate: contained_in
+    target_entity: Aircraft
+    cardinality: many-to-one
+    required: false
+    description: This aircraft system is an integral part of a parent aircraft.
+  - predicate: allocated_from
+    target_entity: Function
+    cardinality: many-to-many
+    required: false
+    description: Aircraft-level or system-level functions allocated to this system.
+  - predicate: realized_by
+    target_entity: Part
+    cardinality: many-to-many
+    required: false
+    description: Physical assemblies or line-replaceable units that realize this system.
+  - predicate: affects_ci
+    target_entity: ConfigurationItem
+    cardinality: many-to-many
+    required: false
+    description: Configuration items governed under this aircraft system boundary.
+
+lifecycle_states:
+  - concept
+  - development
+  - qualification
+  - released
+  - in_service
+  - retired
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - aircraft subsystem
+  - onboard system
+
+not_to_be_confused_with:
+  - concept: System
+    distinction: System is the generic concept; AircraftSystem is scoped specifically to elements integral to an aircraft and subject to airworthiness governance.
+  - concept: ConfigurationItem
+    distinction: A CI is a unit of configuration control; an aircraft system is an architectural and functional unit that may contain multiple CIs.
+
+examples:
+  - name: Flight control system
+    description: Aircraft system governing control surfaces, actuation, and flight control laws.
+  - name: Avionics system
+    description: Aircraft system encompassing navigation, communication, and display capabilities.
+
+anti_examples:
+  - name: Ground power unit
+    description: A ground support system is not an aircraft system even though it supports aircraft operations.
+
+open_questions:
+  - Should ATA chapter be modeled as a separate classification entity or remain an attribute?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-15
+    author: GitHub Copilot
+    description: Initial definition as a specialization of System scoped to aircraft context.

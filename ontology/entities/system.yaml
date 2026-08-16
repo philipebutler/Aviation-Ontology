@@ -95,10 +95,14 @@ aliases:
 not_to_be_confused_with:
   - concept: Part
     distinction: A part is a physical realization or managed item; a system may be logical or physical.
+  - concept: Product
+    distinction: Product is a PLM identity concept independent of version; System is an architectural and functional concept. Some top-level products (Aircraft) are also systems, but the concepts remain distinct.
 
 examples:
   - name: Flight control system
     description: System responsible for controlling aircraft attitude and flight surfaces.
+  - name: Aircraft
+    description: The top-level system-of-interest in aviation; simultaneously a system and a product identity.
 
 anti_examples:
   - name: Drawing file

@@ -1,0 +1,128 @@
+id: entity.assembly
+name: Assembly
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A Part that is composed of two or more child parts or sub-assemblies joined into a single controlled item.
+
+canonical_definition: >
+  An Assembly is a specialization of Part that is structurally composed of child parts or
+  sub-assemblies. It is managed as a distinct controlled item in the product structure and
+  has its own identity, revision, and configuration traceability independent of its children.
+
+purpose: >
+  Assembly provides explicit semantics for the composition level of the product structure,
+  distinguishing items that are built up from children from items that are detail parts
+  without structure.
+
+semantic_scope:
+  includes:
+    - Top-level assemblies.
+    - Sub-assemblies at any level of the product structure.
+    - Assemblies managed as distinct configuration items.
+  excludes:
+    - Detail parts with no child structure.
+    - Virtual groupings without a governed assembly drawing or model.
+
+standards_alignment:
+  sysml:
+    concept: PartDefinition with composite usage structure
+    notes: Assemblies map to composite blocks in SysML structural decomposition.
+  step_iso_10303:
+    concept: product with next_assembly_usage_occurrence children (ISO 10303-44, AP242)
+    notes: Assembly semantics align with STEP parent product definitions that have usage occurrence children.
+
+ownership:
+  business_owner: Engineering / Configuration Management
+  semantic_owner: Product Definition / Configuration Management
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM
+  authoritative_artifact: Assembly drawing or MBD model
+  authoritative_process: Configuration management and product structure release process
+
+attributes:
+  - name: id
+    description: Unique assembly identifier.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable assembly name.
+    required: true
+    datatype: string
+  - name: revision
+    description: Revision or version identifier.
+    required: false
+    datatype: string
+  - name: lifecycle_state
+    description: Managed lifecycle state.
+    required: true
+    datatype: string
+
+relationships:
+  - predicate: specializes
+    target_entity: Part
+    cardinality: many-to-one
+    required: true
+    description: An assembly is a type of part that contains child structure.
+  - predicate: has_child
+    target_entity: Part
+    cardinality: one-to-many
+    required: true
+    description: An assembly is composed of one or more child parts or sub-assemblies.
+  - predicate: has_child
+    target_entity: Assembly
+    cardinality: one-to-many
+    required: false
+    description: An assembly may contain child sub-assemblies.
+  - predicate: realized_by
+    target_entity: Part
+    cardinality: many-to-many
+    required: false
+    description: Assembly may be physically realized by procured or manufactured sub-assemblies.
+  - predicate: changed_by
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: A change object may modify this assembly.
+
+lifecycle_states:
+  - draft
+  - in_work
+  - released
+  - superseded
+  - obsolete
+
+local_definitions: []
+historical_definitions: []
+aliases:
+  - sub-assembly
+  - top-level assembly
+  - installation
+
+not_to_be_confused_with:
+  - concept: Part
+    distinction: All assemblies are parts but not all parts are assemblies; a detail part has no child structure.
+  - concept: ProductStructureOccurrence
+    distinction: ProductStructureOccurrence is the usage link between parent and child definitions; Assembly is the identity of the composed item itself.
+
+examples:
+  - name: Wing spar assembly
+    description: Structural assembly composed of spar caps, web, and fasteners controlled as a single released item.
+
+anti_examples:
+  - name: Aluminum billet
+    description: Raw material stock is not an assembly.
+
+open_questions:
+  - Should top-level assembly and sub-assembly be modeled as separate subtypes or as an attribute?
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-15
+    author: GitHub Copilot
+    description: Initial definition as a specialization of Part with child structure.

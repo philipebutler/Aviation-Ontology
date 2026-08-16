@@ -1,0 +1,63 @@
+id: relationship.applies_to
+name: Applies To
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: applies_to
+inverse_predicate: has_requirement
+
+summary: >
+  Links a requirement to the entity it obligates — such as an Aircraft, Product, or ProductDefinition.
+
+canonical_definition: >
+  The applies_to relationship asserts that a Requirement imposes an obligation on a target
+  entity. The target must satisfy the requirement through design, function allocation,
+  or verified demonstration.
+
+source_entity: Requirement
+target_entity: Entity
+
+cardinality:
+  source_to_target: many-to-many
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - A requirement may apply to an aircraft, product, product definition, or system.
+  - Requirements applied at aircraft or product level may be decomposed to lower-level entities.
+
+lifecycle_constraints:
+  - Allocation should be established during requirements analysis and maintained through baseline changes.
+
+source_of_authority:
+  system_of_record: Requirements management system
+  authoritative_process: Requirements allocation and traceability process
+
+examples:
+  - source: Stall speed requirement
+    relationship: applies_to
+    target: Aircraft Model X
+    explanation: The stall speed obligation applies directly to the aircraft type design.
+  - source: Interface definition requirement
+    relationship: applies_to
+    target: ProductDefinition (design context)
+    explanation: Interface requirements apply to the specific product definition context.
+
+anti_examples:
+  - source: Verification result
+    relationship: applies_to
+    target: Aircraft
+    explanation: Verification results satisfy requirements; they do not impose requirements.
+
+local_meanings: []
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-15
+    author: GitHub Copilot
+    description: Initial definition. Added to resolve direct requirement-to-aircraft/product allocation gap identified in consistency review.
