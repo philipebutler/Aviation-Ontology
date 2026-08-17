@@ -1,0 +1,81 @@
+id: relationship.contains_part
+name: Contains Part
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: contains_part
+inverse_predicate: part_of_component
+
+summary: >
+  Links a component to the lower-level parts it structurally or functionally contains.
+
+canonical_definition: >
+  The contains_part relationship asserts that a Component includes or is composed of one or more Part elements 
+  that form its physical realization. This relationship represents the immediate parent-child containment in 
+  the product structure hierarchy, distinguishing lower-level parts from higher-level components or assemblies.
+
+source_entity: Component
+target_entity: Part
+
+cardinality:
+  source_to_target: one-to-many
+  target_to_source: many-to-one
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - A part may belong to only one component at the immediate level (though may be referenced by multiple occurrences).
+  - Parts contained within a component contribute to its form, fit, and functional definition.
+  - Component-to-part relationships establish ownership and configuration control boundaries.
+
+lifecycle_constraints:
+  - Part inclusion must be defined and stable at component baseline.
+  - Changes to part content or composition require component change authorization.
+
+source_of_authority:
+  system_of_record: PLM / product structure database
+  authoritative_process: Component architecture and bill-of-materials (BOM) governance
+
+examples:
+  - source: Main Landing Gear Assembly 2200-series Component
+    relationship: contains_part
+    target: Main landing gear wheel assembly Part
+    explanation: Landing gear component directly contains wheel assembly part.
+
+  - source: Main Landing Gear Assembly 2200-series Component
+    relationship: contains_part
+    target: Landing gear extension/retraction actuator Part
+    explanation: Landing gear component directly contains actuator part.
+
+  - source: Turbofan Engine Assembly 5400-series Component
+    relationship: contains_part
+    target: High-pressure compressor rotor assembly Part
+    explanation: Engine component contains high-pressure compressor rotor part.
+
+anti_examples:
+  - source: Commercial Transport Aircraft Component
+    relationship: contains_part
+    target: Turbofan Engine Assembly 5400-series Part
+    explanation: A higher-level component (aircraft) contains components, not parts directly; use part_of_aircraft relationship instead.
+
+  - source: Flight Control System Component
+    relationship: contains_part
+    target: Different Aircraft Flight Control System Component
+    explanation: Different component instances are separate; containment applies within a single component hierarchy.
+
+local_meanings:
+  - context: Bill of Materials (BOM)
+    definition: A part that appears on the formal component BOM and is released as part of the component configuration.
+  - context: Manufacturing
+    definition: A part that must be procured, assembled, and quality-verified as part of component manufacturing.
+
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-17
+    author: GitHub Copilot
+    description: Initial definition linking Component to Part for assembly hierarchy.

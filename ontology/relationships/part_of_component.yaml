@@ -1,0 +1,82 @@
+id: relationship.part_of_component
+name: Part of Component
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: part_of_component
+inverse_predicate: contains_component
+
+summary: >
+  Links a component to a higher-level component that includes it, enabling hierarchical composition of components.
+
+canonical_definition: >
+  The part_of_component relationship asserts that a target Component is a managed subsystem or subassembly 
+  of a source Component, contributing to its functional capability or structural integrity. This relationship 
+  enables hierarchical decomposition where components can be nested within other components, supporting 
+  multi-level product architectures and modular design practices.
+
+source_entity: Component
+target_entity: Component
+
+cardinality:
+  source_to_target: many-to-one
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - A component linked via part_of_component must have defined functional or structural interfaces with the parent component.
+  - The child component's sourcing and lifecycle are tracked independently but rolled up through the parent component.
+  - Circular containment relationships are not allowed; a component cannot be part of itself directly or transitively.
+
+lifecycle_constraints:
+  - Component nesting links should be stable at product baseline and controlled through configuration management.
+  - Hierarchy changes require change authorization and flow through the parent component's governance.
+
+source_of_authority:
+  system_of_record: PLM / product structure database
+  authoritative_process: Product architecture and modular design governance process
+
+examples:
+  - source: Hydraulic Pump Subassembly
+    relationship: part_of_component
+    target: Aircraft Hydraulic System Component
+    explanation: Pump subassembly is part of the larger hydraulic system component.
+
+  - source: Flight Control Actuator Module
+    relationship: part_of_component
+    target: Flight Control System Component
+    explanation: Actuator module is a functional subassembly within the flight control component.
+
+  - source: Avionics Display Unit Assembly
+    relationship: part_of_component
+    target: Integrated Avionics Suite Component
+    explanation: Display unit is a subcomponent of the integrated avionics suite.
+
+anti_examples:
+  - source: Aircraft Engine
+    relationship: part_of_component
+    target: Aircraft Engine
+    explanation: A component cannot be part of itself; this would create a circular dependency.
+
+  - source: Nose Landing Gear Component
+    relationship: part_of_component
+    target: Main Landing Gear Component
+    explanation: Separate aircraft landing gear components are siblings, not hierarchically nested.
+
+local_meanings:
+  - context: Modular product design
+    definition: A subassembly or functional subsystem that can be designed, manufactured, tested, and maintained independently but is formally integrated into a parent component.
+  - context: Configuration management
+    definition: A child component whose configuration changes must be coordinated with and authorized at the parent component level.
+
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-17
+    author: GitHub Copilot
+    description: Initial definition linking Component to Component for hierarchical product structure decomposition.

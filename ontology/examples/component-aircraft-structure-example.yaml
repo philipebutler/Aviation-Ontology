@@ -1,0 +1,205 @@
+# Example: Component and Aircraft Product Structure
+# Demonstrates how components fit within aircraft product structure,
+# including internal manufacturing and supplier-sourced components.
+
+example_id: example.component_aircraft_structure
+name: Component and Aircraft Product Structure Example
+
+description: >
+  This example illustrates a three-level product hierarchy: Aircraft containing Components,
+  and Components containing lower-level Parts. It shows both internally manufactured and
+  supplier-sourced components, representing realistic aerospace product architecture.
+
+objects:
+  # Aircraft level
+  - id: AC-COM-1000
+    type: Product
+    name: Commercial Transport Aircraft Model XYZ product identity
+
+  - id: AC-COM-1000-R2
+    type: ProductVersion
+    name: Commercial Transport Aircraft Model XYZ Revision 2
+
+  - id: AC-COM-1000-DESIGN
+    type: ProductDefinition
+    name: Commercial Transport Aircraft design definition
+
+  # Engine Component (Supplier-sourced)
+  - id: ENG-COMP-5400
+    type: Component
+    name: Turbofan Engine Assembly 5400-series
+    component_type: Propulsion
+    sourcing_type: supplier
+    supplier: TurboAir Industries
+
+  - id: ENG-COMP-5400-R8
+    type: ProductVersion
+    name: Turbofan Engine Assembly 5400-series Revision 8
+
+  # Landing Gear Component (Internal)
+  - id: LDG-GEAR-2200
+    type: Component
+    name: Main Landing Gear Assembly 2200-series
+    component_type: Landing Gear
+    sourcing_type: internal
+    supplier: null
+
+  - id: LDG-GEAR-2200-R5
+    type: ProductVersion
+    name: Main Landing Gear Assembly 2200-series Revision 5
+
+  # Avionics Component (Supplier-sourced)
+  - id: AVIONICS-8800
+    type: Component
+    name: Integrated Avionics Suite 8800
+    component_type: Avionics
+    sourcing_type: supplier
+    supplier: AvionicsPlus Corporation
+
+  - id: AVIONICS-8800-R3
+    type: ProductVersion
+    name: Integrated Avionics Suite 8800 Revision 3
+
+  # Fuselage Component (Internal assembly)
+  - id: FUSELAGE-1100
+    type: Component
+    name: Fuselage Forward Section Assembly 1100
+    component_type: Structural
+    sourcing_type: internal
+
+  - id: FUSELAGE-1100-R4
+    type: ProductVersion
+    name: Fuselage Forward Section Assembly 1100 Revision 4
+
+  # Parts within Landing Gear component
+  - id: PART-WHEEL-2210
+    type: Part
+    name: Main landing gear wheel assembly
+
+  - id: PART-STRUT-2215
+    type: Part
+    name: Main landing gear strut
+
+  - id: PART-ACTUATOR-2220
+    type: Part
+    name: Landing gear extension/retraction actuator
+
+  # Change impacting engine component
+  - id: CHG-1250
+    type: Change
+    name: Engine cooling system enhancement
+
+  - id: CHG-1251
+    type: Change
+    name: Landing gear brake assembly update
+
+  # Verification records
+  - id: VER-2405
+    type: Verification
+    name: Engine hot-fire test report
+
+  - id: VER-2410
+    type: Verification
+    name: Landing gear extension/retraction endurance test
+
+relationships:
+  # Aircraft to Components
+  - source: AC-COM-1000
+    predicate: has_version
+    target: AC-COM-1000-R2
+    description: Aircraft product has controlled version
+
+  - source: AC-COM-1000-R2
+    predicate: defines
+    target: AC-COM-1000-DESIGN
+    description: Product version defines design context
+
+  - source: AC-COM-1000-DESIGN
+    predicate: part_of_aircraft
+    target: ENG-COMP-5400
+    description: Aircraft design includes engine component
+
+  - source: AC-COM-1000-DESIGN
+    predicate: part_of_aircraft
+    target: LDG-GEAR-2200
+    description: Aircraft design includes landing gear component
+
+  - source: AC-COM-1000-DESIGN
+    predicate: part_of_aircraft
+    target: AVIONICS-8800
+    description: Aircraft design includes avionics component
+
+  - source: AC-COM-1000-DESIGN
+    predicate: part_of_aircraft
+    target: FUSELAGE-1100
+    description: Aircraft design includes fuselage component
+
+  # Component versions
+  - source: ENG-COMP-5400
+    predicate: has_version
+    target: ENG-COMP-5400-R8
+    description: Engine component has controlled version
+
+  - source: LDG-GEAR-2200
+    predicate: has_version
+    target: LDG-GEAR-2200-R5
+    description: Landing gear component has controlled version
+
+  - source: AVIONICS-8800
+    predicate: has_version
+    target: AVIONICS-8800-R3
+    description: Avionics component has controlled version
+
+  - source: FUSELAGE-1100
+    predicate: has_version
+    target: FUSELAGE-1100-R4
+    description: Fuselage component has controlled version
+
+  # Components contain Parts
+  - source: LDG-GEAR-2200
+    predicate: contains_part
+    target: PART-WHEEL-2210
+    description: Landing gear component contains wheel assembly
+
+  - source: LDG-GEAR-2200
+    predicate: contains_part
+    target: PART-STRUT-2215
+    description: Landing gear component contains strut
+
+  - source: LDG-GEAR-2200
+    predicate: contains_part
+    target: PART-ACTUATOR-2220
+    description: Landing gear component contains actuator
+
+  # Changes affecting components
+  - source: CHG-1250
+    predicate: changed_by
+    target: ENG-COMP-5400
+    description: Engine component affected by change
+
+  - source: CHG-1251
+    predicate: changed_by
+    target: LDG-GEAR-2200
+    description: Landing gear component affected by change
+
+  # Verification of components
+  - source: ENG-COMP-5400
+    predicate: verified_by
+    target: VER-2405
+    description: Engine component verified through hot-fire test
+
+  - source: LDG-GEAR-2200
+    predicate: verified_by
+    target: VER-2410
+    description: Landing gear component verified through endurance test
+
+notes: >
+  This example demonstrates:
+  - Aircraft as top-level product containing multiple components
+  - Components at intermediate hierarchy level with supplier vs. internal sourcing
+  - Components containing lower-level parts (landing gear parts example)
+  - Version control at both aircraft and component level
+  - Change management flowing through component hierarchy
+  - Verification evidence tied to component instances
+  - Realistic aerospace supply chain pattern where components like engines are supplier-furnished
+    while structural assemblies like fuselage may be internally manufactured

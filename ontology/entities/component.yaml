@@ -1,0 +1,218 @@
+id: entity.component
+name: Component
+kind: entity
+status: draft
+version: 0.1.0
+
+summary: >
+  A managed physical or design element that can function as a standalone product or as a part of a larger assembly.
+
+canonical_definition: >
+  A Component is a product realization element that represents a subassembly, subsystem, or bounded collection 
+  of lower-level parts and/or functions. It may stand alone as a product or be incorporated as part of a larger 
+  aircraft or system assembly. Components are typically designed, manufactured, procured, installed, and 
+  configuration-controlled across their lifecycle, with sourcing managed through internal engineering or 
+  external suppliers.
+
+purpose: >
+  Components provide a hierarchical abstraction layer in product structure that enables modular design, 
+  supplier management, configuration control, and testing at the subsystem level. They connect product 
+  architecture to manufacturing, procurement, logistics, configuration management, and certification workflows.
+
+semantic_scope:
+  includes:
+    - Subassemblies combining multiple parts.
+    - Subsystems with integrated functions and parts.
+    - Supplier-furnished items (SFI) or subsystems.
+    - Internally manufactured assemblies.
+    - Modular units that can be installed, tested, or replaced as a single entity.
+    - Components that form part of larger products (e.g., engines, landing gear, avionics suites as components of an aircraft).
+    - Components that could be sold as standalone products.
+  excludes:
+    - Individual raw materials or single parts without assembly or functional integration.
+    - Pure functions or logical behaviors not realized in physical form.
+    - Temporary or reference objects not managed under configuration control.
+    - Items that are merely containers without defined internal structure.
+
+standards_alignment:
+  sysml:
+    concept: PartDefinition / PartUsage with hierarchical containment, SysML Block with internal structure
+    notes: Useful for modeling integrated physical and logical subsystem structure.
+  iso_15288:
+    concept: Configuration item (CI) at subsystem or assembly level
+    notes: Component aligns with CI identification and baselining practices for managed subsystem elements.
+  step_iso_10303:
+    concept: next_assembly_usage_occurrence (NAUO), component (AP242), product_definition with assembly structure
+    notes: Components map to STEP assembly structure and occurrence modeling at intermediate hierarchy levels.
+  other:
+    - standard: EIA-649-A Configuration Management
+      concept: Managed assembly or subsystem element within product structure
+      notes: Components support CM governance at granular product hierarchy levels.
+    - standard: MIL-HDBK-61B Work Breakdown Structure
+      concept: Hardware or structural configuration elements in WBS
+      notes: Component aligns with product-oriented WBS elements.
+
+ownership:
+  business_owner: Engineering / Product Architecture / Configuration Management
+  semantic_owner: Product Definition / Systems Engineering
+  steward: TBD
+  approving_authority: TBD
+
+source_of_authority:
+  system_of_record: PLM / Product Structure Database
+  authoritative_artifact: Product structure tree, assembly drawings, component specifications
+  authoritative_process: Product architecture definition and component governance process
+
+attributes:
+  - name: id
+    description: Unique component identifier, typically spanning supplier boundaries.
+    required: true
+    datatype: string
+  - name: name
+    description: Human-readable component name or designation.
+    required: true
+    datatype: string
+  - name: component_type
+    description: Classification or category of component (e.g., engine, avionics, structural, landing gear).
+    required: false
+    datatype: string
+  - name: revision
+    description: Revision or version identifier.
+    required: false
+    datatype: string
+  - name: lifecycle_state
+    description: Managed lifecycle state (draft, released, obsolete, etc.).
+    required: true
+    datatype: string
+  - name: sourcing_type
+    description: Indicator of sourcing strategy (internal, supplier, COTS, SFI).
+    required: false
+    datatype: string
+  - name: supplier
+    description: Supplier name or identifier if externally sourced.
+    required: false
+    datatype: string
+  - name: description
+    description: Business or engineering description of component purpose and scope.
+    required: false
+    datatype: string
+
+relationships:
+  - predicate: part_of
+    target_entity: Component
+    cardinality: many-to-one
+    required: false
+    description: A component may be part of another higher-level component, enabling hierarchical composition.
+  - predicate: contains
+    target_entity: Component
+    cardinality: one-to-many
+    required: false
+    description: A component may contain other lower-level components.
+  - predicate: contains_part
+    target_entity: Part
+    cardinality: one-to-many
+    required: false
+    description: A component contains one or more managed parts or assemblies.
+  - predicate: part_of_product
+    target_entity: Product
+    cardinality: many-to-one
+    required: false
+    description: A component may be incorporated into a larger product (e.g., aircraft).
+  - predicate: part_of_aircraft
+    target_entity: Aircraft
+    cardinality: many-to-one
+    required: false
+    description: A component may be a subsystem or assembly of an aircraft.
+  - predicate: is_standalone_product
+    target_entity: Product
+    cardinality: one-to-one
+    required: false
+    description: A component may also be marketed or managed as a standalone product.
+  - predicate: realizes
+    target_entity: System
+    cardinality: many-to-many
+    required: false
+    description: A component realizes one or more system elements or functions.
+  - predicate: has_material
+    target_entity: Material
+    cardinality: many-to-many
+    required: false
+    description: A component is made from one or more governed material specifications.
+  - predicate: sourced_by
+    target_entity: ChangeGovernanceAuthority
+    cardinality: many-to-one
+    required: false
+    description: A component sourcing is governed by an internal organization or supplier.
+  - predicate: changed_by
+    target_entity: Change
+    cardinality: many-to-many
+    required: false
+    description: A component is subject to configuration changes and change management.
+  - predicate: has_configuration_item
+    target_entity: ConfigurationItem
+    cardinality: one-to-one
+    required: false
+    description: A component may be managed as a configuration item under CM governance.
+  - predicate: requires
+    target_entity: Requirement
+    cardinality: many-to-many
+    required: false
+    description: A component is allocated and must satisfy one or more requirements.
+  - predicate: verified_by
+    target_entity: Verification
+    cardinality: many-to-many
+    required: false
+    description: A component verification and qualification is documented through verification records.
+
+lifecycle_states:
+  - draft
+  - reviewed
+  - approved
+  - released
+  - in_production
+  - obsolete
+  - superseded
+
+valid_state_transitions:
+  - from: draft
+    to: reviewed
+  - from: reviewed
+    to: approved
+  - from: approved
+    to: released
+  - from: released
+    to: in_production
+  - from: in_production
+    to: obsolete
+  - from: released
+    to: obsolete
+  - from: obsolete
+    to: superseded
+
+local_definitions:
+  - context: Aviation PLM Systems
+    definition: A managed assembly or subsystem within aircraft product structure, typically subject to supplier management, supply chain control, and configuration audits.
+    source: Industry PLM practice in aerospace/defense
+  - context: Supply Chain Management
+    definition: A major subsystem or assembly sourced from an internal manufacturing facility or an approved supplier, tracked through procurement and logistics workflows.
+    source: Supply chain and procurement standards
+
+historical_definitions: []
+
+examples:
+  - description: Engine as an aircraft component
+    context: Aircraft subsystem assembly that functions both as a standalone product and as a critical component of the larger aircraft system.
+  - description: Landing gear assembly as a component
+    context: Structural and mechanical assembly with multiple integrated parts and functions.
+  - description: Avionics suite as a component
+    context: Integrated electronic subsystem with software and hardware elements.
+  - description: Fuselage section as a component
+    context: Structural component that forms part of the aircraft body.
+
+anti_examples:
+  - description: Single fastener or raw material
+    rationale: Individual parts without functional or structural integration are Parts, not Components.
+  - description: Pure software module
+    rationale: Logical functions without physical realization are Systems or Functions, not Components.
+  - description: Design reference object
+    rationale: Uncontrolled reference elements are not Components.

@@ -117,3 +117,15 @@ A STEP representation construct for geometric/topological/presentation form, inc
 ## Advanced B-Rep Shape Representation
 
 A STEP geometric representation subtype used to encode boundary-representation solids and topology for high-fidelity product model exchange.
+
+## Component
+
+A managed physical or design element representing a subassembly, subsystem, or bounded collection of lower-level parts and/or functions. A component may stand alone as a product or be incorporated as part of a larger assembly (such as an aircraft), with sourcing managed through internal engineering or external suppliers.
+
+## Assembly
+
+A managed collection of parts and/or subassemblies combined together to form a functional or structural unit, with controlled interfaces and configuration.
+
+## Subsystem
+
+A functional grouping of components and parts that provides a bounded capability, typically governed as a unit for design, testing, certification, and maintenance.

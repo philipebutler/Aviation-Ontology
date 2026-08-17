@@ -1,0 +1,82 @@
+id: relationship.part_of_aircraft
+name: Part of Aircraft
+kind: relationship
+status: draft
+version: 0.1.0
+
+predicate: part_of_aircraft
+inverse_predicate: contains_component
+
+summary: >
+  Links a component to an aircraft or product that includes it as a structural, functional, or subsystem element.
+
+canonical_definition: >
+  The part_of_aircraft relationship asserts that a target Component is an integral physical, 
+  functional, or subsystem element of a source Aircraft, contributing to the aircraft's 
+  capability, structure, or operational envelope and subject to its configuration governance, 
+  certification, and airworthiness obligations.
+
+source_entity: Component
+target_entity: Aircraft
+
+cardinality:
+  source_to_target: many-to-one
+  target_to_source: one-to-many
+
+required: false
+transitive: false
+symmetric: false
+
+semantic_constraints:
+  - A component linked via part_of_aircraft must have defined interfaces with the parent aircraft.
+  - The component's lifecycle and certification obligations are governed under the parent aircraft type design.
+  - A component may have part_of_aircraft links to only one aircraft at the same product hierarchy level.
+
+lifecycle_constraints:
+  - Component inclusion links should be established by architecture definition and stable at product baseline.
+  - Changes to component allocation or interfaces should flow through change management.
+
+source_of_authority:
+  system_of_record: PLM / systems architecture toolset
+  authoritative_process: Aircraft systems and product architecture decomposition process
+
+examples:
+  - source: Turbofan Engine Assembly 5400-series
+    relationship: part_of_aircraft
+    target: Commercial Transport Aircraft Model XYZ
+    explanation: Engine component is an integral propulsion component of the aircraft type design.
+
+  - source: Main Landing Gear Assembly 2200-series
+    relationship: part_of_aircraft
+    target: Commercial Transport Aircraft Model XYZ
+    explanation: Landing gear is a structural and functional component of the aircraft.
+
+  - source: Integrated Avionics Suite 8800
+    relationship: part_of_aircraft
+    target: Commercial Transport Aircraft Model XYZ
+    explanation: Avionics suite is an integral subsystem of the aircraft.
+
+anti_examples:
+  - source: Ground Power Unit
+    relationship: part_of_aircraft
+    target: Commercial Transport Aircraft Model XYZ
+    explanation: Ground support equipment is not part of the aircraft; it supports the aircraft externally.
+
+  - source: Test Bench Component Mock-up
+    relationship: part_of_aircraft
+    target: Commercial Transport Aircraft Model XYZ
+    explanation: Development or test-only mockups are not part of the production aircraft configuration.
+
+local_meanings:
+  - context: Aircraft configuration management
+    definition: A component that is formally allocated to an aircraft baseline and subject to the aircraft's configuration control board governance.
+  - context: Supply chain and procurement
+    definition: A supplier-furnished or internally manufactured assembly that is scheduled, procured, and installed as part of aircraft assembly and delivery.
+
+historical_meanings: []
+
+change_history:
+  - version: 0.1.0
+    date: 2026-08-17
+    author: GitHub Copilot
+    description: Initial definition linking Component to Aircraft in product structure hierarchy.
