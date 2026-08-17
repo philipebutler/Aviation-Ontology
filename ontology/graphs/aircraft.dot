@@ -17,8 +17,10 @@ digraph AircraftOntology {
         pad=0.6
         splines=ortho
     ]
+
     node [ fontname="Helvetica Neue, Helvetica, Arial, sans-serif" fontsize=10 shape=none margin=0 ]
     edge [ fontname="Helvetica Neue, Helvetica, Arial, sans-serif" fontsize=9 ]
+
 
     // ── Legend key ─────────────────────────────────────────────────────────
     // Arrow styles:
